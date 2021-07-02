@@ -1,0 +1,47 @@
+/*
+Name : top-bar
+Date : 2021.06.30
+*/
+
+  header.top-bar-container {
+    /* border: 1px solid red; */
+    width: 100%;
+    height: 60px;
+    font-family: 'NotoSansCJKkr';
+    font-weight: 700;
+  }
+
+  nav.top-bar {
+    /* border: 1px solid green; */
+    width: 100%;
+    height: 60px;
+    background-color: #262a2d;
+
+  }
+
+  ol.top-bar-item-box {
+    /* border: 1px solid blue; */
+    display: grid;
+    grid-template-columns: 135px 1fr 60px 80px 85px;
+    list-style: none;
+  }
+
+  li.top-bar-item {
+    /* border: 1px solid pink; */
+    height: 60px;
+  }
+
+  .top-bar-title {
+    /* border: 1px solid pink; */
+    display: block;
+    margin: 20px 0 0 0;
+    font-size: 16px;
+    line-height: 1.5;
+  }
+
+  .top-bar-name {
+    display: block;
+    margin: 20px 0 0 0;
+    font-size: 16px;
+    line-height: 1.5;
+  }

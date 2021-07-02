@@ -1,0 +1,221 @@
+{
+	"info": {
+		"_postman_id": "1a89b961-2801-4d98-9a50-b9f39695105f",
+		"name": "iot.farota.com",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "장치 아이디 조회",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "X-Authorization",
+						"value": "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJzay11c2VyQHNtYXJmLmtyIiwic2NvcGVzIjpbIlRFTkFOVF9BRE1JTiJdLCJ1c2VySWQiOiJhNjcyZTQyMC01NGEwLTExZWItOTY1OC1hNTRmZmRlYjExNDciLCJlbmFibGVkIjp0cnVlLCJpc1B1YmxpYyI6ZmFsc2UsInRlbmFudElkIjoiZDlkZTBhNTAtNDNmOC0xMWViLWE3M2MtZTlkOWU0YjE4MzA1IiwiY3VzdG9tZXJJZCI6IjEzODE0MDAwLTFkZDItMTFiMi04MDgwLTgwODA4MDgwODA4MCIsImlzcyI6InRoaW5nc2JvYXJkLmlvIiwiaWF0IjoxNjI0MzI5MDg2LCJleHAiOjE2MjQzMzgwODZ9.AjPU1yU-LjfwDXH6VTxCXuS9cmUqitwP4Cm7dLjXHjqT8-cFdwLPb0t6AoqKG-cuAZ2T0nkL55FDEgtRBNt6Jg",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://iot.farota.com/api/tenant/devices?deviceName=test1",
+					"protocol": "https",
+					"host": [
+						"iot",
+						"farota",
+						"com"
+					],
+					"path": [
+						"api",
+						"tenant",
+						"devices"
+					],
+					"query": [
+						{
+							"key": "deviceName",
+							"value": "test1",
+							"description": "장치 시리얼"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "로그인 토큰 발급",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"username\": \"manager@smarf.kr\",\n    \"password\": \"uiop90-=\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://iot.farota.com/api/auth/login",
+					"protocol": "https",
+					"host": [
+						"iot",
+						"farota",
+						"com"
+					],
+					"path": [
+						"api",
+						"auth",
+						"login"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "장치 최근 데이터 조회",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "X-Authorization",
+						"value": "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJtYW5hZ2VyQHNtYXJmLmtyIiwic2NvcGVzIjpbIlRFTkFOVF9BRE1JTiJdLCJ1c2VySWQiOiI0Mjc2YzYxMC00M2Y5LTExZWItYTczYy1lOWQ5ZTRiMTgzMDUiLCJmaXJzdE5hbWUiOiLsiqTrp4jtlIQiLCJlbmFibGVkIjp0cnVlLCJpc1B1YmxpYyI6ZmFsc2UsInRlbmFudElkIjoiZDlkZTBhNTAtNDNmOC0xMWViLWE3M2MtZTlkOWU0YjE4MzA1IiwiY3VzdG9tZXJJZCI6IjEzODE0MDAwLTFkZDItMTFiMi04MDgwLTgwODA4MDgwODA4MCIsImlzcyI6InRoaW5nc2JvYXJkLmlvIiwiaWF0IjoxNjI0NTc5NjYyLCJleHAiOjE2MjQ1ODg2NjJ9.gqXIRyRNwmQJwAaOMR0-1D9lPw2cHiEUj1WLJsbcPNhCFhKxV9JXVDQpxAl6sPgx63KFoeWsG84lN2Pp3mUBiQ",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "https://iot.farota.com/api/plugins/telemetry/DEVICE/c2da6500-d3eb-11eb-a83d-a5da307f61ba/values/timeseries?keys=waterQuality,waterTemp",
+					"protocol": "https",
+					"host": [
+						"iot",
+						"farota",
+						"com"
+					],
+					"path": [
+						"api",
+						"plugins",
+						"telemetry",
+						"DEVICE",
+						"c2da6500-d3eb-11eb-a83d-a5da307f61ba",
+						"values",
+						"timeseries"
+					],
+					"query": [
+						{
+							"key": "keys",
+							"value": "waterQuality,waterTemp"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "장치 데이터 리스트 조회(startTs, endTs)",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "X-Authorization",
+						"value": "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJtYW5hZ2VyQHNtYXJmLmtyIiwic2NvcGVzIjpbIlRFTkFOVF9BRE1JTiJdLCJ1c2VySWQiOiI0Mjc2YzYxMC00M2Y5LTExZWItYTczYy1lOWQ5ZTRiMTgzMDUiLCJmaXJzdE5hbWUiOiLsiqTrp4jtlIQiLCJlbmFibGVkIjp0cnVlLCJpc1B1YmxpYyI6ZmFsc2UsInRlbmFudElkIjoiZDlkZTBhNTAtNDNmOC0xMWViLWE3M2MtZTlkOWU0YjE4MzA1IiwiY3VzdG9tZXJJZCI6IjEzODE0MDAwLTFkZDItMTFiMi04MDgwLTgwODA4MDgwODA4MCIsImlzcyI6InRoaW5nc2JvYXJkLmlvIiwiaWF0IjoxNjI0NTc5NjYyLCJleHAiOjE2MjQ1ODg2NjJ9.gqXIRyRNwmQJwAaOMR0-1D9lPw2cHiEUj1WLJsbcPNhCFhKxV9JXVDQpxAl6sPgx63KFoeWsG84lN2Pp3mUBiQ",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "https://iot.farota.com/api/plugins/telemetry/DEVICE/c2da6500-d3eb-11eb-a83d-a5da307f61ba/values/timeseries?startTs=1624374000000&endTs=1624478400000&limit=1000&keys=waterQuality,waterTemp",
+					"protocol": "https",
+					"host": [
+						"iot",
+						"farota",
+						"com"
+					],
+					"path": [
+						"api",
+						"plugins",
+						"telemetry",
+						"DEVICE",
+						"c2da6500-d3eb-11eb-a83d-a5da307f61ba",
+						"values",
+						"timeseries"
+					],
+					"query": [
+						{
+							"key": "startTs",
+							"value": "1624374000000",
+							"description": "timestamp(millisecond 포함)"
+						},
+						{
+							"key": "endTs",
+							"value": "1624478400000",
+							"description": "timestamp(millisecond 포함)"
+						},
+						{
+							"key": "limit",
+							"value": "1000",
+							"description": "출력 데이터 갯수"
+						},
+						{
+							"key": "keys",
+							"value": "waterQuality,waterTemp",
+							"description": "temp,humid,fire,co2,o2,h2s,ch4,co"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "장치 제어 RPC call",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "X-Authorization",
+						"value": "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJzay11c2VyQHNtYXJmLmtyIiwic2NvcGVzIjpbIlRFTkFOVF9BRE1JTiJdLCJ1c2VySWQiOiJhNjcyZTQyMC01NGEwLTExZWItOTY1OC1hNTRmZmRlYjExNDciLCJlbmFibGVkIjp0cnVlLCJpc1B1YmxpYyI6ZmFsc2UsInRlbmFudElkIjoiZDlkZTBhNTAtNDNmOC0xMWViLWE3M2MtZTlkOWU0YjE4MzA1IiwiY3VzdG9tZXJJZCI6IjEzODE0MDAwLTFkZDItMTFiMi04MDgwLTgwODA4MDgwODA4MCIsImlzcyI6InRoaW5nc2JvYXJkLmlvIiwiaWF0IjoxNjI0MzI5MDg2LCJleHAiOjE2MjQzMzgwODZ9.AjPU1yU-LjfwDXH6VTxCXuS9cmUqitwP4Cm7dLjXHjqT8-cFdwLPb0t6AoqKG-cuAZ2T0nkL55FDEgtRBNt6Jg",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"method\": \"setOnOff\",\n    \"params\": {\n        \"onOff\": 0,\n        \"valveNo\": 4\n    }\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://iot.farota.com/api/plugins/rpc/oneway/80e7afe0-d256-11eb-a83d-a5da307f61ba",
+					"protocol": "https",
+					"host": [
+						"iot",
+						"farota",
+						"com"
+					],
+					"path": [
+						"api",
+						"plugins",
+						"rpc",
+						"oneway",
+						"80e7afe0-d256-11eb-a83d-a5da307f61ba"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

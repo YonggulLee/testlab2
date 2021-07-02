@@ -1,0 +1,64 @@
+/*
+Name : font
+Date : 2021.06.30
+*/
+
+@font-face {
+  font-family: 'NotoSansCJKkr';
+  font-style: normal;
+  font-weight: 100;
+  src: url(assets/font/NotoSansKR-Thin.woff2) format('woff2');
+  src: url(assets/font/NotoSansKR-Thin.woff) format('woff');
+  src: url(assets/font/NotoSansKR-Thin.otf) format('opentype');
+  src: url(assets/font/NotoSansKR-Thin.ttf) format('truetype');
+}
+
+@font-face {
+  font-family: 'NotoSansCJKkr';
+  font-style: normal;
+  font-weight: 300;
+  src: url(assets/font/NotoSansKR-Light.woff2) format('woff2');
+  src: url(assets/font/NotoSansKR-Light.woff) format('woff');
+  src: url(assets/font/NotoSansKR-Light.otf) format('opentype');
+  src: url(assets/font/NotoSansKR-Light.ttf) format('truetype');
+}
+
+@font-face {
+  font-family: 'NotoSansCJKkr';
+  font-style: normal;
+  font-weight: 400;
+  src: url(assets/font/NotoSansKR-Regular.woff2) format('woff2');
+  src: url(assets/font/NotoSansKR-Regular.woff) format('woff');
+  src: url(assets/font/NotoSansKR-Regular.otf) format('opentype');
+  src: url(assets/font/NotoSansKR-Regular.ttf) format('truetype');
+}
+
+@font-face {
+  font-family: 'NotoSansCJKkr';
+  font-style: normal;
+  font-weight: 500;
+  src: url(assets/font/NotoSansKR-Medium.woff2) format('woff2');
+  src: url(assets/font/NotoSansKR-Medium.woff) format('woff');
+  src: url(assets/font/NotoSansKR-Medium.otf) format('opentype');
+  src: url(assets/font/NotoSansKR-Medium.ttf) format('truetype');
+}
+
+@font-face {
+  font-family: 'NotoSansCJKkr';
+  font-style: normal;
+  font-weight: 700;
+  src: url(assets/font/NotoSansKR-Bold.woff2) format('woff2');
+  src: url(assets/font/NotoSansKR-Bold.woff) format('woff');
+  src: url(assets/font/NotoSansKR-Bold.otf) format('opentype');
+  src: url(assets/font/NotoSansKR-Bold.ttf) format('truetype');
+}
+
+@font-face {
+  font-family: 'NotoSansCJKkr';
+  font-style: normal;
+  font-weight: 900;
+  src: url(assets/font/NotoSansKR-Black.woff2) format('woff2');
+  src: url(assets/font/NotoSansKR-Black.woff) format('woff');
+  src: url(assets/font/NotoSansKR-Black.otf) format('opentype');
+  src: url(assets/font/NotoSansKR-Black.ttf) format('truetype');
+}

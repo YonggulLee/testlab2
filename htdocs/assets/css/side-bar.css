@@ -1,0 +1,103 @@
+/*
+Name : side-bar
+Date : 2021.06.30
+*/
+
+  section.side-bar-container {
+    /* border: 1px solid pink; */
+    font-family: 'NotoSansCJKkr';
+    font-weight: 600;
+    width: 130px;
+    height: 990px;
+    padding-top:30px;
+    background-color: #262a2d;
+  }
+
+  nav.side-bar {
+    width: 100%;
+    height: 980px;
+  }
+
+  ol.side-bar-item-box {
+    /* border: 1px solid #262a2d; */
+    width: 100%;
+    height: 980px;
+  }
+
+  li.side-bar-item {
+    /* border: 1px solid red; */
+    margin-top:10px;
+    height: 44px;
+    padding: 10px 0 0 15px;
+    color: #F3F8FE;
+  }
+
+  li.side-bar-item:hover {
+    /* border: 1px solid green; */
+    margin-top:10px;
+    height: 44px;
+    padding: 10px 0 0 15px;
+    border-left: 4px solid #9BCF0A;
+    background-color: #323B29;
+  }
+
+  span.side-bar-item-title-eng {
+    font-size: 12px;
+    font-weight: 600;
+    color: #ADADAD;
+  }
+
+  ol.side-bar-sub-item-box-active {
+    /* border: 1px solid green; */
+    position: absolute;
+    background-color: #1D2226;
+    width: 160px;
+    height: 1020px;
+    top: 60px;
+    left: 130px;
+    list-style: none;
+  }
+  h4.side-bar-sub-title{
+    height: 35px;
+    width: 140px;
+    padding: 25px 0 0 20px;
+    border-bottom: 1px solid #34393C;
+    font-size: 16px;
+    font-weight: 500;
+    color: #E0E0E0;
+  }
+
+  li.side-bar-sub-item-active {
+    /* border: 1px solid red; */
+    border-radius: 3px;
+    height: 42px;
+    width: 123px;
+    margin: 18px;
+    display: flex;
+    flex-direction: row;
+  }
+
+  li.side-bar-sub-item-active:hover {
+    /* border: 1px solid red; */
+    border-radius: 4px;
+    height: 42px;
+    width: 123px;
+    margin: 18px;
+    display: flex;
+    flex-direction: row;
+    color: #000000;
+    background-color: #9BCF0A;
+  }
+
+  img.side-bar-sub-item-img {
+    height: 24px;
+    width: 24px;
+    margin: 10px 0 0 10px;
+  }
+
+  span.side-bar-sub-item-title {
+    display: block;
+    margin-top:-25px;
+    margin-left: 41px;
+    color: #8E9193;
+  }
