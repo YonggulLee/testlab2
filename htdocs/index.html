@@ -12,6 +12,9 @@
   <link rel="stylesheet" href="assets/css/dashboard.css">
   <link rel="stylesheet" href="assets/css/smart-band.css">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.21.1/axios.min.js"
+    integrity="sha512-bZS47S7sPOxkjU/4Bt0zrhEtWx0y0CRkhEp8IckzK+ltifIIE9EMIMTuT/mEzoIMewUINruDBIR/jJnbguonqQ=="
+    crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 </head>
 
 <body>
@@ -92,14 +95,14 @@
           <div class="dashboard-article-header-item">
             <span class="dashboard-article-header-item-sub-title">leq</span>
             <div class="dashboard-article-header-item-sub-box">
-              <span class="dashboard-article-header-item-sub-box-num font-green">56.2</span>
+              <span class="dashboard-article-header-item-sub-box-num font-green" id="noise-leq">56.2</span>
               <span class="dashboard-article-header-item-sub-box-unit font-gray ">dB</span>
             </div>
           </div>
           <div class="dashboard-article-header-item">
             <span class="dashboard-article-header-item-sub-title">L max</span>
             <div class="dashboard-article-header-item-sub-box">
-              <span class="dashboard-article-header-item-sub-box-num font-blue">56.2</span>
+              <span class="dashboard-article-header-item-sub-box-num font-blue" id="noise-lmax">56.2</span>
               <span class="dashboard-article-header-item-sub-box-unit font-gray ">dB</span>
             </div>
           </div>
@@ -118,14 +121,14 @@
           <div class="dashboard-article-header-item">
             <span class="dashboard-article-header-item-sub-title">2.5pm</span>
             <div class="dashboard-article-header-item-sub-box">
-              <span class="dashboard-article-header-item-sub-box-num font-green">-0.22</span>
+              <span class="dashboard-article-header-item-sub-box-num font-green" id="dust-ultra">-0.22</span>
               <span class="dashboard-article-header-item-sub-box-unit font-gray ">㎍/㎥</span>
             </div>
           </div>
           <div class="dashboard-article-header-item">
             <span class="dashboard-article-header-item-sub-title">10 PM</span>
             <div class="dashboard-article-header-item-sub-box">
-              <span class="dashboard-article-header-item-sub-box-num font-blue">1.46</span>
+              <span class="dashboard-article-header-item-sub-box-num font-blue" id="dust-fine">1.46</span>
               <span class="dashboard-article-header-item-sub-box-unit font-gray ">㎍/㎥</span>
             </div>
           </div>
@@ -144,21 +147,21 @@
           <div class="dashboard-article-header-item">
             <span class="dashboard-article-header-item-sub-title">X</span>
             <div class="dashboard-article-header-item-sub-box-2">
-              <span class="dashboard-article-header-item-sub-box-num font-green">-0.22</span>
+              <span class="dashboard-article-header-item-sub-box-num font-green" id="vibe-x1">-0.22</span>
               <span class="dashboard-article-header-item-sub-box-unit font-gray ">g</span>
             </div>
           </div>
           <div class="dashboard-article-header-item">
-            <span class="dashboard-article-header-item-sub-title">L max</span>
+            <span class="dashboard-article-header-item-sub-title">Y</span>
             <div class="dashboard-article-header-item-sub-box-2">
-              <span class="dashboard-article-header-item-sub-box-num font-blue">-1.46</span>
+              <span class="dashboard-article-header-item-sub-box-num font-blue" id="vibe-y1">-1.46</span>
               <span class="dashboard-article-header-item-sub-box-unit font-gray ">g</span>
             </div>
           </div>
           <div class="dashboard-article-header-item">
-            <span class="dashboard-article-header-item-sub-title">L max</span>
+            <span class="dashboard-article-header-item-sub-title">Z</span>
             <div class="dashboard-article-header-item-sub-box-2">
-              <span class="dashboard-article-header-item-sub-box-num font-blue">1.03</span>
+              <span class="dashboard-article-header-item-sub-box-num font-blue" id="vibe-z1">1.03</span>
               <span class="dashboard-article-header-item-sub-box-unit font-gray ">g</span>
             </div>
           </div>
@@ -176,21 +179,21 @@
           <div class="dashboard-article-header-item">
             <span class="dashboard-article-header-item-sub-title">X</span>
             <div class="dashboard-article-header-item-sub-box-2">
-              <span class="dashboard-article-header-item-sub-box-num font-green">-0.22</span>
+              <span class="dashboard-article-header-item-sub-box-num font-green" id="vibe-x2">-0.22</span>
               <span class="dashboard-article-header-item-sub-box-unit font-gray ">g</span>
             </div>
           </div>
           <div class="dashboard-article-header-item">
-            <span class="dashboard-article-header-item-sub-title">L max</span>
+            <span class="dashboard-article-header-item-sub-title">Y</span>
             <div class="dashboard-article-header-item-sub-box-2">
-              <span class="dashboard-article-header-item-sub-box-num font-blue">-1.46</span>
+              <span class="dashboard-article-header-item-sub-box-num font-blue" id="vibe-y2">-1.46</span>
               <span class="dashboard-article-header-item-sub-box-unit font-gray ">g</span>
             </div>
           </div>
           <div class="dashboard-article-header-item">
-            <span class="dashboard-article-header-item-sub-title">L max</span>
+            <span class="dashboard-article-header-item-sub-title">Z</span>
             <div class="dashboard-article-header-item-sub-box-2">
-              <span class="dashboard-article-header-item-sub-box-num font-blue">1.03</span>
+              <span class="dashboard-article-header-item-sub-box-num font-blue" id="vibe-z2">1.03</span>
               <span class="dashboard-article-header-item-sub-box-unit font-gray ">g</span>
             </div>
           </div>
@@ -239,7 +242,7 @@
               </div>
             </div>
             <div class="weather-station-info-data data-white ">
-              <span class="weather-station-info-data-num">26.2 </span>
+              <span class="weather-station-info-data-num" id="weather-temp">26.2 </span>
               <span class="weather-station-info-data-unit">'C</span>
             </div>
           </div>
@@ -255,7 +258,7 @@
               </div>
             </div>
             <div class="weather-station-info-data data-white ">
-              <span class="weather-station-info-data-num">68.0</span>
+              <span class="weather-station-info-data-num" id="weather-humid">68.0</span>
               <span class="weather-station-info-data-unit">%</span>
             </div>
           </div>
@@ -271,7 +274,7 @@
               </div>
             </div>
             <div class="weather-station-info-data data-white ">
-              <span class="weather-station-info-data-num">994.7 </span>
+              <span class="weather-station-info-data-num" id="weather-pressure">994.7 </span>
               <span class="weather-station-info-data-unit">hPa</span>
             </div>
           </div>
@@ -287,7 +290,7 @@
               </div>
             </div>
             <div class="weather-station-info-data data-white ">
-              <span class="weather-station-info-data-num">0.00 </span>
+              <span class="weather-station-info-data-num" id="weather-uv">0.00 </span>
               <span class="weather-station-info-data-unit">W/m2</span>
             </div>
           </div>
@@ -305,7 +308,7 @@
               </div>
             </div>
             <div class="weather-station-info-data data-white ">
-              <span class="weather-station-info-data-num">0.0</span>
+              <span class="weather-station-info-data-num" id="weather-rain-day">0.0</span>
               <span class="weather-station-info-data-unit">mm</span>
             </div>
           </div>
@@ -321,7 +324,7 @@
               </div>
             </div>
             <div class="weather-station-info-data data-white ">
-              <span class="weather-station-info-data-num">0.0</span>
+              <span class="weather-station-info-data-num" id="weather-rain-hour">0.0</span>
               <span class="weather-station-info-data-unit">mm</span>
             </div>
           </div>
@@ -337,7 +340,7 @@
               </div>
             </div>
             <div class="weather-station-info-data data-white ">
-              <span class="weather-station-info-data-num">0.00</span>
+              <span class="weather-station-info-data-num" id="weather-rad">0.00</span>
               <span class="weather-station-info-data-unit">W/m2</span>
             </div>
           </div>
@@ -353,7 +356,7 @@
               </div>
             </div>
             <div class="weather-station-info-data data-white ">
-              <span class="weather-station-info-data-num">1.00</span>
+              <span class="weather-station-info-data-num" id="weather-windspeed">1.00</span>
               <span class="weather-station-info-data-unit">m/s</span>
             </div>
           </div>
@@ -392,7 +395,7 @@
           <div class="sprinkler-title title-kor">
             스프링클러 1번,2번
           </div>
-          <div class="sprinkler-status-off">
+          <div class="sprinkler-status-off" id="sprinkler-1">
             꺼짐
           </div>
         </div>
@@ -405,19 +408,20 @@
           <div class="sprinkler-title title-kor">
             스프링클러 3번,4번
           </div>
-          <div class="sprinkler-status-off">
+          <div class="sprinkler-status-off" id="sprinkler-2">
             꺼짐
           </div>
         </div>
         <div class="sprinkler-btns img-center">
           <img src="assets/img/9.png" alt="">
-        </div></div>
+        </div>
+      </div>
       <div class="dashboard-row-2-item">
         <div class="sprinkler-box">
           <div class="sprinkler-title title-kor">
             스프링클러 5번,6번
           </div>
-          <div class="sprinkler-status-off">
+          <div class="sprinkler-status-off" id="sprinkler-3">
             꺼짐
           </div>
         </div>
@@ -430,7 +434,7 @@
           <div class="sprinkler-title title-kor">
             스프링클러 7번,8번
           </div>
-          <div class="sprinkler-status-off">
+          <div class="sprinkler-status-off" id="sprinkler-4">
             꺼짐
           </div>
         </div>
@@ -455,7 +459,7 @@
             </div>
           </div>
           <div class="img-center">
-            <img class="big-sprinkler-tempimg" src="assets/img/10.png" alt="" >
+            <img class="big-sprinkler-tempimg" src="assets/img/10.png" alt="">
           </div>
         </div>
       </div>
@@ -465,7 +469,7 @@
           <div class="gate-title title-wight title-kor">
             게이트 외부 살수
           </div>
-          <div class="gate-status">
+          <div class="gate-status" id="trench-out">
             꺼짐
           </div>
         </div>
@@ -478,7 +482,7 @@
           <div class="sprinkler-title title-kor">
             스프링클러 9번,10번
           </div>
-          <div class="sprinkler-status-off">
+          <div class="sprinkler-status-off" id="sprinkler-5">
             꺼짐
           </div>
         </div>
@@ -489,22 +493,9 @@
       <div class="dashboard-row-2-item">
         <div class="sprinkler-box">
           <div class="sprinkler-title title-kor">
-            스프링클러 11번,12번
+            스프링클러 11번
           </div>
-          <div class="sprinkler-status-off">
-            꺼짐
-          </div>
-        </div>
-        <div class="sprinkler-btns img-center">
-          <img src="assets/img/9.png" alt="">
-        </div>
-      </div>
-      <div class="dashboard-row-2-item">
-        <div class="sprinkler-box">
-          <div class="sprinkler-title title-kor">
-            스프링클러 13번
-          </div>
-          <div class="sprinkler-status-off">
+          <div class="sprinkler-status-off" id="sprinkler-6">
             꺼짐
           </div>
         </div>
@@ -514,13 +505,14 @@
       </div>
       <!-- 공란 -->
       <div class="dashboard-row-2-item"></div>
+      <div class="dashboard-row-2-item"></div>
       <!-- 트랜치 내부 살수 -->
       <div class="dashboard-row-2-item">
         <div class="gate-box">
           <div class="gate-title title-wight title-kor">
             트랜치 내부 살수
           </div>
-          <div class="gate-status">
+          <div class="gate-status" id="trench-in">
             꺼짐
           </div>
         </div>
@@ -533,5 +525,80 @@
 
 
   </section>
+  <script>
+    (async () => {
+      const { data: { token } } = await axios.post('https://dongsung.farota.com/api/auth/login', {
+        username: "manager@smarf.kr",
+        password: "uiop90-=",
+      })
+
+      const farota = axios.create({
+        baseURL: 'https://dongsung.farota.com/api/',
+        headers: { 'X-Authorization': 'Bearer ' + token }
+      })
+
+      const SENSOR_ID_NOISE = 'e8a11380-bc2e-11eb-8551-4f4bb0e28011'
+      const SENSOR_ID_DUST = 'c4cc4150-bc2e-11eb-8551-4f4bb0e28011'
+      const SENSOR_ID_VIBE = '26b984e0-b793-11eb-a7c7-c5ac42947b75'
+      const SENSOR_ID_WEATER = 'd737f5b0-b9da-11eb-a7c7-c5ac42947b75'
+      const SENSOR_ID_SPRIN = '446e8620-b923-11eb-a7c7-c5ac42947b75'
+      const SENSOR_ID_TRENCH = '27351810-bd26-11eb-8551-4f4bb0e28011'
+
+      const URI_NOISE = `/plugins/telemetry/DEVICE/${SENSOR_ID_NOISE}/values/timeseries`
+      const URI_DUST = `/plugins/telemetry/DEVICE/${SENSOR_ID_DUST}/values/timeseries`
+      const URI_VIBE = `/plugins/telemetry/DEVICE/${SENSOR_ID_VIBE}/values/timeseries`
+      const URI_WEATHER = `/plugins/telemetry/DEVICE/${SENSOR_ID_WEATER}/values/timeseries`
+      const URI_SPRINKLER = `/plugins/telemetry/DEVICE/${SENSOR_ID_SPRIN}/values/timeseries`
+      const URI_SPRINKLER_TRENCH = `/plugins/telemetry/DEVICE/${SENSOR_ID_TRENCH}/values/timeseries`
+
+
+      const [{ data: noise }, { data: dust }, { data: vibe }, { data: weather }, { data: sprinkler }, { data: sprinklerTrench }] = await Promise.all([
+        farota.get(URI_NOISE, { params: { keys: 'leq,lmax' } }),
+        farota.get(URI_DUST, { params: { keys: 'finedust,ultraFinedust' } }),
+        farota.get(URI_VIBE, { params: { keys: 'x_1,y_1,z_1,x_2,y_2,z_2' } }),
+        farota.get(URI_WEATHER, { params: { keys: 'outTemp,outHumidity,radiation,uv,windSpeed,pressure,dayRain,hourRain' } }),
+        farota.get(URI_SPRINKLER, { params: { keys: 'switch1,switch2,switch3,switch4,switch5,switch6' } }),
+        farota.get(URI_SPRINKLER_TRENCH, { params: { keys: 'switch1_1,switch1_2' } }),
+      ])
+
+      // 소음센서
+      document.querySelector('#noise-leq').innerText = noise.leq[0].value
+      document.querySelector('#noise-lmax').innerText = noise.lmax[0].value
+      // 미세먼지
+      document.querySelector('#dust-ultra').innerText = dust.ultraFinedust[0].value
+      document.querySelector('#dust-fine').innerText = dust.finedust[0].value
+      // 진동센서 1
+      document.querySelector('#vibe-x1').innerText = vibe.x_1[0].value
+      document.querySelector('#vibe-y1').innerText = vibe.y_1[0].value
+      document.querySelector('#vibe-z1').innerText = vibe.z_1[0].value
+      // 진동센서 2
+      document.querySelector('#vibe-x2').innerText = vibe.x_2[0].value
+      document.querySelector('#vibe-y2').innerText = vibe.y_2[0].value
+      document.querySelector('#vibe-z2').innerText = vibe.z_2[0].value
+
+      // 기상대
+      document.querySelector('#weather-temp').innerText = Number(weather.outTemp[0].value).toFixed(2)
+      document.querySelector('#weather-humid').innerText = Number(weather.outHumidity[0].value).toFixed(1)
+      document.querySelector('#weather-pressure').innerText = Number(weather.pressure[0].value).toFixed(2)
+      document.querySelector('#weather-uv').innerText = Number(weather.uv[0].value).toFixed(2)
+      document.querySelector('#weather-rain-day').innerText = Number(weather.dayRain[0].value).toFixed(2)
+      document.querySelector('#weather-rain-hour').innerText = Number(weather.hourRain[0].value).toFixed(2)
+      document.querySelector('#weather-rad').innerText = Number(weather.radiation[0].value).toFixed(0)
+      document.querySelector('#weather-windspeed').innerText = Number(weather.windSpeed[0].value).toFixed(2)
+
+      // 스프링클러
+      document.querySelector('#sprinkler-1').innerText = sprinkler.switch1[0].value == '1' ? '켜짐' : '꺼짐'
+      document.querySelector('#sprinkler-2').innerText = sprinkler.switch2[0].value == '1' ? '켜짐' : '꺼짐'
+      document.querySelector('#sprinkler-3').innerText = sprinkler.switch3[0].value == '1' ? '켜짐' : '꺼짐'
+      document.querySelector('#sprinkler-4').innerText = sprinkler.switch4[0].value == '1' ? '켜짐' : '꺼짐'
+      document.querySelector('#sprinkler-5').innerText = sprinkler.switch5[0].value == '1' ? '켜짐' : '꺼짐'
+      document.querySelector('#sprinkler-6').innerText = sprinkler.switch6[0].value == '1' ? '켜짐' : '꺼짐'
+
+      // 게이트 살수
+      document.querySelector('#trench-out').innerText = sprinklerTrench.switch1_1[0].value == '1' ? '켜짐' : '꺼짐'
+      document.querySelector('#trench-in').innerText = sprinklerTrench.switch1_2[0].value == '1' ? '켜짐' : '꺼짐'
+    })()
+  </script>
 </body>
+
 </html>

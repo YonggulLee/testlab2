@@ -197,7 +197,7 @@ img.dashboard-article-fire-img {
   grid-column: 5;
   grid-row:4/6;
 }
-.dashboard-row-2-item:nth-child(21) {
+.dashboard-row-2-item:nth-child(20), .dashboard-row-2-item:nth-child(21) {
   border: 1px solid #000000;
   background-color: #000000;
 }
