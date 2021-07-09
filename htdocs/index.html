@@ -15,6 +15,7 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.21.1/axios.min.js"
     integrity="sha512-bZS47S7sPOxkjU/4Bt0zrhEtWx0y0CRkhEp8IckzK+ltifIIE9EMIMTuT/mEzoIMewUINruDBIR/jJnbguonqQ=="
     crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.4.1/chart.min.js"    integrity="sha512-5vwN8yor2fFT9pgPS9p9R7AszYaNn0LkQElTXIsZFCL7ucT8zDCAqlQXDdaqgA1mZP47hdvztBMsIoFxq/FyyQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 </head>
 
 <body>
@@ -107,8 +108,24 @@
             </div>
           </div>
         </div>
-        <div class="dashboard-article-body content-body img-center">
-          <img src="assets/img/1.png" alt="">
+        <div class="dashboard-article-body content-body">
+          <div class="dashboard-article-body-chart-index-box-02-item">
+            <div class="dashboard-article-body-chart-index-01">
+              <img src="assets/img/char_index_green.png" alt="">
+              <span class="dashboard-article-body-chart-index-title">L eq평균</span>
+              <span class="dashboard-article-body-chart-index-value">0</span>
+              <span class="dashboard-article-body-chart-index-unit">dB</span>
+            </div>
+            <div class="dashboard-article-body-chart-index-02">
+              <img src="assets/img/char_index_blue.png" alt="">
+              <span class="dashboard-article-body-chart-index-title">L max평균</span>
+              <span class="dashboard-article-body-chart-index-value">0</span>
+              <span class="dashboard-article-body-chart-index-unit">dB</span>
+            </div>
+          </div>
+          <div class="chart">
+            <canvas id="noiseChart"></canvas>
+          </div>
         </div>
       </article>
       <!-- 미세먼지 센서 -->
@@ -133,8 +150,24 @@
             </div>
           </div>
         </div>
-        <div class="dashboard-article-body content-body img-center">
-          <img src="assets/img/2.png" alt="">
+        <div class="dashboard-article-body content-body">
+          <div class="dashboard-article-body-chart-index-box-02-item">
+            <div class="dashboard-article-body-chart-index-01">
+              <img src="assets/img/char_index_green.png" alt="">
+              <span class="dashboard-article-body-chart-index-title">L eq평균</span>
+              <span class="dashboard-article-body-chart-index-value">0</span>
+              <span class="dashboard-article-body-chart-index-unit">dB</span>
+            </div>
+            <div class="dashboard-article-body-chart-index-02">
+              <img src="assets/img/char_index_blue.png" alt="">
+              <span class="dashboard-article-body-chart-index-title">L max평균</span>
+              <span class="dashboard-article-body-chart-index-value">0</span>
+              <span class="dashboard-article-body-chart-index-unit">dB</span>
+            </div>
+          </div>
+          <div class="chart">
+            <canvas id="dustChart"></canvas>
+          </div>
         </div>
       </article>
       <!-- 진동 센서 -->
@@ -166,8 +199,30 @@
             </div>
           </div>
         </div>
-        <div class="dashboard-article-body content-body img-center">
-          <img src="assets/img/3.png" alt="">
+        <div class="dashboard-article-body content-body">
+          <div class="dashboard-article-body-chart-index-box-03-item">
+            <div class="dashboard-article-body-chart-index-01">
+              <img src="assets/img/char_index_green.png" alt="">
+              <span class="dashboard-article-body-chart-index-title">L eq평균</span>
+              <span class="dashboard-article-body-chart-index-value">0</span>
+              <span class="dashboard-article-body-chart-index-unit">dB</span>
+            </div>
+            <div class="dashboard-article-body-chart-index-02">
+              <img src="assets/img/char_index_blue.png" alt="">
+              <span class="dashboard-article-body-chart-index-title">L max평균</span>
+              <span class="dashboard-article-body-chart-index-value">0</span>
+              <span class="dashboard-article-body-chart-index-unit">dB</span>
+            </div>
+            <div class="dashboard-article-body-chart-index-02">
+              <img src="assets/img/char_index_yellow.png" alt="">
+              <span class="dashboard-article-body-chart-index-title">L max평균</span>
+              <span class="dashboard-article-body-chart-index-value">0</span>
+              <span class="dashboard-article-body-chart-index-unit">dB</span>
+            </div>
+          </div>
+          <div class="chart">
+            <canvas id="vibeChart1"></canvas>
+          </div>
         </div>
       </article>
       <article class="dashboard-article">
@@ -198,8 +253,30 @@
             </div>
           </div>
         </div>
-        <div class="dashboard-article-body content-body img-center">
-          <img src="assets/img/4.png" alt="">
+        <div class="dashboard-article-body content-body">
+          <div class="dashboard-article-body-chart-index-box-03-item">
+            <div class="dashboard-article-body-chart-index-01">
+              <img src="assets/img/char_index_green.png" alt="">
+              <span class="dashboard-article-body-chart-index-title">L eq평균</span>
+              <span class="dashboard-article-body-chart-index-value">0</span>
+              <span class="dashboard-article-body-chart-index-unit">dB</span>
+            </div>
+            <div class="dashboard-article-body-chart-index-02">
+              <img src="assets/img/char_index_blue.png" alt="">
+              <span class="dashboard-article-body-chart-index-title">L max평균</span>
+              <span class="dashboard-article-body-chart-index-value">0</span>
+              <span class="dashboard-article-body-chart-index-unit">dB</span>
+            </div>
+            <div class="dashboard-article-body-chart-index-02">
+              <img src="assets/img/char_index_yellow.png" alt="">
+              <span class="dashboard-article-body-chart-index-title">L max평균</span>
+              <span class="dashboard-article-body-chart-index-value">0</span>
+              <span class="dashboard-article-body-chart-index-unit">dB</span>
+            </div>
+          </div>
+          <div class="chart">
+            <canvas id="vibeChart2"></canvas>
+          </div>
         </div>
       </article>
       <!-- 화재 센서 -->
@@ -242,7 +319,7 @@
               </div>
             </div>
             <div class="weather-station-info-data data-white ">
-              <span class="weather-station-info-data-num" id="weather-temp">26.2 </span>
+              <span class="weather-station-info-data-num" id="weather-temp">0</span>
               <span class="weather-station-info-data-unit">'C</span>
             </div>
           </div>
@@ -258,7 +335,7 @@
               </div>
             </div>
             <div class="weather-station-info-data data-white ">
-              <span class="weather-station-info-data-num" id="weather-humid">68.0</span>
+              <span class="weather-station-info-data-num" id="weather-humid">0</span>
               <span class="weather-station-info-data-unit">%</span>
             </div>
           </div>
@@ -274,7 +351,7 @@
               </div>
             </div>
             <div class="weather-station-info-data data-white ">
-              <span class="weather-station-info-data-num" id="weather-pressure">994.7 </span>
+              <span class="weather-station-info-data-num" id="weather-pressure">0</span>
               <span class="weather-station-info-data-unit">hPa</span>
             </div>
           </div>
@@ -371,7 +448,7 @@
           </div>
           <div class="sand-sinking-tank-data-box">
             <div class="sand-sinking-tank-data-num font-green">
-              2500
+              0
             </div>
             <div class="sand-sinking-tank-data-unit">
               L
@@ -564,13 +641,16 @@
       // 소음센서
       document.querySelector('#noise-leq').innerText = noise.leq[0].value
       document.querySelector('#noise-lmax').innerText = noise.lmax[0].value
+
       // 미세먼지
       document.querySelector('#dust-ultra').innerText = dust.ultraFinedust[0].value
       document.querySelector('#dust-fine').innerText = dust.finedust[0].value
+
       // 진동센서 1
       document.querySelector('#vibe-x1').innerText = vibe.x_1[0].value
       document.querySelector('#vibe-y1').innerText = vibe.y_1[0].value
       document.querySelector('#vibe-z1').innerText = vibe.z_1[0].value
+
       // 진동센서 2
       document.querySelector('#vibe-x2').innerText = vibe.x_2[0].value
       document.querySelector('#vibe-y2').innerText = vibe.y_2[0].value
@@ -598,6 +678,248 @@
       document.querySelector('#trench-out').innerText = sprinklerTrench.switch1_1[0].value == '1' ? '켜짐' : '꺼짐'
       document.querySelector('#trench-in').innerText = sprinklerTrench.switch1_2[0].value == '1' ? '켜짐' : '꺼짐'
     })()
+
+    // 차트 영역
+    // 소음센서 차트
+    let noiseChart = document.getElementById('noiseChart').getContext('2d');
+    let noise_Chart = new Chart(noiseChart,{
+      type : 'line',//bar, pie, line, doughnut, polarArea
+      data : {
+        labels : ['09:00','10:00','12:00','14:00','15:00','16:00','17:00'], //시간축
+        datasets : [{
+            label : 'leq' ,
+            data : [100,150,522,25,30,30,60],
+            backgroundColor:['#4ED139'],
+            borderColor:['#4ED139']
+          },
+          // data2
+          {
+            label : 'leq' ,
+            data : [200,100,31,42,333,333,333],
+            backgroundColor:['#289CF4'],
+            borderColor:['#289CF4']
+          }
+        ]
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        legend: {
+          labels: {
+            fontColor: "red",
+            fontSize: 18
+          }
+        },
+        scales: {
+          yAxes: [{
+            ticks: {
+              beginAtZero: true,
+              stepSize : 4,
+              fontColor : "#515557",
+              fontSize : 10,
+            },
+            gridLines:{
+              color: 'red',
+              lineWidth:30
+            }
+          }],
+          xAxes: [{
+            ticks:{
+              fontColor : 'rgba(12, 13, 13, 1)',
+              fontSize : 10
+            },
+            gridLines:{
+              color: "rgba(87, 152, 23, 1)",
+              lineWidth: 30
+            }
+          }]
+        }
+      }
+    })
+    // 미세먼지 차트
+    let dustChart = document.getElementById('dustChart').getContext('2d');
+    let dust_Chart = new Chart(dustChart,{
+      type : 'line',//bar, pie, line, doughnut, polarArea
+      data : {
+        labels : ['09:00','10:00','12:00','14:00','15:00','16:00','17:00'], //시간축
+        datasets : [{
+            label : 'leq' ,
+            data : [100,150,522,25,30,30,60],
+            backgroundColor:['#4ED139'],
+            borderColor:['#4ED139']
+          },
+          // data2
+          {
+            label : 'leq' ,
+            data : [200,100,31,42,333,333,333],
+            backgroundColor:['#289CF4'],
+            borderColor:['#289CF4']
+          }
+        ]
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        legend: {
+          labels: {
+            fontColor: "red",
+            fontSize: 18
+          }
+        },
+        scales: {
+          yAxes: [{
+            ticks: {
+              beginAtZero: true,
+              stepSize : 4,
+              fontColor : "#515557",
+              fontSize : 10,
+            },
+            gridLines:{
+              color: 'red',
+              lineWidth:30
+            }
+          }],
+          xAxes: [{
+            ticks:{
+              fontColor : 'rgba(12, 13, 13, 1)',
+              fontSize : 10
+            },
+            gridLines:{
+              color: "rgba(87, 152, 23, 1)",
+              lineWidth: 30
+            }
+          }]
+        }
+      }
+    })
+    // 미세먼지 차트
+    let vibeChart1 = document.getElementById('vibeChart1').getContext('2d');
+    let vibe_Chart1 = new Chart(vibeChart1,{
+      type : 'line',//bar, pie, line, doughnut, polarArea
+      data : {
+        labels : ['09:00','10:00','12:00','14:00','15:00','16:00','17:00'], // 여기에 시간축 데이터를 넣으면 됨
+        datasets : [{
+            label : 'leq' ,
+            data : [100,150,522,25,30,30,60], // 여기에 데이터를 넣으면 됨
+            backgroundColor:['#4ED139'],
+            borderColor:['#4ED139']
+          },
+          // data2
+          {
+            label : 'leq' ,
+            data : [200,100,31,42,333,333,333],
+            backgroundColor:['#289CF4'],
+            borderColor:['#289CF4']
+          },
+          // data3
+          {
+            label : 'leq' ,
+            data : [13,124,31,42,43,523,333],
+            backgroundColor:['#FDCA57'],
+            borderColor:['#FDCA57']
+          }
+        ]
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        legend: {
+          labels: {
+            fontColor: "red",
+            fontSize: 18
+          }
+        },
+        scales: {
+          yAxes: [{
+            ticks: {
+              beginAtZero: true,
+              stepSize : 4,
+              fontColor : "#515557",
+              fontSize : 10,
+            },
+            gridLines:{
+              color: 'red',
+              lineWidth:30
+            }
+          }],
+          xAxes: [{
+            ticks:{
+              fontColor : 'rgba(12, 13, 13, 1)',
+              fontSize : 10
+            },
+            gridLines:{
+              color: "rgba(87, 152, 23, 1)",
+              lineWidth: 30
+            }
+          }]
+        }
+      }
+    })
+    // 미세먼지 차트
+    let vibeChart2 = document.getElementById('vibeChart2').getContext('2d');
+    let vibe_Chart2 = new Chart(vibeChart2,{
+      type : 'line',//bar, pie, line, doughnut, polarArea
+      data : {
+        labels : ['09:00','10:00','12:00','14:00','15:00','16:00','17:00'], //시간축
+        datasets : [{
+            label : 'leq' ,
+            data : [100,150,522,25,30,30,60],
+            backgroundColor:['#4ED139'],
+            borderColor:['#4ED139']
+          },
+          // data2
+          {
+            label : 'leq' ,
+            data : [200,100,31,42,333,333,333],
+            backgroundColor:['#289CF4'],
+            borderColor:['#289CF4']
+          },
+          // data3
+          {
+            label : 'leq' ,
+            data : [13,124,31,42,43,523,333],
+            backgroundColor:['#FDCA57'],
+            borderColor:['#FDCA57']
+          }
+        ]
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        legend: {
+          labels: {
+            fontColor: "red",
+            fontSize: 18
+          }
+        },
+        scales: {
+          yAxes: [{
+            ticks: {
+              beginAtZero: true,
+              stepSize : 4,
+              fontColor : "#515557",
+              fontSize : 10,
+            },
+            gridLines:{
+              color: 'red',
+              lineWidth:30
+            }
+          }],
+          xAxes: [{
+            ticks:{
+              fontColor : 'rgba(12, 13, 13, 1)',
+              fontSize : 10
+            },
+            gridLines:{
+              color: "rgba(87, 152, 23, 1)",
+              lineWidth: 30
+            }
+          }]
+        }
+      }
+    })
+
+
   </script>
 </body>
 
