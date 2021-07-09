@@ -747,8 +747,15 @@
       options: {
         responsive: true,
         maintainAspectRatio: false,
-        legend:{
-          display:false
+        layout: {
+          padding: {
+            top: 20
+          }
+        },
+        plugins:{
+          legend:{
+            display : false
+          }
         }
       }
     })
@@ -776,37 +783,18 @@
       options: {
         responsive: true,
         maintainAspectRatio: false,
-        legend: {
-          labels: {
-            fontColor: "red",
-            fontSize: 18
+        layout: {
+          padding: {
+            top: 20
           }
         },
-        scales: {
-          yAxes: [{
-            ticks: {
-              beginAtZero: true,
-              stepSize : 4,
-              fontColor : "#515557",
-              fontSize : 10,
-            },
-            gridLines:{
-              color: 'red',
-              lineWidth:30
-            }
-          }],
-          xAxes: [{
-            ticks:{
-              fontColor : 'rgba(12, 13, 13, 1)',
-              fontSize : 10
-            },
-            gridLines:{
-              color: "rgba(87, 152, 23, 1)",
-              lineWidth: 30
-            }
-          }]
+        plugins:{
+          legend:{
+            display : false
+          }
         }
       }
+
     })
     // 미세먼지 차트
     let vibeChart1 = document.getElementById('vibeChart1').getContext('2d');
@@ -839,35 +827,15 @@
       options: {
         responsive: true,
         maintainAspectRatio: false,
-        legend: {
-          labels: {
-            fontColor: "red",
-            fontSize: 18
+        layout: {
+          padding: {
+            top: 20
           }
         },
-        scales: {
-          yAxes: [{
-            ticks: {
-              beginAtZero: true,
-              stepSize : 4,
-              fontColor : "#515557",
-              fontSize : 10,
-            },
-            gridLines:{
-              color: 'red',
-              lineWidth:30
-            }
-          }],
-          xAxes: [{
-            ticks:{
-              fontColor : 'rgba(12, 13, 13, 1)',
-              fontSize : 10
-            },
-            gridLines:{
-              color: "rgba(87, 152, 23, 1)",
-              lineWidth: 30
-            }
-          }]
+        plugins:{
+          legend:{
+            display : false
+          }
         }
       }
     })
@@ -902,35 +870,15 @@
       options: {
         responsive: true,
         maintainAspectRatio: false,
-        legend: {
-          labels: {
-            fontColor: "red",
-            fontSize: 18
+        layout: {
+          padding: {
+            top: 20
           }
         },
-        scales: {
-          yAxes: [{
-            ticks: {
-              beginAtZero: true,
-              stepSize : 4,
-              fontColor : "#515557",
-              fontSize : 10,
-            },
-            gridLines:{
-              color: 'red',
-              lineWidth:30
-            }
-          }],
-          xAxes: [{
-            ticks:{
-              fontColor : 'rgba(12, 13, 13, 1)',
-              fontSize : 10
-            },
-            gridLines:{
-              color: "rgba(87, 152, 23, 1)",
-              lineWidth: 30
-            }
-          }]
+        plugins:{
+          legend:{
+            display : false
+          }
         }
       }
     })
