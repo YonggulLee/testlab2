@@ -267,8 +267,9 @@ img.dashboard-article-fire-img {
   grid-row:4/6;
 }
 .dashboard-row-2-item:nth-child(20), .dashboard-row-2-item:nth-child(21) {
-  border: 1px solid #000000;
-  background-color: #000000;
+  background-color: #0f332e;
+    border-radius: 6px;
+    border: 1px solid #414446;
 }
 
 /* weather-station */
