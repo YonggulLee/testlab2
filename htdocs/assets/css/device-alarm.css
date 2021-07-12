@@ -1,0 +1,40 @@
+/*
+Name : deviceAlarm
+Date : 2021.07.12
+*/
+
+.content-container-device-alarm{
+  /* border: 1px solid red; */
+  display: grid;
+  justify-content: center;
+  align-items: center;
+}
+
+.device-alarm-b01 {
+  /* border: 1px solid red; */
+  width: 300px;
+  height: 160px;
+}
+
+.device-alarm-b01-02 {
+  /* border: 1px solid red; */
+}
+
+
+.device-alarm-title {
+  text-align: center;
+  font-size: 30px;
+  padding: 30px 0 10px 0;
+}
+
+.device-alarm-btn-box {
+  display:grid;
+  grid-template-columns: 1fr 1fr;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+}
+
+.device-alarm-btn {
+  background-color: #6DD230;
+}

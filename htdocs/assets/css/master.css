@@ -113,6 +113,17 @@ button {
 
   }
 
+  section.content-container-device-alarm {
+    position: absolute;
+    /* border: 1px solid red; */
+    /* background-color: powderblue; */
+    top: 65px;
+    left: 130px;
+    width:1790px;
+    height: 1020px;
+
+  }
+
   .content-body {
     background-color: #1D2226;
     border-radius: 6px;

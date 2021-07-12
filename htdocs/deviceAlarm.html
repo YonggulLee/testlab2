@@ -11,6 +11,7 @@
   <link rel="stylesheet" href="assets/css/side-bar.css">
   <link rel="stylesheet" href="assets/css/dashboard.css">
   <link rel="stylesheet" href="assets/css/smart-band.css">
+  <link rel="stylesheet" href="assets/css/device-alarm.css">
   <!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css"> -->
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.21.1/axios.min.js"
@@ -79,31 +80,7 @@
         <li class="side-bar-item">
           <a href="groundfloor.html">지상부<br><span class="side-bar-item-title-eng">Ground Floor</span></a>
         </li>
-        <!-- 서브 메뉴 -->
-        <ol class="side-bar-sub-item-box-active">
-          <h4 class="side-bar-sub-title">지상부</h4>
-          <!-- 서브 메뉴 : 제어 -->
-          <li class="side-bar-sub-item-active">
-            <a href="#">
-              <img class="side-bar-sub-item-img" src="assets/img/side-bar_icon_def_control.png" alt="">
-              <span class="side-bar-sub-item-title">제어</span>
-            </a>
-          </li>
-          <!-- 서브 메뉴 : 센서 -->
-          <li class="side-bar-sub-item-active">
-            <a href="#">
-              <img class="side-bar-sub-item-img" src="assets/img/side-bar_icon_def_senc.png" alt="">
-              <span class="side-bar-sub-item-title">센서</span>
-            </a>
-          </li>
-          <!-- 서브 메뉴 : 통신장비 -->
-          <li class="side-bar-sub-item-active">
-            <a href="#">
-              <img class="side-bar-sub-item-img" src="assets/img/side-bar_icon_def_telecom.png" alt="">
-              <span class="side-bar-sub-item-title">통신장비</span>
-            </a>
-          </li>
-        </ol>
+
 
         <!-- 사이드 메뉴 : 스마트밴드(건강관리,위치관리) -->
         <li class="side-bar-item">
@@ -113,13 +90,19 @@
       </ol>
     </nav>
   </section>
-  <section class="content-container-dashboard img-center">
-    <div class="">
-      <div class="" style="font-size:30px;font-weight:700;">
-        추후 서비스 구현 예정입니다
+  <section class="content-container-device-alarm">
+    <div class="device-alarm-b01 content-body">
+      <div class="device-alarm-b01-02">
+        <div class="device-alarm-title title-kor">
+          장치알람
+        </div>
+        <div class="">
+
+        </div>
       </div>
-      <div class=""style="font-size:20px;font-weight:700; color:#797979">
-        The service will be implemented later
+      <div class="device-alarm-btn-box">
+        <button class="device-alarm-btn" type="submit">장치 A</button>
+        <button class="device-alarm-btn" type="submit">장치 B</button>
       </div>
     </div>
   </section>
