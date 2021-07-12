@@ -227,6 +227,7 @@
         const container = document.querySelector(
           ".content-container-smartband"
         );
+
         for (const band of BANDs) {
           const id = band.config.url.split("/")[4];
           const { highBloodPressure, lowBloodPressure } = band.data;
@@ -250,29 +251,65 @@
       function createArticle(id, high, low, date) {
         const article = document.createElement("article");
         article.classList.add("health-check-article");
+        let smartBandName = new String();
+        switch (id) {
+          case "dab4b010-e08c-11eb-8f29-a98e7e184789":
+            smartBandName = "Smart Band 01";
+            break;
+          case "0a253300-e08e-11eb-8f29-a98e7e184789":
+            smartBandName = "Smart Band 02";
+            break;
+          case "de6e0e90-e08c-11eb-8f29-a98e7e184789":
+            smartBandName = "Smart Band 03";
+            break;
+          case "e6e9fe30-e08c-11eb-8f29-a98e7e184789":
+            smartBandName = "Smart Band 04";
+            break;
+          case "e9dfe5a0-e08c-11eb-8f29-a98e7e184789":
+            smartBandName = "Smart Band 05";
+            break;
+          case "ecab1390-e08c-11eb-8f29-a98e7e184789":
+            smartBandName = "Smart Band 06";
+            break;
+          case "ef7249e0-e08c-11eb-8f29-a98e7e184789":
+            smartBandName = "Smart Band 07";
+            break;
+          case "f26daf90-e08c-11eb-8f29-a98e7e184789":
+            smartBandName = "Smart Band 08";
+            break;
+          case "f4f8c740-e08c-11eb-8f29-a98e7e184789":
+            smartBandName = "Smart Band 09";
+            break;
+          case "f7afd0f0-e08c-11eb-8f29-a98e7e184789":
+            smartBandName = "Smart Band 10";
+            break;
+          default:
+            smartBandName = "Smart Band";
+        }
         article.innerHTML = `
-      <!-- 밴드 ID -->
-      <div class="health-check-article-item"><span>${id}</span></div>
-      <!-- 수축기 혈압 -->
-      <div class="health-check-article-item">
-        <span class="health-check-article-item-num">${high}</span>
-        <span class="health-check-article-item-unit">mmHg</span>
-      </div>
-      <!-- 이완기 혈압 -->
-      <div class="health-check-article-item">
-        <span class="health-check-article-item-num">${low}</span>
-        <span class="health-check-article-item-unit">mmHg</span>
-      </div>`;
+            <!-- 밴드 ID -->
+            <div class="health-check-article-item"><span>${smartBandName}</span></div>
+            <!-- 수축기 혈압 -->
+            <div class="health-check-article-item">
+              <span class="health-check-article-item-num">${high}</span>
+              <span class="health-check-article-item-unit">mmHg</span>
+            </div>
+            <!-- 이완기 혈압 -->
+            <div class="health-check-article-item">
+              <span class="health-check-article-item-num">${low}</span>
+              <span class="health-check-article-item-unit">mmHg</span>
+            </div>`;
 
         if (high > 140 || low > 90) {
           article.innerHTML += `
-        <div class="health-check-article-item">
-          <span class="health-check-article-item-state-high">고혈압</span>
-        </div>`;
+          <div class="health-check-article-item">
+            <span class="health-check-article-item-state-high">고혈압</span>
+          </div>`;
         } else if (high >= 120 || low >= 80) {
-          article.innerHTML += `<div class="health-check-article-item">
-          <span class="health-check-article-item-state-prehigh">전고혈압</span>
-        </div>`;
+          article.innerHTML += `
+          <div class="health-check-article-item">
+            <span class="health-check-article-item-state-prehigh">전고혈압</span>
+          </div>`;
         } else if (high >= 90 || low >= 60) {
           article.innerHTML += `<div class="health-check-article-item">
           <span class="health-check-article-item-state-normal">정상</span>
@@ -284,11 +321,10 @@
         } else {
           article.innerHTML += `<div class="health-check-article-item"></div>`;
         }
-
         article.innerHTML += `
-      <div class="health-check-article-item">
-        <span class="health-check-article-item-date">${date}</span>
-      </div>`;
+        <div class="health-check-article-item">
+          <span class="health-check-article-item-date">${date}</span>
+        </div>`;
 
         return article;
       }

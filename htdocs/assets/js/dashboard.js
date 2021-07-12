@@ -157,9 +157,9 @@ window.addEventListener("DOMContentLoaded", async function() {
     const vibeChart2 = document.getElementById("vibeChart2").getContext("2d");
 
     //노이즈 차트
-    const array = new Array(100);
-    for (let i = 0; i < array.length; i++) {
-      array[i] = 70;
+    const guideLineArr = new Array(100);
+    for (let i = 0; i < guideLineArr.length; i++) {
+      guideLineArr[i] = 70;
     }
     new Chart(noiseChart, {
       type: "line",
@@ -185,7 +185,7 @@ window.addEventListener("DOMContentLoaded", async function() {
           },
           {
             label: "guird",
-            data: array,
+            data: guideLineArr,
             backgroundColor: ["red"],
             borderColor: ["red"]
           }
