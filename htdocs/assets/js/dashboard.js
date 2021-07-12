@@ -168,10 +168,52 @@ window.addEventListener("DOMContentLoaded", async function() {
     const vibeChart2 = document.getElementById("vibeChart2").getContext("2d");
 
     //노이즈 차트
+
+    //평균값 계산
+    function calculateAverageValue(array) {
+      const dataArray = array;
+      let sum = 0;
+      let average = 0;
+      for (let i = 0; i < dataArray.length; i++) {
+        sum = sum + Number(dataArray[i].value);
+      }
+      average = sum / dataArray.length;
+      average = average.toFixed(2);
+      return average;
+    }
+    //범례 평균값 세팅
+    // 노이즈 차트
+    const averageLeq = calculateAverageValue(noise.leq);
+    document.querySelector("#noiseChartLeqAverage").innerText = averageLeq;
+    const averagelmax = calculateAverageValue(noise.lmax);
+    document.querySelector("#noiseChartLmaxAverage").innerText = averagelmax;
+    // 미세먼지 차트
+    const averageuUltraFinedust = calculateAverageValue(dust.ultraFinedust);
+    document.querySelector(
+      "#dustChartUFDustAverage"
+    ).innerText = averageuUltraFinedust;
+    const averageFinedust = calculateAverageValue(dust.finedust);
+    document.querySelector(
+      "#dustChartFDustAverage"
+    ).innerText = averageFinedust;
+
+    const averageX_1 = calculateAverageValue(vibe.x_1);
+    document.querySelector("#vibeCart1XAverage").innerText = averageX_1;
+    const averageY_1 = calculateAverageValue(vibe.y_1);
+    document.querySelector("#vibeCart1YAverage").innerText = averageY_1;
+    const averageZ_1 = calculateAverageValue(vibe.z_1);
+    document.querySelector("#vibeCart1ZAverage").innerText = averageZ_1;
+
+    // const averageLeq = calculateAverageValue(noise.leq);
+    // const averageLeq = calculateAverageValue(noise.leq);
+    // const averageLeq = calculateAverageValue(noise.leq);
+
+    //70 dB 가이드라인 표시를 위한 배열
     const guideLineArr = new Array(100);
     for (let i = 0; i < guideLineArr.length; i++) {
       guideLineArr[i] = 70;
     }
+
     new Chart(noiseChart, {
       type: "line",
       data: {
@@ -195,7 +237,7 @@ window.addEventListener("DOMContentLoaded", async function() {
             borderColor: ["#289CF4"]
           },
           {
-            label: "guird",
+            label: "guideLine",
             data: guideLineArr,
             backgroundColor: ["red"],
             borderColor: ["red"]
