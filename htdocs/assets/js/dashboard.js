@@ -95,18 +95,29 @@ window.addEventListener("DOMContentLoaded", async function() {
   ).toFixed(2);
 
   // 스프링클러
-  document.querySelector("#sprinkler-1").innerText =
-    sprinkler.switch1[0].value == "1" ? "켜짐" : "꺼짐";
-  document.querySelector("#sprinkler-2").innerText =
-    sprinkler.switch2[0].value == "1" ? "켜짐" : "꺼짐";
-  document.querySelector("#sprinkler-3").innerText =
-    sprinkler.switch3[0].value == "1" ? "켜짐" : "꺼짐";
-  document.querySelector("#sprinkler-4").innerText =
-    sprinkler.switch4[0].value == "1" ? "켜짐" : "꺼짐";
-  document.querySelector("#sprinkler-5").innerText =
-    sprinkler.switch5[0].value == "1" ? "켜짐" : "꺼짐";
-  document.querySelector("#sprinkler-6").innerText =
-    sprinkler.switch6[0].value == "1" ? "켜짐" : "꺼짐";
+  for (let i = 1; i - 1 < sprinkler.length; i++) {
+    if (sprinkler.switch1[0].value == "1") {
+      document.querySelector("#sprinkler-1").innerText = "작동중";
+      document
+        .querySelector(`#sprinkler-${i}`)
+        .classList.replace("sprinkler-status-off", "sprinkler-status-on");
+    } else {
+      document.querySelector("#sprinkler-1").innerText = "꺼짐";
+      document
+        .querySelector(`#sprinkler-${i}`)
+        .classList.replace("sprinkler-status-on", "sprinkler-status-off");
+    }
+  }
+  // document.querySelector("#sprinkler-2").innerText =
+  //   sprinkler.switch2[0].value == "1" ? "작동중" : "꺼짐";
+  // document.querySelector("#sprinkler-3").innerText =
+  //   sprinkler.switch3[0].value == "1" ? "작동중" : "꺼짐";
+  // document.querySelector("#sprinkler-4").innerText =
+  //   sprinkler.switch4[0].value == "1" ? "작동중" : "꺼짐";
+  // document.querySelector("#sprinkler-5").innerText =
+  //   sprinkler.switch5[0].value == "1" ? "작동중" : "꺼짐";
+  // document.querySelector("#sprinkler-6").innerText =
+  //   sprinkler.switch6[0].value == "1" ? "작동중" : "꺼짐";
 
   // 게이트 살수
   document.querySelector("#trench-out").innerText =
