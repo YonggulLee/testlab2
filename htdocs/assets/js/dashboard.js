@@ -19,6 +19,7 @@ window.addEventListener("DOMContentLoaded", async function() {
   const SENSOR_ID_TRENCH = "27351810-bd26-11eb-8551-4f4bb0e28011";
 	const SENSOR_ID_FIRE_1 = "6bf43210-e2f6-11eb-8692-193d8d39219e";
 	const SENSOR_ID_FIRE_2 = "6bf43210-e2f6-11eb-8692-193d8d39219e";
+	const DEVICE_ID_BUZZ = "f314d090-e2f3-11eb-8692-193d8d39219e";
 
   const URI_NOISE = `/plugins/telemetry/DEVICE/${SENSOR_ID_NOISE}/values/timeseries`;
   const URI_DUST = `/plugins/telemetry/DEVICE/${SENSOR_ID_DUST}/values/timeseries`;
@@ -468,10 +469,7 @@ window.addEventListener("DOMContentLoaded", async function() {
         params: { valveNo, onOff: onOff ? 1 : 0 }
       };
 
-      await farota.post(
-        "/plugins/rpc/oneway/446e8620-b923-11eb-a7c7-c5ac42947b75",
-        body
-      );
+      await farota.post(`/plugins/rpc/oneway/${SENSOR_ID_SPRIN}`, body);
 
       document.querySelector("#sprinkler-" + valveNo).innerText =
         onOff == "1" ? "켜짐" : "꺼짐";
@@ -537,5 +535,18 @@ window.addEventListener("DOMContentLoaded", async function() {
       .addEventListener("click", () => {
         sprinklerCtrl(6, false);
       });
+		document.querySelector("#alarm-1").addEventListener("click", () => {
+			farota.post(`/plugins/rpc/oneway/${DEVICE_ID_BUZZ}`, {
+				method: "setOnOff",
+				params: { valveNo: 1, onOff: 1 }
+			})
+		})
+
+		document.querySelector("#alarm-2").addEventListener("click", () => {
+			farota.post(`/plugins/rpc/oneway/${DEVICE_ID_BUZZ}`, {
+				method: "setOnOff",
+				params: { valveNo: 2, onOff: 1 }
+			})
+		})
   }
 });
