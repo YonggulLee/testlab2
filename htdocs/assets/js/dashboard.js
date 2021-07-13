@@ -39,7 +39,7 @@ window.addEventListener("DOMContentLoaded", async function() {
     farota.get(URI_WEATHER, {
       params: {
         keys:
-          "outTemp,outHumidity,radiation,uv,windSpeed,pressure,dayRain,hourRain"
+          "windDir,outTemp,outHumidity,radiation,uv,windSpeed,pressure,dayRain,hourRain"
       }
     }),
     farota.get(URI_SPRINKLER, {
@@ -69,6 +69,30 @@ window.addEventListener("DOMContentLoaded", async function() {
   document.querySelector("#vibe-z2").innerText = vibe.z_2[0].value;
 
   // 기상대
+  let windDirValue = weather.windDir[0].value;
+  windDirValue = Number(windDirValue);
+  // 기상대 이미지 변경
+  if (
+    (337.5 < windDirValue && windDirValue <= 360) ||
+    (0 < windDirValue && windDirValue <= 22.5)
+  ) {
+    document.querySelector("#windDir").src = "assets/img/windDirNN.png";
+  } else if (22.5 < windDirValue && windDirValue <= 67.5) {
+    document.querySelector("#windDir").src = "assets/img/windDirNE.png";
+  } else if (67.5 < windDirValue && windDirValue <= 112.5) {
+    document.querySelector("#windDir").src = "assets/img/windDirEE.png";
+  } else if (112.5 < windDirValue && windDirValue <= 157.5) {
+    document.querySelector("#windDir").src = "assets/img/windDirSE.png";
+  } else if (157.5 < windDirValue && windDirValue <= 202.5) {
+    document.querySelector("#windDir").src = "assets/img/windDirSS.png";
+  } else if (202.5 < windDirValue && windDirValue <= 247.5) {
+    document.querySelector("#windDir").src = "assets/img/windDirSW.png";
+  } else if (247.5 < windDirValue && windDirValue <= 292.5) {
+    document.querySelector("#windDir").src = "assets/img/windDirWW.png";
+  } else {
+    document.querySelector("#windDir").src = "assets/img/windDirNW.png";
+  }
+
   document.querySelector("#weather-temp").innerText = Number(
     weather.outTemp[0].value
   ).toFixed(2);
