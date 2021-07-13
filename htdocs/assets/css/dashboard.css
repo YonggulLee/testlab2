@@ -237,31 +237,51 @@ img.dashboard-article-fire-img {
   background-color: #000000;
   border-radius: 6px;
   border: 1px solid #000000;
-  grid-column: 1/5;
+  grid-column: 1/4;
 }
 
 .dashboard-row-2-item:nth-child(10) {
   background-color: #000000;
   border-radius: 6px;
   border: 1px solid #000000;
-  grid-column: 5/6;
+  /* grid-column: 4/5; */
 }
 .dashboard-row-2-item:nth-child(11) {
   background-color: #000000;
   border: 1px solid #000000;
   border-radius: 6px;
-  grid-column: 6/7;
+  /* grid-column: 5/6; */
 }
+
+.dashboard-row-2-item:nth-child(12) {
+  background-color: #000000;
+  border: 1px solid #000000;
+  border-radius: 6px;
+  /* grid-column: 6/8; */
+}
+
+.dashboard-row-2-item:nth-child(15) {
+  /* border: 1px solid #000000; */
+  /* grid-column: 5;
+  grid-row: 4/6; */
+}
+
 .dashboard-row-2-item:nth-child(16) {
+  /* border: 1px solid #000000; */
+  grid-column: 4;
+  grid-row: 4/6;
+}
+.dashboard-row-2-item:nth-child(17) {
   /* border: 1px solid #000000; */
   grid-column: 5;
   grid-row: 4/6;
 }
-.dashboard-row-2-item:nth-child(20),
+.dashboard-row-2-item:nth-child(20) {
+}
 .dashboard-row-2-item:nth-child(21) {
-  background-color: #000000;
+  /* background-color: #000000;
   border-radius: 6px;
-  border: 1px solid #000000;
+  border: 1px solid #000000; */
 }
 
 /* weather-station */
@@ -396,6 +416,21 @@ img.dashboard-article-fire-img {
   padding-right: 20px;
 }
 
+.device-alame-box {
+  display: grid;
+  grid-template-columns: 1fr;
+  justify-content: center;
+  align-items: center;
+  margin-top: 5px;
+  padding-top: 5px;
+  padding-left: 20px;
+  padding-right: 20px;
+}
+
+.device-alame-btn {
+  background-color: #fdca57;
+}
+
 .sprinkler-btn-off {
   background-color: #ff3847;
 }
@@ -409,12 +444,14 @@ img.dashboard-article-fire-img {
   /* border: 1px solid pink; */
   display: grid;
   grid-auto-rows: 1fr 1fr 1fr;
-  padding: 25px 0 0 25px;
+  padding: 0 10px 0 0;
+  margin-top: -10px;
+  margin-left: -20px;
 }
 .big-sprinkler-box {
   /* border: 1px solid pink; */
   display: grid;
-  grid-template-columns: 50px 1fr;
+  grid-template-columns: 40px 1fr;
   margin-bottom: 10px;
 }
 
