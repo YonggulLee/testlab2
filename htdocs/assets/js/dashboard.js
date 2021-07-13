@@ -16,17 +16,18 @@ window.addEventListener("DOMContentLoaded", async function() {
   const SENSOR_ID_VIBE = "26b984e0-b793-11eb-a7c7-c5ac42947b75";
   const SENSOR_ID_WEATER = "d737f5b0-b9da-11eb-a7c7-c5ac42947b75";
   const SENSOR_ID_SPRIN = "446e8620-b923-11eb-a7c7-c5ac42947b75";
-  const SENSOR_ID_TRENCH = "27351810-bd26-11eb-8551-4f4bb0e28011";
 	const SENSOR_ID_FIRE_1 = "6bf43210-e2f6-11eb-8692-193d8d39219e";
 	const SENSOR_ID_FIRE_2 = "6bf43210-e2f6-11eb-8692-193d8d39219e";
 	const DEVICE_ID_BUZZ = "f314d090-e2f3-11eb-8692-193d8d39219e";
+  const DEVICE_ID_TRENCH = "27351810-bd26-11eb-8551-4f4bb0e28011";
+  const DEVICE_ID_SPRIN_BIG = "fd4dd1d0-c97e-11eb-8551-4f4bb0e28011";
 
   const URI_NOISE = `/plugins/telemetry/DEVICE/${SENSOR_ID_NOISE}/values/timeseries`;
   const URI_DUST = `/plugins/telemetry/DEVICE/${SENSOR_ID_DUST}/values/timeseries`;
   const URI_VIBE = `/plugins/telemetry/DEVICE/${SENSOR_ID_VIBE}/values/timeseries`;
   const URI_WEATHER = `/plugins/telemetry/DEVICE/${SENSOR_ID_WEATER}/values/timeseries`;
   const URI_SPRINKLER = `/plugins/telemetry/DEVICE/${SENSOR_ID_SPRIN}/values/timeseries`;
-  const URI_SPRINKLER_TRENCH = `/plugins/telemetry/DEVICE/${SENSOR_ID_TRENCH}/values/timeseries`;
+  const URI_SPRINKLER_TRENCH = `/plugins/telemetry/DEVICE/${DEVICE_ID_TRENCH}/values/timeseries`;
   const URI_FIRE_1 = `/plugins/telemetry/DEVICE/${SENSOR_ID_FIRE_1}/values/timeseries`;
   const URI_FIRE_2 = `/plugins/telemetry/DEVICE/${SENSOR_ID_FIRE_2}/values/timeseries`;
 
@@ -548,5 +549,101 @@ window.addEventListener("DOMContentLoaded", async function() {
 				params: { valveNo: 2, onOff: 1 }
 			})
 		})
+
+    // 대형 살수기 펌프 on/off
+    document
+      .querySelector(".big-sprinkler #pump-off")
+      .addEventListener("click", () => {
+        farota.post(`/plugins/rpc/oneway/${DEVICE_ID_SPRIN_BIG}`, {
+          method: "setOnOff",
+          params: { onOff: 0, valveNo: 1, switchNo: 2 }
+        })
+        document.querySelector(".big-sprinkler-status").innerText = "꺼짐"
+      })
+    document
+      .querySelector(".big-sprinkler #pump-on")
+      .addEventListener("click", () => {
+        farota.post(`/plugins/rpc/oneway/${DEVICE_ID_SPRIN_BIG}`, {
+          method: "setOnOff",
+          params: { onOff: 1, valveNo: 1, switchNo: 2 }
+        })
+        document.querySelector(".big-sprinkler-status").innerText = "켜짐"
+      })
+
+    // 대형 살수기 스윙 on/off
+    document
+      .querySelector(".big-sprinkler #swing-off")
+      .addEventListener("click", () => {
+        farota.post(`/plugins/rpc/oneway/${DEVICE_ID_SPRIN_BIG}`, {
+          method: "setOnOff",
+          params: { onOff: 0, valveNo: 1, switchNo: 4 }
+        })
+      })
+    document
+      .querySelector(".big-sprinkler #swing-on")
+      .addEventListener("click", () => {
+        farota.post(`/plugins/rpc/oneway/${DEVICE_ID_SPRIN_BIG}`, {
+          method: "setOnOff",
+          params: { onOff: 1, valveNo: 1, switchNo: 4 }
+        })
+      })
+
+    // 대형 살수기 리프트 on/off
+    document
+      .querySelector(".big-sprinkler #lift-off")
+      .addEventListener("click", () => {
+        farota.post(`/plugins/rpc/oneway/${DEVICE_ID_SPRIN_BIG}`, {
+          method: "setOnOff",
+          params: { onOff: 0, valveNo: 1, switchNo: 3 }
+        })
+      })
+    document
+      .querySelector(".big-sprinkler #lift-on")
+      .addEventListener("click", () => {
+        farota.post(`/plugins/rpc/oneway/${DEVICE_ID_SPRIN_BIG}`, {
+          method: "setOnOff",
+          params: { onOff: 1, valveNo: 1, switchNo: 3 }
+        })
+      })
+
+    // 게이트 외부 살수 on/off
+    document
+      .querySelector("#trench-out-off")
+      .addEventListener("click", () => {
+        farota.post(`/plugins/rpc/oneway/${DEVICE_ID_TRENCH}`, {
+          method: "setOnOff",
+          params: { onOff: 0, valveNo: 1, switchNo: 1 }
+        })
+        document.querySelector("#trench-out").innerText = "꺼짐"
+      })
+    document
+      .querySelector("#trench-out-on")
+      .addEventListener("click", () => {
+        farota.post(`/plugins/rpc/oneway/${DEVICE_ID_TRENCH}`, {
+          method: "setOnOff",
+          params: { onOff: 1, valveNo: 1, switchNo: 1 }
+        })
+        document.querySelector("#trench-out").innerText = "켜짐"
+      })
+
+    // 게이트 내부 살수 on/off
+    document
+      .querySelector("#trench-in-off")
+      .addEventListener("click", () => {
+        farota.post(`/plugins/rpc/oneway/${DEVICE_ID_TRENCH}`, {
+          method: "setOnOff",
+          params: { onOff: 0, valveNo: 1, switchNo: 2 }
+        })
+        document.querySelector("#trench-in").innerText = "꺼짐"
+      })
+    document
+      .querySelector("#trench-in-on")
+      .addEventListener("click", () => {
+        farota.post(`/plugins/rpc/oneway/${DEVICE_ID_TRENCH}`, {
+          method: "setOnOff",
+          params: { onOff: 1, valveNo: 1, switchNo: 2 }
+        })
+        document.querySelector("#trench-in").innerText = "켜짐"
+      })
   }
 });
