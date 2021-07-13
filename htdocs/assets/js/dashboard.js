@@ -16,9 +16,10 @@ window.addEventListener("DOMContentLoaded", async function() {
   const SENSOR_ID_VIBE = "26b984e0-b793-11eb-a7c7-c5ac42947b75";
   const SENSOR_ID_WEATER = "d737f5b0-b9da-11eb-a7c7-c5ac42947b75";
   const SENSOR_ID_SPRIN = "446e8620-b923-11eb-a7c7-c5ac42947b75";
-	const SENSOR_ID_FIRE_1 = "6bf43210-e2f6-11eb-8692-193d8d39219e";
-	const SENSOR_ID_FIRE_2 = "6bf43210-e2f6-11eb-8692-193d8d39219e";
-	const DEVICE_ID_BUZZ = "f314d090-e2f3-11eb-8692-193d8d39219e";
+  const SENSOR_ID_FIRE_1 = "6bf43210-e2f6-11eb-8692-193d8d39219e";
+  const SENSOR_ID_FIRE_2 = "6bf43210-e2f6-11eb-8692-193d8d39219e";
+  const SENSOR_ID_FIRE_3 = "c8707450-e2f5-11eb-8692-193d8d39219e";
+  const DEVICE_ID_BUZZ = "f314d090-e2f3-11eb-8692-193d8d39219e";
   const DEVICE_ID_TRENCH = "27351810-bd26-11eb-8551-4f4bb0e28011";
   const DEVICE_ID_SPRIN_BIG = "fd4dd1d0-c97e-11eb-8551-4f4bb0e28011";
 
@@ -30,6 +31,7 @@ window.addEventListener("DOMContentLoaded", async function() {
   const URI_SPRINKLER_TRENCH = `/plugins/telemetry/DEVICE/${DEVICE_ID_TRENCH}/values/timeseries`;
   const URI_FIRE_1 = `/plugins/telemetry/DEVICE/${SENSOR_ID_FIRE_1}/values/timeseries`;
   const URI_FIRE_2 = `/plugins/telemetry/DEVICE/${SENSOR_ID_FIRE_2}/values/timeseries`;
+  const URI_FIRE_3 = `/plugins/telemetry/DEVICE/${SENSOR_ID_FIRE_3}/values/timeseries`;
 
   const [
     { data: noise },
@@ -38,8 +40,9 @@ window.addEventListener("DOMContentLoaded", async function() {
     { data: weather },
     { data: sprinkler },
     { data: sprinklerTrench },
-		{ data: fire1 },
-		{ data: fire2 },
+    { data: fire1 },
+    { data: fire2 },
+    { data: fire3 }
   ] = await Promise.all([
     farota.get(URI_NOISE, { params: { keys: "leq,lmax" } }),
     farota.get(URI_DUST, { params: { keys: "finedust,ultraFinedust" } }),
@@ -56,8 +59,9 @@ window.addEventListener("DOMContentLoaded", async function() {
     farota.get(URI_SPRINKLER_TRENCH, {
       params: { keys: "switch1_1,switch1_2" }
     }),
-		farota.get(URI_FIRE_1, { params: { keys: "state" } }),
-		farota.get(URI_FIRE_2, { params: { keys: "state" } })
+    farota.get(URI_FIRE_1, { params: { keys: "state" } }),
+    farota.get(URI_FIRE_2, { params: { keys: "state" } }),
+    farota.get(URI_FIRE_3, { params: { keys: "state" } })
   ]);
 
   // 소음센서
@@ -77,26 +81,34 @@ window.addEventListener("DOMContentLoaded", async function() {
   document.querySelector("#vibe-x2").innerText = vibe.x_2[0].value;
   document.querySelector("#vibe-y2").innerText = vibe.y_2[0].value;
   document.querySelector("#vibe-z2").innerText = vibe.z_2[0].value;
-	
-	let innerCheck = '<i class="fas fa-check-circle"></i> 정상'
-	let innerCross = '<i class="fas fa-times-circle"></i> 비정상'
 
-	const fireElem1 = document.querySelector("#fire-1")
-	const fireElem2 = document.querySelector("#fire-2")
-	
-	if (fire1.state[0].value == 0) {
-		fireElem1.innerHTML = innerCheck
-	} else {
-		fireElem1.innerHTML = innerCross
-		fireElem1.classList.add('bad')
-	}
+  let innerCheck = '<i class="fas fa-check-circle"></i> 정상';
+  let innerCross = '<i class="fas fa-times-circle"></i> 비정상';
 
-	if (fire2.state[0].value == 0) {
-		fireElem2.innerHTML = innerCheck
-	} else {
-		fireElem2.innerHTML = innerCross
-		fireElem2.classList.add('bad')
-	}
+  const fireElem1 = document.querySelector("#fire-1");
+  const fireElem2 = document.querySelector("#fire-2");
+  const fireElem3 = document.querySelector("#fire-3");
+
+  if (fire1.state[0].value == 0) {
+    fireElem1.innerHTML = innerCheck;
+  } else {
+    fireElem1.innerHTML = innerCross;
+    fireElem1.classList.add("bad");
+  }
+
+  if (fire2.state[0].value == 0) {
+    fireElem2.innerHTML = innerCheck;
+  } else {
+    fireElem2.innerHTML = innerCross;
+    fireElem2.classList.add("bad");
+  }
+
+  if (fire3.state[0].value == 0) {
+    fireElem3.innerHTML = innerCheck;
+  } else {
+    fireElem3.innerHTML = innerCross;
+    fireElem3.classList.add("bad");
+  }
 
   // 기상대
   let windDirValue = weather.windDir[0].value;
@@ -536,19 +548,19 @@ window.addEventListener("DOMContentLoaded", async function() {
       .addEventListener("click", () => {
         sprinklerCtrl(6, false);
       });
-		document.querySelector("#alarm-1").addEventListener("click", () => {
-			farota.post(`/plugins/rpc/oneway/${DEVICE_ID_BUZZ}`, {
-				method: "setOnOff",
-				params: { valveNo: 1, onOff: 1 }
-			})
-		})
+    document.querySelector("#alarm-1").addEventListener("click", () => {
+      farota.post(`/plugins/rpc/oneway/${DEVICE_ID_BUZZ}`, {
+        method: "setOnOff",
+        params: { valveNo: 1, onOff: 1 }
+      });
+    });
 
-		document.querySelector("#alarm-2").addEventListener("click", () => {
-			farota.post(`/plugins/rpc/oneway/${DEVICE_ID_BUZZ}`, {
-				method: "setOnOff",
-				params: { valveNo: 2, onOff: 1 }
-			})
-		})
+    document.querySelector("#alarm-2").addEventListener("click", () => {
+      farota.post(`/plugins/rpc/oneway/${DEVICE_ID_BUZZ}`, {
+        method: "setOnOff",
+        params: { valveNo: 2, onOff: 1 }
+      });
+    });
 
     // 대형 살수기 펌프 on/off
     document
@@ -557,18 +569,18 @@ window.addEventListener("DOMContentLoaded", async function() {
         farota.post(`/plugins/rpc/oneway/${DEVICE_ID_SPRIN_BIG}`, {
           method: "setOnOff",
           params: { onOff: 0, valveNo: 1, switchNo: 2 }
-        })
-        document.querySelector(".big-sprinkler-status").innerText = "꺼짐"
-      })
+        });
+        document.querySelector(".big-sprinkler-status").innerText = "꺼짐";
+      });
     document
       .querySelector(".big-sprinkler #pump-on")
       .addEventListener("click", () => {
         farota.post(`/plugins/rpc/oneway/${DEVICE_ID_SPRIN_BIG}`, {
           method: "setOnOff",
           params: { onOff: 1, valveNo: 1, switchNo: 2 }
-        })
-        document.querySelector(".big-sprinkler-status").innerText = "켜짐"
-      })
+        });
+        document.querySelector(".big-sprinkler-status").innerText = "켜짐";
+      });
 
     // 대형 살수기 스윙 on/off
     document
@@ -577,16 +589,16 @@ window.addEventListener("DOMContentLoaded", async function() {
         farota.post(`/plugins/rpc/oneway/${DEVICE_ID_SPRIN_BIG}`, {
           method: "setOnOff",
           params: { onOff: 0, valveNo: 1, switchNo: 4 }
-        })
-      })
+        });
+      });
     document
       .querySelector(".big-sprinkler #swing-on")
       .addEventListener("click", () => {
         farota.post(`/plugins/rpc/oneway/${DEVICE_ID_SPRIN_BIG}`, {
           method: "setOnOff",
           params: { onOff: 1, valveNo: 1, switchNo: 4 }
-        })
-      })
+        });
+      });
 
     // 대형 살수기 리프트 on/off
     document
@@ -595,55 +607,47 @@ window.addEventListener("DOMContentLoaded", async function() {
         farota.post(`/plugins/rpc/oneway/${DEVICE_ID_SPRIN_BIG}`, {
           method: "setOnOff",
           params: { onOff: 0, valveNo: 1, switchNo: 3 }
-        })
-      })
+        });
+      });
     document
       .querySelector(".big-sprinkler #lift-on")
       .addEventListener("click", () => {
         farota.post(`/plugins/rpc/oneway/${DEVICE_ID_SPRIN_BIG}`, {
           method: "setOnOff",
           params: { onOff: 1, valveNo: 1, switchNo: 3 }
-        })
-      })
+        });
+      });
 
     // 게이트 외부 살수 on/off
-    document
-      .querySelector("#trench-out-off")
-      .addEventListener("click", () => {
-        farota.post(`/plugins/rpc/oneway/${DEVICE_ID_TRENCH}`, {
-          method: "setOnOff",
-          params: { onOff: 0, valveNo: 1, switchNo: 1 }
-        })
-        document.querySelector("#trench-out").innerText = "꺼짐"
-      })
-    document
-      .querySelector("#trench-out-on")
-      .addEventListener("click", () => {
-        farota.post(`/plugins/rpc/oneway/${DEVICE_ID_TRENCH}`, {
-          method: "setOnOff",
-          params: { onOff: 1, valveNo: 1, switchNo: 1 }
-        })
-        document.querySelector("#trench-out").innerText = "켜짐"
-      })
+    document.querySelector("#trench-out-off").addEventListener("click", () => {
+      farota.post(`/plugins/rpc/oneway/${DEVICE_ID_TRENCH}`, {
+        method: "setOnOff",
+        params: { onOff: 0, valveNo: 1, switchNo: 1 }
+      });
+      document.querySelector("#trench-out").innerText = "꺼짐";
+    });
+    document.querySelector("#trench-out-on").addEventListener("click", () => {
+      farota.post(`/plugins/rpc/oneway/${DEVICE_ID_TRENCH}`, {
+        method: "setOnOff",
+        params: { onOff: 1, valveNo: 1, switchNo: 1 }
+      });
+      document.querySelector("#trench-out").innerText = "켜짐";
+    });
 
     // 게이트 내부 살수 on/off
-    document
-      .querySelector("#trench-in-off")
-      .addEventListener("click", () => {
-        farota.post(`/plugins/rpc/oneway/${DEVICE_ID_TRENCH}`, {
-          method: "setOnOff",
-          params: { onOff: 0, valveNo: 1, switchNo: 2 }
-        })
-        document.querySelector("#trench-in").innerText = "꺼짐"
-      })
-    document
-      .querySelector("#trench-in-on")
-      .addEventListener("click", () => {
-        farota.post(`/plugins/rpc/oneway/${DEVICE_ID_TRENCH}`, {
-          method: "setOnOff",
-          params: { onOff: 1, valveNo: 1, switchNo: 2 }
-        })
-        document.querySelector("#trench-in").innerText = "켜짐"
-      })
+    document.querySelector("#trench-in-off").addEventListener("click", () => {
+      farota.post(`/plugins/rpc/oneway/${DEVICE_ID_TRENCH}`, {
+        method: "setOnOff",
+        params: { onOff: 0, valveNo: 1, switchNo: 2 }
+      });
+      document.querySelector("#trench-in").innerText = "꺼짐";
+    });
+    document.querySelector("#trench-in-on").addEventListener("click", () => {
+      farota.post(`/plugins/rpc/oneway/${DEVICE_ID_TRENCH}`, {
+        method: "setOnOff",
+        params: { onOff: 1, valveNo: 1, switchNo: 2 }
+      });
+      document.querySelector("#trench-in").innerText = "켜짐";
+    });
   }
 });

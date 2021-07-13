@@ -98,6 +98,7 @@ article.dashboard-article-fire-box {
   display: grid;
   grid-gap: 10px;
   grid-template-columns: 1fr;
+  grid-template-rows: 1fr 1fr 1fr;
 }
 
 /* 상단 1열 바디 부분 */
@@ -167,7 +168,7 @@ div.dashboard-article-fire {
 }
 
 img.dashboard-article-fire-img {
-  margin: 35px 0 0 65px;
+  margin: 10px 0 0 65px;
 }
 
 .dashboard-article-fire-title {
