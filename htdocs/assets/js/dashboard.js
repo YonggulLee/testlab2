@@ -17,8 +17,8 @@ window.addEventListener("DOMContentLoaded", async function() {
   const SENSOR_ID_WEATER = "d737f5b0-b9da-11eb-a7c7-c5ac42947b75";
   const SENSOR_ID_SPRIN = "446e8620-b923-11eb-a7c7-c5ac42947b75";
   const SENSOR_ID_FIRE_1 = "6bf43210-e2f6-11eb-8692-193d8d39219e";
-  const SENSOR_ID_FIRE_2 = "6bf43210-e2f6-11eb-8692-193d8d39219e";
-  const SENSOR_ID_FIRE_3 = "c8707450-e2f5-11eb-8692-193d8d39219e";
+  const SENSOR_ID_FIRE_2 = "c8707450-e2f5-11eb-8692-193d8d39219e";
+  const SENSOR_ID_FIRE_3 = "72c11220-e2f6-11eb-8692-193d8d39219e";
   const DEVICE_ID_BUZZ = "f314d090-e2f3-11eb-8692-193d8d39219e";
   const DEVICE_ID_TRENCH = "27351810-bd26-11eb-8551-4f4bb0e28011";
   const DEVICE_ID_SPRIN_BIG = "fd4dd1d0-c97e-11eb-8551-4f4bb0e28011";
