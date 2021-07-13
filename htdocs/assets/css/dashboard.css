@@ -433,6 +433,15 @@ img.dashboard-article-fire-img {
   padding-right: 20px;
 }
 
+.sprinkler-big-btn-box {
+  display: grid;
+  grid-template-columns: 1fr;
+  justify-content: center;
+  align-items: center;
+  padding-left: 20px;
+  padding-right: 20px;
+}
+
 .device-alame-btn {
   background-color: #fdca57;
 }

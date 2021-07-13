@@ -28,6 +28,7 @@ window.addEventListener("DOMContentLoaded", async function() {
   const URI_VIBE = `/plugins/telemetry/DEVICE/${SENSOR_ID_VIBE}/values/timeseries`;
   const URI_WEATHER = `/plugins/telemetry/DEVICE/${SENSOR_ID_WEATER}/values/timeseries`;
   const URI_SPRINKLER = `/plugins/telemetry/DEVICE/${SENSOR_ID_SPRIN}/values/timeseries`;
+  const URI_SPRINKLER_BIG = `/plugins/telemetry/DEVICE/${DEVICE_ID_SPRIN_BIG}/values/timeseries`;
   const URI_SPRINKLER_TRENCH = `/plugins/telemetry/DEVICE/${DEVICE_ID_TRENCH}/values/timeseries`;
   const URI_FIRE_1 = `/plugins/telemetry/DEVICE/${SENSOR_ID_FIRE_1}/values/timeseries`;
   const URI_FIRE_2 = `/plugins/telemetry/DEVICE/${SENSOR_ID_FIRE_2}/values/timeseries`;
@@ -39,6 +40,7 @@ window.addEventListener("DOMContentLoaded", async function() {
     { data: vibe },
     { data: weather },
     { data: sprinkler },
+    { data: sprinklerBig },
     { data: sprinklerTrench },
     { data: fire1 },
     { data: fire2 },
@@ -55,6 +57,9 @@ window.addEventListener("DOMContentLoaded", async function() {
     }),
     farota.get(URI_SPRINKLER, {
       params: { keys: "switch1,switch2,switch3,switch4,switch5,switch6" }
+    }),
+    farota.get(URI_SPRINKLER_BIG, {
+      params: { keys: "switch1,switch2,switch3,switch4" }
     }),
     farota.get(URI_SPRINKLER_TRENCH, {
       params: { keys: "switch1_1,switch1_2" }
@@ -174,12 +179,14 @@ window.addEventListener("DOMContentLoaded", async function() {
         .classList.replace("sprinkler-status-on", "sprinkler-status-off");
     }
   }
-  // document.querySelector("#sprinkler-2").innerText =
-  //   sprinkler.switch2[0].value == "1" ? "작동중" : "꺼짐";
-  // document.querySelector("#sprinkler-3").innerText =
-  //   sprinkler.switch3[0].value == "1" ? "작동중" : "꺼짐";
-  // document.querySelector("#sprinkler-4").innerText =
-  //   sprinkler.switch4[0].value == "1" ? "작동중" : "꺼짐";
+
+  // 대형 스프링클러
+  document.querySelector("#pump-toggle").innerText =
+    sprinklerBig.switch1[0].value == "1" ? "ON" : "OFF";
+  document.querySelector("#swing-toggle").innerText =
+    sprinklerBig.switch2[0].value == "1" ? "ON" : "OFF";
+  document.querySelector("#lift-toggle").innerText =
+    sprinklerBig.switch3[0].value == "1" ? "ON" : "OFF";
   // document.querySelector("#sprinkler-5").innerText =
   //   sprinkler.switch5[0].value == "1" ? "작동중" : "꺼짐";
   // document.querySelector("#sprinkler-6").innerText =
@@ -563,60 +570,136 @@ window.addEventListener("DOMContentLoaded", async function() {
     });
 
     // 대형 살수기 펌프 on/off
-    document
-      .querySelector(".big-sprinkler #pump-off")
-      .addEventListener("click", () => {
-        farota.post(`/plugins/rpc/oneway/${DEVICE_ID_SPRIN_BIG}`, {
-          method: "setOnOff",
-          params: { onOff: 0, valveNo: 1, switchNo: 2 }
-        });
-        document.querySelector(".big-sprinkler-status").innerText = "꺼짐";
-      });
-    document
-      .querySelector(".big-sprinkler #pump-on")
-      .addEventListener("click", () => {
-        farota.post(`/plugins/rpc/oneway/${DEVICE_ID_SPRIN_BIG}`, {
-          method: "setOnOff",
-          params: { onOff: 1, valveNo: 1, switchNo: 2 }
-        });
-        document.querySelector(".big-sprinkler-status").innerText = "켜짐";
-      });
+    const BigSpringklerPumpBtn = document.querySelector(
+      ".big-sprinkler #pump-toggle"
+    );
+    BigSpringklerPumpBtn.addEventListener("click", () => {
+      let className = BigSpringklerPumpBtn.className;
+      switch (className) {
+        case "sprinkler-btn-on":
+          BigSpringklerPumpBtn.className = "sprinkler-btn-off";
+          BigSpringklerPumpBtn.innerHTML = "OFF";
+          farota.post(`/plugins/rpc/oneway/${DEVICE_ID_SPRIN_BIG}`, {
+            method: "setOnOff",
+            params: { onOff: 0, valveNo: 1, switchNo: 2 }
+          });
+          break;
+        case "sprinkler-btn-off":
+          BigSpringklerPumpBtn.className = "sprinkler-btn-on";
+          BigSpringklerPumpBtn.innerHTML = "ON";
+          farota.post(`/plugins/rpc/oneway/${DEVICE_ID_SPRIN_BIG}`, {
+            method: "setOnOff",
+            params: { onOff: 1, valveNo: 1, switchNo: 2 }
+          });
+          break;
+        default:
+      }
+    });
+
+    // document
+    //   .querySelector(".big-sprinkler #pump-off")
+    //   .addEventListener("click", () => {
+    //     farota.post(`/plugins/rpc/oneway/${DEVICE_ID_SPRIN_BIG}`, {
+    //       method: "setOnOff",
+    //       params: { onOff: 0, valveNo: 1, switchNo: 2 }
+    //     });
+    //     document.querySelector(".big-sprinkler-status").innerText = "꺼짐";
+    //   });
+    // document
+    //   .querySelector(".big-sprinkler #pump-on")
+    //   .addEventListener("click", () => {
+    //     farota.post(`/plugins/rpc/oneway/${DEVICE_ID_SPRIN_BIG}`, {
+    //       method: "setOnOff",
+    //       params: { onOff: 1, valveNo: 1, switchNo: 2 }
+    //     });
+    //     document.querySelector(".big-sprinkler-status").innerText = "켜짐";
+    //   });
 
     // 대형 살수기 스윙 on/off
-    document
-      .querySelector(".big-sprinkler #swing-off")
-      .addEventListener("click", () => {
-        farota.post(`/plugins/rpc/oneway/${DEVICE_ID_SPRIN_BIG}`, {
-          method: "setOnOff",
-          params: { onOff: 0, valveNo: 1, switchNo: 4 }
-        });
-      });
-    document
-      .querySelector(".big-sprinkler #swing-on")
-      .addEventListener("click", () => {
-        farota.post(`/plugins/rpc/oneway/${DEVICE_ID_SPRIN_BIG}`, {
-          method: "setOnOff",
-          params: { onOff: 1, valveNo: 1, switchNo: 4 }
-        });
-      });
+    const BigSpringklerSwingBtn = document.querySelector(
+      ".big-sprinkler #swing-toggle"
+    );
+    BigSpringklerSwingBtn.addEventListener("click", () => {
+      let className = BigSpringklerSwingBtn.className;
+      switch (className) {
+        case "sprinkler-btn-on":
+          BigSpringklerSwingBtn.className = "sprinkler-btn-off";
+          BigSpringklerSwingBtn.innerHTML = "OFF";
+          farota.post(`/plugins/rpc/oneway/${DEVICE_ID_SPRIN_BIG}`, {
+            method: "setOnOff",
+            params: { onOff: 0, valveNo: 1, switchNo: 4 }
+          });
+          break;
+        case "sprinkler-btn-off":
+          BigSpringklerSwingBtn.className = "sprinkler-btn-on";
+          BigSpringklerSwingBtn.innerHTML = "ON";
+          farota.post(`/plugins/rpc/oneway/${DEVICE_ID_SPRIN_BIG}`, {
+            method: "setOnOff",
+            params: { onOff: 1, valveNo: 1, switchNo: 4 }
+          });
+          break;
+        default:
+      }
+    });
+    // document
+    //   .querySelector(".big-sprinkler #swing-off")
+    //   .addEventListener("click", () => {
+    //     farota.post(`/plugins/rpc/oneway/${DEVICE_ID_SPRIN_BIG}`, {
+    //       method: "setOnOff",
+    //       params: { onOff: 0, valveNo: 1, switchNo: 4 }
+    //     });
+    //   });
+    // document
+    //   .querySelector(".big-sprinkler #swing-on")
+    //   .addEventListener("click", () => {
+    //     farota.post(`/plugins/rpc/oneway/${DEVICE_ID_SPRIN_BIG}`, {
+    //       method: "setOnOff",
+    //       params: { onOff: 1, valveNo: 1, switchNo: 4 }
+    //     });
+    //   });
 
     // 대형 살수기 리프트 on/off
-    document
-      .querySelector(".big-sprinkler #lift-off")
-      .addEventListener("click", () => {
-        farota.post(`/plugins/rpc/oneway/${DEVICE_ID_SPRIN_BIG}`, {
-          method: "setOnOff",
-          params: { onOff: 0, valveNo: 1, switchNo: 3 }
-        });
-      });
-    document
-      .querySelector(".big-sprinkler #lift-on")
-      .addEventListener("click", () => {
-        farota.post(`/plugins/rpc/oneway/${DEVICE_ID_SPRIN_BIG}`, {
-          method: "setOnOff",
-          params: { onOff: 1, valveNo: 1, switchNo: 3 }
-        });
-      });
+    const BigSpringklerLiftBtn = document.querySelector(
+      ".big-sprinkler #lift-toggle"
+    );
+    BigSpringklerLiftBtn.addEventListener("click", () => {
+      let className = BigSpringklerLiftBtn.className;
+      switch (className) {
+        case "sprinkler-btn-on":
+          BigSpringklerLiftBtn.className = "sprinkler-btn-off";
+          BigSpringklerLiftBtn.innerHTML = "OFF";
+          farota.post(`/plugins/rpc/oneway/${DEVICE_ID_SPRIN_BIG}`, {
+            method: "setOnOff",
+            params: { onOff: 0, valveNo: 1, switchNo: 3 }
+          });
+          break;
+        case "sprinkler-btn-off":
+          BigSpringklerLiftBtn.className = "sprinkler-btn-on";
+          BigSpringklerLiftBtn.innerHTML = "ON";
+          farota.post(`/plugins/rpc/oneway/${DEVICE_ID_SPRIN_BIG}`, {
+            method: "setOnOff",
+            params: { onOff: 1, valveNo: 1, switchNo: 3 }
+          });
+          break;
+        default:
+      }
+    });
+    // document
+    //   .querySelector(".big-sprinkler #lift-off")
+    //   .addEventListener("click", () => {
+    //     farota.post(`/plugins/rpc/oneway/${DEVICE_ID_SPRIN_BIG}`, {
+    //       method: "setOnOff",
+    //       params: { onOff: 0, valveNo: 1, switchNo: 3 }
+    //     });
+    //   });
+    // document
+    //   .querySelector(".big-sprinkler #lift-on")
+    //   .addEventListener("click", () => {
+    //     farota.post(`/plugins/rpc/oneway/${DEVICE_ID_SPRIN_BIG}`, {
+    //       method: "setOnOff",
+    //       params: { onOff: 1, valveNo: 1, switchNo: 3 }
+    //     });
+    //   });
 
     // 게이트 외부 살수 on/off
     document.querySelector("#trench-out-off").addEventListener("click", () => {
