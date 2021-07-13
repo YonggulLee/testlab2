@@ -176,18 +176,23 @@ img.dashboard-article-fire-img {
 }
 
 .dashboard-article-fire-status {
+  display: flex;
+  justify-content: center;
+}
+
+.dashboard-article-fire-status > p {
   /* border: 1px solid red; */
   border-radius: 6px;
   margin: auto;
   margin-top: 10px;
-  padding: 5px 20px 0 20px;
-  width: 60px;
-  height: 25px;
-  display: grid;
-  grid-template-columns: 1fr 1fr;
+  padding: 5px 20px;
   background-color: #0acf7c;
   font-weight: 700;
   color: black;
+}
+
+.dashboard-article-fire-status > p.bad {
+  background-color: #FDCA57;
 }
 
 /* <!-- 상단 2열 --> */

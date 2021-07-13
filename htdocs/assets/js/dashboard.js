@@ -17,6 +17,8 @@ window.addEventListener("DOMContentLoaded", async function() {
   const SENSOR_ID_WEATER = "d737f5b0-b9da-11eb-a7c7-c5ac42947b75";
   const SENSOR_ID_SPRIN = "446e8620-b923-11eb-a7c7-c5ac42947b75";
   const SENSOR_ID_TRENCH = "27351810-bd26-11eb-8551-4f4bb0e28011";
+	const SENSOR_ID_FIRE_1 = "6bf43210-e2f6-11eb-8692-193d8d39219e";
+	const SENSOR_ID_FIRE_2 = "6bf43210-e2f6-11eb-8692-193d8d39219e";
 
   const URI_NOISE = `/plugins/telemetry/DEVICE/${SENSOR_ID_NOISE}/values/timeseries`;
   const URI_DUST = `/plugins/telemetry/DEVICE/${SENSOR_ID_DUST}/values/timeseries`;
@@ -24,6 +26,8 @@ window.addEventListener("DOMContentLoaded", async function() {
   const URI_WEATHER = `/plugins/telemetry/DEVICE/${SENSOR_ID_WEATER}/values/timeseries`;
   const URI_SPRINKLER = `/plugins/telemetry/DEVICE/${SENSOR_ID_SPRIN}/values/timeseries`;
   const URI_SPRINKLER_TRENCH = `/plugins/telemetry/DEVICE/${SENSOR_ID_TRENCH}/values/timeseries`;
+  const URI_FIRE_1 = `/plugins/telemetry/DEVICE/${SENSOR_ID_FIRE_1}/values/timeseries`;
+  const URI_FIRE_2 = `/plugins/telemetry/DEVICE/${SENSOR_ID_FIRE_2}/values/timeseries`;
 
   const [
     { data: noise },
@@ -31,7 +35,9 @@ window.addEventListener("DOMContentLoaded", async function() {
     { data: vibe },
     { data: weather },
     { data: sprinkler },
-    { data: sprinklerTrench }
+    { data: sprinklerTrench },
+		{ data: fire1 },
+		{ data: fire2 },
   ] = await Promise.all([
     farota.get(URI_NOISE, { params: { keys: "leq,lmax" } }),
     farota.get(URI_DUST, { params: { keys: "finedust,ultraFinedust" } }),
@@ -47,7 +53,9 @@ window.addEventListener("DOMContentLoaded", async function() {
     }),
     farota.get(URI_SPRINKLER_TRENCH, {
       params: { keys: "switch1_1,switch1_2" }
-    })
+    }),
+		farota.get(URI_FIRE_1, { params: { keys: "state" } }),
+		farota.get(URI_FIRE_2, { params: { keys: "state" } })
   ]);
 
   // 소음센서
@@ -67,6 +75,26 @@ window.addEventListener("DOMContentLoaded", async function() {
   document.querySelector("#vibe-x2").innerText = vibe.x_2[0].value;
   document.querySelector("#vibe-y2").innerText = vibe.y_2[0].value;
   document.querySelector("#vibe-z2").innerText = vibe.z_2[0].value;
+	
+	let innerCheck = '<i class="fas fa-check-circle"></i> 정상'
+	let innerCross = '<i class="fas fa-times-circle"></i> 비정상'
+
+	const fireElem1 = document.querySelector("#fire-1")
+	const fireElem2 = document.querySelector("#fire-2")
+	
+	if (fire1.state[0].value == 0) {
+		fireElem1.innerHTML = innerCheck
+	} else {
+		fireElem1.innerHTML = innerCross
+		fireElem1.classList.add('bad')
+	}
+
+	if (fire2.state[0].value == 0) {
+		fireElem2.innerHTML = innerCheck
+	} else {
+		fireElem2.innerHTML = innerCross
+		fireElem2.classList.add('bad')
+	}
 
   // 기상대
   document.querySelector("#weather-temp").innerText = Number(
