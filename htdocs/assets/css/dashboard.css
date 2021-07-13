@@ -192,7 +192,7 @@ img.dashboard-article-fire-img {
 }
 
 .dashboard-article-fire-status > p.bad {
-  background-color: #FDCA57;
+  background-color: #fdca57;
 }
 
 /* <!-- 상단 2열 --> */
@@ -449,9 +449,7 @@ img.dashboard-article-fire-img {
   /* border: 1px solid pink; */
   display: grid;
   grid-auto-rows: 1fr 1fr 1fr;
-  padding: 0 10px 0 0;
-  margin-top: -10px;
-  margin-left: -20px;
+  padding: 20px 10px 20px 20px;
 }
 .big-sprinkler-box {
   /* border: 1px solid pink; */
@@ -495,7 +493,7 @@ img.dashboard-article-fire-img {
 }
 
 /* 게이트 살수 */
-.dashboard-row-2-item:nth-child(17) {
+.dashboard-row-2-item:nth-child(18) {
   display: grid;
   grid-template-columns: 150px 1fr;
   padding: 30px;
