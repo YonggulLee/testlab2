@@ -205,22 +205,26 @@ window.addEventListener("DOMContentLoaded", async function() {
 
   const endTs = now.getTime();
 
-  now.setHours(now.getHours() - 10);
+  now.setHours(now.getHours() - 24);
   const startTs = now.getTime();
 
+  var endDate = new Date(endTs);
+  var startDate = new Date(startTs);
+  console.log(endDate);
+  console.log(startDate);
   // Chart drawing
 
   {
     const [{ data: noise }, { data: dust }, { data: vibe }] = await Promise.all(
       [
         farota.get(URI_NOISE, {
-          params: { startTs, endTs, limits: 1000, keys: "leq,lmax" }
+          params: { startTs, endTs, limits: 2000, keys: "leq,lmax" }
         }),
         farota.get(URI_DUST, {
           params: {
             startTs,
             endTs,
-            limits: 1000,
+            limits: 2000,
             keys: "finedust,ultraFinedust"
           }
         }),
@@ -228,7 +232,7 @@ window.addEventListener("DOMContentLoaded", async function() {
           params: {
             startTs,
             endTs,
-            limits: 1000,
+            limits: 2000,
             keys: "x_1,y_1,z_1,x_2,y_2,z_2"
           }
         })
@@ -422,11 +426,47 @@ window.addEventListener("DOMContentLoaded", async function() {
       const mins = "" + time.getMinutes();
       return hours.padStart(2, "0") + ":" + mins.padStart(2, "0");
     });
+    console.log(vibeLabels);
+    var vibeLabelsReverse = [];
+    for (let i = x1.length - 1; i >= 0; i--) {
+      vibeLabelsReverse.push(vibeLabels[i]);
+    }
+    console.log(vibeLabelsReverse);
+
+    var x1Reverse = [];
+    for (let i = x1.length - 1; i >= 0; i--) {
+      x1Reverse.push(x1[i]);
+    }
+
+    var y1Reverse = [];
+    for (let i = y1.length - 1; i >= 0; i--) {
+      y1Reverse.push(y1[i]);
+    }
+
+    var z1Reverse = [];
+    for (let i = z1.length - 1; i >= 0; i--) {
+      z1Reverse.push(z1[i]);
+    }
+
+    var x2Reverse = [];
+    for (let i = x2.length - 1; i >= 0; i--) {
+      x2Reverse.push(x2[i]);
+    }
+
+    var y2Reverse = [];
+    for (let i = y2.length - 1; i >= 0; i--) {
+      y2Reverse.push(y2[i]);
+    }
+
+    var z2Reverse = [];
+    for (let i = z2.length - 1; i >= 0; i--) {
+      z2Reverse.push(z2[i]);
+    }
 
     new Chart(vibeChart1, {
       type: "line",
       data: {
-        labels: vibeLabels,
+        labels: vibeLabelsReverse,
         datasets: [
           {
             label: "X",
@@ -465,7 +505,7 @@ window.addEventListener("DOMContentLoaded", async function() {
     new Chart(vibeChart2, {
       type: "line",
       data: {
-        labels: vibeLabels,
+        labels: vibeLabelsReverse,
         datasets: [
           {
             label: "X",
