@@ -288,7 +288,7 @@ window.addEventListener("DOMContentLoaded", async function() {
     // const averageLeq = calculateAverageValue(noise.leq);
 
     //70 dB 가이드라인 표시를 위한 배열
-    const guideLineArr = new Array(100);
+    const guideLineArr = new Array(288);
     for (let i = 0; i < guideLineArr.length; i++) {
       guideLineArr[i] = 70;
     }
@@ -335,6 +335,7 @@ window.addEventListener("DOMContentLoaded", async function() {
         ]
       },
       options: {
+        borderWidth: 2,
         elements: {
           point: {
             pointStyle: "line",
@@ -392,6 +393,7 @@ window.addEventListener("DOMContentLoaded", async function() {
         ]
       },
       options: {
+        borderWidth: 1,
         elements: {
           point: {
             pointStyle: "line",
