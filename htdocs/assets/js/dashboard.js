@@ -287,10 +287,21 @@ window.addEventListener("DOMContentLoaded", async function() {
       guideLineArr[i] = 70;
     }
 
+    // 순서 반전
+    var leqReverse = [];
+    for (let i = noise.leq.length - 1; i >= 0; i--) {
+      leqReverse.push(noise.leq[i]);
+    }
+
+    var lmaxReverse = [];
+    for (let i = noise.lmax.length - 1; i >= 0; i--) {
+      lmaxReverse.push(noise.lmax[i]);
+    }
+
     new Chart(noiseChart, {
       type: "line",
       data: {
-        labels: noise.leq.map(({ ts }) => {
+        labels: leqReverse.map(({ ts }) => {
           let time = new Date(ts);
           const hours = "" + time.getHours();
           const mins = "" + time.getMinutes();
@@ -299,13 +310,13 @@ window.addEventListener("DOMContentLoaded", async function() {
         datasets: [
           {
             label: "leq",
-            data: noise.leq.map(({ value }) => value),
+            data: leqReverse.map(({ value }) => value),
             backgroundColor: ["#4ED139"],
             borderColor: ["#4ED139"]
           },
           {
             label: "lmax",
-            data: noise.lmax.map(({ value }) => value),
+            data: lmaxReverse.map(({ value }) => value),
             backgroundColor: ["#289CF4"],
             borderColor: ["#289CF4"]
           },
@@ -340,10 +351,20 @@ window.addEventListener("DOMContentLoaded", async function() {
       }
     });
 
+    var finedustReverse = [];
+    for (let i = dust.finedust.length - 1; i >= 0; i--) {
+      finedustReverse.push(dust.finedust[i]);
+    }
+
+    var ultraFinedustReverse = [];
+    for (let i = dust.ultraFinedust.length - 1; i >= 0; i--) {
+      ultraFinedustReverse.push(dust.ultraFinedust[i]);
+    }
+
     new Chart(dustChart, {
       type: "line",
       data: {
-        labels: dust.finedust.map(({ ts }) => {
+        labels: finedustReverse.map(({ ts }) => {
           let time = new Date(ts);
           const hours = "" + time.getHours();
           const mins = "" + time.getMinutes();
@@ -352,13 +373,13 @@ window.addEventListener("DOMContentLoaded", async function() {
         datasets: [
           {
             label: "2.5pm",
-            data: dust.ultraFinedust.map(({ value }) => value),
+            data: ultraFinedustReverse.map(({ value }) => value),
             backgroundColor: ["#4ED139"],
             borderColor: ["#4ED139"]
           },
           {
             label: "10pm",
-            data: dust.finedust.map(({ value }) => value),
+            data: finedustReverse.map(({ value }) => value),
             backgroundColor: ["#289CF4"],
             borderColor: ["#289CF4"]
           }
