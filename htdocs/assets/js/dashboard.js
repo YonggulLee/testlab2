@@ -200,8 +200,8 @@ window.addEventListener("DOMContentLoaded", async function() {
 
   let now = new Date();
 
-  now.setMinutes(0);
-  now.setSeconds(0, 0);
+  // now.setMinutes(0);
+  // now.setSeconds(0, 0);
 
   const endTs = now.getTime();
 
@@ -218,13 +218,13 @@ window.addEventListener("DOMContentLoaded", async function() {
     const [{ data: noise }, { data: dust }, { data: vibe }] = await Promise.all(
       [
         farota.get(URI_NOISE, {
-          params: { startTs, endTs, limits: 2000, keys: "leq,lmax" }
+          params: { startTs, endTs, limit: 1000, keys: "leq,lmax" }
         }),
         farota.get(URI_DUST, {
           params: {
             startTs,
             endTs,
-            limits: 2000,
+            limit: 2000,
             keys: "finedust,ultraFinedust"
           }
         }),
@@ -232,13 +232,15 @@ window.addEventListener("DOMContentLoaded", async function() {
           params: {
             startTs,
             endTs,
-            limits: 2000,
+            limit: 1000,
             keys: "x_1,y_1,z_1,x_2,y_2,z_2"
           }
         })
       ]
     );
-
+    console.log(noise);
+    console.log(dust);
+    console.log(vibe);
     const noiseChart = document.getElementById("noiseChart").getContext("2d");
     const dustChart = document.getElementById("dustChart").getContext("2d");
     const vibeChart1 = document.getElementById("vibeChart1").getContext("2d");
@@ -426,12 +428,11 @@ window.addEventListener("DOMContentLoaded", async function() {
       const mins = "" + time.getMinutes();
       return hours.padStart(2, "0") + ":" + mins.padStart(2, "0");
     });
-    console.log(vibeLabels);
+
     var vibeLabelsReverse = [];
     for (let i = x1.length - 1; i >= 0; i--) {
       vibeLabelsReverse.push(vibeLabels[i]);
     }
-    console.log(vibeLabelsReverse);
 
     var x1Reverse = [];
     for (let i = x1.length - 1; i >= 0; i--) {
