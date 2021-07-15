@@ -24,6 +24,7 @@
       crossorigin="anonymous"
       referrerpolicy="no-referrer"
     ></script>
+    <script src="assets/js/utility.js" defer></script>
   </head>
 
   <body>
@@ -161,7 +162,7 @@
           <span class="health-check-header-title">이완기 혈압</span>
         </div>
         <!-- 5.혈압상태 -->
-        <div class="health-check-header-item">
+        <div class="health-check-header-item"> 
           <img
             class="health-check-header-img"
             src="assets/img/health-check-header-icon3.png"
@@ -182,6 +183,7 @@
     </section>
 
     <script>
+      refreshData(60);
       (async () => {
         const {
           data: { token }

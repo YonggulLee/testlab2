@@ -1,3 +1,6 @@
+// ()초에 한 번씩 데이터를 리프레시 시함
+refreshData(60);
+
 window.addEventListener("DOMContentLoaded", async function() {
   const {
     data: { token }
