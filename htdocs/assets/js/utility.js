@@ -1,7 +1,7 @@
 // Utility Class & Function Here 
 
-function refreshData (second) {
+function refreshData (seconds) {
     setTimeout(function(){
         location.reload();
-      },second*1000);
+      },seconds*1000);
 };
