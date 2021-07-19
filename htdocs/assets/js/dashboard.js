@@ -207,9 +207,6 @@ window.addEventListener("DOMContentLoaded", async function() {
 
   let now = new Date();
 
-  // now.setMinutes(0);
-  // now.setSeconds(0, 0);
-
   const endTs = now.getTime();
 
   now.setHours(now.getHours() - 24);

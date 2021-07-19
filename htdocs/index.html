@@ -10,6 +10,7 @@
     <link rel="stylesheet" href="assets/css/side-bar.css" />
     <link rel="stylesheet" href="assets/css/dashboard.css" />
     <link rel="stylesheet" href="assets/css/smart-band.css" />
+    <link rel="stylesheet" href="assets/plugins/lightbox/css/lightbox.css" />
     <!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css"> -->
     <link
       rel="stylesheet"
@@ -28,6 +29,7 @@
       crossorigin="anonymous"
       referrerpolicy="no-referrer"
     ></script>
+    <script src="assets/plugins/lightbox/js/lightbox.js" defer></script>
     <script src="assets/js/utility.js" defer></script>
     <script src="assets/js/dashboard.js" defer></script>
   </head>
@@ -256,7 +258,7 @@
         <article class="dashboard-article">
           <div class="dashboard-article-header content-body item-3">
             <div class="dashboard-article-header-item">
-              <img src="assets/img/dashboard_icon_noise.png" alt="" />
+              <img src="assets/img/dashboard_icon_dust.png" alt="" />
               <span class="dashboard-article-header-item-title">미세먼지</span>
             </div>
             <div class="dashboard-article-header-item">
@@ -325,7 +327,7 @@
         <article class="dashboard-article">
           <div class="dashboard-article-header content-body box-item-4">
             <div class="dashboard-article-header-item">
-              <img src="assets/img/dashboard_icon_noise.png" alt="" />
+              <img src="assets/img/dashboard_icon_viv.png" alt="" />
               <span class="dashboard-article-header-item-title"
                 >진동센서 1</span
               >
@@ -725,7 +727,7 @@
           </div>
         </div>
         <div class="dashboard-row-2-item">
-          <img class="feild-map" src="assets/img/6.png" alt="" />
+          <a href="assets/img/dashboard_fieldmap_temp.png" data-lightbox="dashboard_fieldmap_temp" data-title="dashboard_fieldmap_temp"><img class="feild-map" src="assets/img/6.png" alt="" /></a>
         </div>
         <div class="dashboard-row-2-item">스프링클러</div>
         <div class="dashboard-row-2-item">장비알람</div>
