@@ -14,7 +14,8 @@ window.addEventListener("DOMContentLoaded", async function() {
     headers: { "X-Authorization": "Bearer " + token }
   });
 
-  const SENSOR_ID_NOISE = "e8a11380-bc2e-11eb-8551-4f4bb0e28011";
+  const SENSOR_ID_NOISE_1 = "e8a11380-bc2e-11eb-8551-4f4bb0e28011";
+  const SENSOR_ID_NOISE_2 = "e8a11a40-e601-11eb-8e78-f7a9f6ae5a19";
   const SENSOR_ID_DUST = "c4cc4150-bc2e-11eb-8551-4f4bb0e28011";
   const SENSOR_ID_VIBE = "26b984e0-b793-11eb-a7c7-c5ac42947b75";
   const SENSOR_ID_WEATER = "d737f5b0-b9da-11eb-a7c7-c5ac42947b75";
@@ -26,7 +27,8 @@ window.addEventListener("DOMContentLoaded", async function() {
   const DEVICE_ID_TRENCH = "27351810-bd26-11eb-8551-4f4bb0e28011";
   const DEVICE_ID_SPRIN_BIG = "fd4dd1d0-c97e-11eb-8551-4f4bb0e28011";
 
-  const URI_NOISE = `/plugins/telemetry/DEVICE/${SENSOR_ID_NOISE}/values/timeseries`;
+  const URI_NOISE_1 = `/plugins/telemetry/DEVICE/${SENSOR_ID_NOISE_1}/values/timeseries`;
+  const URI_NOISE_2 = `/plugins/telemetry/DEVICE/${SENSOR_ID_NOISE_2}/values/timeseries`;
   const URI_DUST = `/plugins/telemetry/DEVICE/${SENSOR_ID_DUST}/values/timeseries`;
   const URI_VIBE = `/plugins/telemetry/DEVICE/${SENSOR_ID_VIBE}/values/timeseries`;
   const URI_WEATHER = `/plugins/telemetry/DEVICE/${SENSOR_ID_WEATER}/values/timeseries`;
@@ -38,7 +40,8 @@ window.addEventListener("DOMContentLoaded", async function() {
   const URI_FIRE_3 = `/plugins/telemetry/DEVICE/${SENSOR_ID_FIRE_3}/values/timeseries`;
 
   const [
-    { data: noise },
+    { data: noise1 },
+    { data: noise2 },
     { data: dust },
     { data: vibe },
     { data: weather },
@@ -49,9 +52,10 @@ window.addEventListener("DOMContentLoaded", async function() {
     { data: fire2 },
     { data: fire3 }
   ] = await Promise.all([
-    farota.get(URI_NOISE, { params: { keys: "leq,lmax" } }),
+    farota.get(URI_NOISE_1, { params: { keys: "leq,lmax" } }),
+    farota.get(URI_NOISE_2, { params: { keys: "leq,lmax" } }),
     farota.get(URI_DUST, { params: { keys: "finedust,ultraFinedust" } }),
-    farota.get(URI_VIBE, { params: { keys: "x_1,y_1,z_1,x_2,y_2,z_2" } }),
+    farota.get(URI_VIBE, { params: { keys: "x_1,y_1,z_1" } }),
     farota.get(URI_WEATHER, {
       params: {
         keys:
@@ -72,9 +76,14 @@ window.addEventListener("DOMContentLoaded", async function() {
     farota.get(URI_FIRE_3, { params: { keys: "state" } })
   ]);
 
-  // 소음센서
-  document.querySelector("#noise-leq").innerText = noise.leq[0].value;
-  document.querySelector("#noise-lmax").innerText = noise.lmax[0].value;
+
+  // 소음센서1
+  document.querySelector("#noise1-leq").innerText = noise1.leq[0].value;
+  document.querySelector("#noise1-lmax").innerText = noise1.lmax[0].value;
+
+  // 소음센서1
+  document.querySelector("#noise2-leq").innerText = noise2.leq[0].value;
+  document.querySelector("#noise2-lmax").innerText = noise2.lmax[0].value;
 
   // 미세먼지
   document.querySelector("#dust-ultra").innerText = dust.ultraFinedust[0].value;
@@ -84,11 +93,6 @@ window.addEventListener("DOMContentLoaded", async function() {
   document.querySelector("#vibe-x1").innerText = vibe.x_1[0].value;
   document.querySelector("#vibe-y1").innerText = vibe.y_1[0].value;
   document.querySelector("#vibe-z1").innerText = vibe.z_1[0].value;
-
-  // 진동센서 2
-  document.querySelector("#vibe-x2").innerText = vibe.x_2[0].value;
-  document.querySelector("#vibe-y2").innerText = vibe.y_2[0].value;
-  document.querySelector("#vibe-z2").innerText = vibe.z_2[0].value;
 
   let innerCheck = '<i class="fas fa-check-circle"></i> 정상';
   let innerCross = '<i class="fas fa-times-circle"></i> 비정상';
@@ -217,9 +221,12 @@ window.addEventListener("DOMContentLoaded", async function() {
   // Chart drawing
 
   {
-    const [{ data: noise }, { data: dust }, { data: vibe }] = await Promise.all(
+    const [{ data: noise1 }, { data: noise2 }, { data: dust }, { data: vibe }] = await Promise.all(
       [
-        farota.get(URI_NOISE, {
+        farota.get(URI_NOISE_1, {
+          params: { startTs, endTs, limit: 1000, keys: "leq,lmax" }
+        }),
+        farota.get(URI_NOISE_2, {
           params: { startTs, endTs, limit: 1000, keys: "leq,lmax" }
         }),
         farota.get(URI_DUST, {
@@ -235,20 +242,19 @@ window.addEventListener("DOMContentLoaded", async function() {
             startTs,
             endTs,
             limit: 1000,
-            keys: "x_1,y_1,z_1,x_2,y_2,z_2"
+            keys: "x_1,y_1,z_1"
           }
         })
       ]
     );
     
-    const noiseChart = document.getElementById("noiseChart").getContext("2d");
+    const noiseChart1 = document.getElementById("noiseChart1").getContext("2d");
+    const noiseChart2 = document.getElementById("noiseChart2").getContext("2d");
     const dustChart = document.getElementById("dustChart").getContext("2d");
     const vibeChart1 = document.getElementById("vibeChart1").getContext("2d");
-    const vibeChart2 = document.getElementById("vibeChart2").getContext("2d");
 
-    //노이즈 차트
 
-    //평균값 계산
+    //배열 안에 있는 데이터의 평균값을 계산합니다. 
     function calculateAverageValue(array) {
       const dataArray = array;
       let sum = 0;
@@ -262,10 +268,14 @@ window.addEventListener("DOMContentLoaded", async function() {
     }
     //범례 평균값 세팅
     // 노이즈 차트
-    const averageLeq = calculateAverageValue(noise.leq);
-    document.querySelector("#noiseChartLeqAverage").innerText = averageLeq;
-    const averagelmax = calculateAverageValue(noise.lmax);
-    document.querySelector("#noiseChartLmaxAverage").innerText = averagelmax;
+    const averageLeq1 = calculateAverageValue(noise1.leq);
+    document.querySelector("#noiseChart1LeqAverage").innerText = averageLeq1;
+    const averagelmax1 = calculateAverageValue(noise1.lmax);
+    document.querySelector("#noiseChart1LmaxAverage").innerText = averagelmax1;
+    const averageLeq2 = calculateAverageValue(noise2.leq);
+    document.querySelector("#noiseChart2LeqAverage").innerText = averageLeq2;
+    const averagelmax2 = calculateAverageValue(noise2.lmax);
+    document.querySelector("#noiseChart2LmaxAverage").innerText = averagelmax2;
     // 미세먼지 차트
     const averageuUltraFinedust = calculateAverageValue(dust.ultraFinedust);
     document.querySelector(
@@ -288,26 +298,42 @@ window.addEventListener("DOMContentLoaded", async function() {
     // const averageLeq = calculateAverageValue(noise.leq);
 
     //70 dB 가이드라인 표시를 위한 배열
-    const guideLineArr = new Array(noise.lmax.length);
-    for (let i = 0; i < guideLineArr.length; i++) {
-      guideLineArr[i] = 70;
+    const noise1GuideLineArr = new Array(noise1.lmax.length);
+    for (let i = 0; i < noise1GuideLineArr.length; i++) {
+      noise1GuideLineArr[i] = 70;
+    }
+
+    const noise2GuideLineArr = new Array(noise2.lmax.length);
+    for (let i = 0; i < noise2GuideLineArr.length; i++) {
+      noise2GuideLineArr[i] = 70;
     }
 
     // 순서 반전
-    var leqReverse = [];
-    for (let i = noise.leq.length - 1; i >= 0; i--) {
-      leqReverse.push(noise.leq[i]);
+    var noise1LeqReverse = [];
+    for (let i = noise1.leq.length - 1; i >= 0; i--) {
+      noise1LeqReverse.push(noise1.leq[i]);
     }
 
-    var lmaxReverse = [];
-    for (let i = noise.lmax.length - 1; i >= 0; i--) {
-      lmaxReverse.push(noise.lmax[i]);
+    var noise1LmaxReverse = [];
+    for (let i = noise1.lmax.length - 1; i >= 0; i--) {
+      noise1LmaxReverse.push(noise1.lmax[i]);
     }
 
-    new Chart(noiseChart, {
+    var noise2LeqReverse = [];
+    for (let i = noise2.leq.length - 1; i >= 0; i--) {
+      noise2LeqReverse.push(noise2.leq[i]);
+    }
+
+    var noise2LmaxReverse = [];
+    for (let i = noise2.lmax.length - 1; i >= 0; i--) {
+      noise2LmaxReverse.push(noise2.lmax[i]);
+    }
+
+
+    new Chart(noiseChart1, {
       type: "line",
       data: {
-        labels: leqReverse.map(({ ts }) => {
+        labels: noise1LeqReverse.map(({ ts }) => {
           let time = new Date(ts);
           const hours = "" + time.getHours();
           const mins = "" + time.getMinutes();
@@ -316,19 +342,73 @@ window.addEventListener("DOMContentLoaded", async function() {
         datasets: [
           {
             label: "leq",
-            data: leqReverse.map(({ value }) => value),
+            data: noise1LeqReverse.map(({ value }) => value),
             backgroundColor: ["#4ED139"],
             borderColor: ["#4ED139"]
           },
           {
             label: "lmax",
-            data: lmaxReverse.map(({ value }) => value),
+            data: noise1LmaxReverse.map(({ value }) => value),
             backgroundColor: ["#289CF4"],
             borderColor: ["#289CF4"]
           },
           {
             label: "guideLine",
-            data: guideLineArr,
+            data: noise1GuideLineArr,
+            backgroundColor: ["red"],
+            borderColor: ["red"]
+          }
+        ]
+      },
+      options: {
+        borderWidth: 2,
+        elements: {
+          point: {
+            pointStyle: "line",
+            hoverBorderWidth: 0,
+            borderWidth: 0
+          }
+        },
+        responsive: true,
+        maintainAspectRatio: false,
+        layout: {
+          padding: {
+            top: 20
+          }
+        },
+        plugins: {
+          legend: {
+            display: false
+          }
+        }
+      }
+    });
+
+    new Chart(noiseChart2, {
+      type: "line",
+      data: {
+        labels: noise2LeqReverse.map(({ ts }) => {
+          let time = new Date(ts);
+          const hours = "" + time.getHours();
+          const mins = "" + time.getMinutes();
+          return hours.padStart(2, "0") + ":" + mins.padStart(2, "0");
+        }),
+        datasets: [
+          {
+            label: "leq",
+            data: noise2LeqReverse.map(({ value }) => value),
+            backgroundColor: ["#4ED139"],
+            borderColor: ["#4ED139"]
+          },
+          {
+            label: "lmax",
+            data: noise2LmaxReverse.map(({ value }) => value),
+            backgroundColor: ["#289CF4"],
+            borderColor: ["#289CF4"]
+          },
+          {
+            label: "guideLine",
+            data: noise2GuideLineArr,
             backgroundColor: ["red"],
             borderColor: ["red"]
           }
@@ -416,22 +496,13 @@ window.addEventListener("DOMContentLoaded", async function() {
       }
     });
 
-    const { x_1, y_1, z_1, x_2, y_2, z_2 } = vibe;
+    const { x_1, y_1, z_1} = vibe;
     const x1 = x_1 ? x_1.map(({ value }) => Number(value)) : [];
     const y1 = y_1 ? y_1.map(({ value }) => Number(value)) : [];
     const z1 = z_1 ? z_1.map(({ value }) => Number(value)) : [];
-    const x2 = x_2 ? x_2.map(({ value }) => Number(value)) : [];
-    const y2 = y_2 ? y_2.map(({ value }) => Number(value)) : [];
-    const z2 = z_2 ? z_2.map(({ value }) => Number(value)) : [];
+  
 
     const vibe1Labels = x_1.map(({ ts }) => {
-      let time = new Date(ts);
-      const hours = "" + time.getHours();
-      const mins = "" + time.getMinutes();
-      return hours.padStart(2, "0") + ":" + mins.padStart(2, "0");
-    });
-
-    const vibe2Labels = x_2.map(({ ts }) => {
       let time = new Date(ts);
       const hours = "" + time.getHours();
       const mins = "" + time.getMinutes();
@@ -442,12 +513,6 @@ window.addEventListener("DOMContentLoaded", async function() {
     for (let i = x1.length - 1; i >= 0; i--) {
       vibe1LabelsReverse.push(vibe1Labels[i]);
     }
-
-    var vibe2LabelsReverse = [];
-    for (let i = x2.length - 1; i >= 0; i--) {
-      vibe2LabelsReverse.push(vibe2Labels[i]);
-    }
-  
 
     var x1Reverse = [];
     for (let i = x1.length - 1; i >= 0; i--) {
@@ -464,20 +529,7 @@ window.addEventListener("DOMContentLoaded", async function() {
       z1Reverse.push(z1[i]);
     }
 
-    var x2Reverse = [];
-    for (let i = x2.length - 1; i >= 0; i--) {
-      x2Reverse.push(x2[i]);
-    }
-
-    var y2Reverse = [];
-    for (let i = y2.length - 1; i >= 0; i--) {
-      y2Reverse.push(y2[i]);
-    }
-
-    var z2Reverse = [];
-    for (let i = z2.length - 1; i >= 0; i--) {
-      z2Reverse.push(z2[i]);
-    }
+   
 
     new Chart(vibeChart1, {
       type: "line",
@@ -518,44 +570,6 @@ window.addEventListener("DOMContentLoaded", async function() {
       }
     });
 
-    new Chart(vibeChart2, {
-      type: "line",
-      data: {
-        labels: vibe2LabelsReverse,
-        datasets: [
-          {
-            label: "X",
-            data: x2,
-            backgroundColor: ["#4ED139"],
-            borderColor: ["#4ED139"]
-          },
-          {
-            label: "Y",
-            data: y2,
-            backgroundColor: ["#289CF4"],
-            borderColor: ["#289CF4"]
-          },
-          {
-            label: "Z",
-            data: z2,
-            backgroundColor: ["#fdca57"],
-            borderColor: ["#fdca57"]
-          }
-        ]
-      },
-      options: {
-        responsive: true,
-        maintainAspectRatio: false,
-        layout: {
-          padding: {
-            top: 20
-          }
-        },
-        plugins: {
-          legend: { display: false }
-        }
-      }
-    });
   }
 
   // RPC Call

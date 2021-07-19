@@ -122,14 +122,14 @@
           <div class="dashboard-article-header content-body item-3">
             <div class="dashboard-article-header-item">
               <img src="assets/img/dashboard_icon_noise.png" alt="" />
-              <span class="dashboard-article-header-item-title">소음센서</span>
+              <span class="dashboard-article-header-item-title">소음센서1</span>
             </div>
             <div class="dashboard-article-header-item">
               <span class="dashboard-article-header-item-sub-title">leq</span>
               <div class="dashboard-article-header-item-sub-box">
                 <span
                   class="dashboard-article-header-item-sub-box-num font-green"
-                  id="noise-leq"
+                  id="noise1-leq"
                   >-</span
                 >
                 <span
@@ -143,7 +143,7 @@
               <div class="dashboard-article-header-item-sub-box">
                 <span
                   class="dashboard-article-header-item-sub-box-num font-blue"
-                  id="noise-lmax"
+                  id="noise1-lmax"
                   >-</span
                 >
                 <span
@@ -162,7 +162,7 @@
                 > 
                 <span
                   class="dashboard-article-body-chart-index-value"
-                  id="noiseChartLeqAverage"
+                  id="noiseChart2LeqAverage"
                   >0</span
                 >
                 <span class="dashboard-article-body-chart-index-unit">dB</span>
@@ -174,14 +174,81 @@
                 >
                 <span
                   class="dashboard-article-body-chart-index-value"
-                  id="noiseChartLmaxAverage"
+                  id="noiseChart1LmaxAverage"
                   >0</span
                 >
                 <span class="dashboard-article-body-chart-index-unit">dB</span>
               </div>
             </div>
             <div class="chart">
-              <canvas id="noiseChart"></canvas>
+              <canvas id="noiseChart1"></canvas>
+            </div>
+          </div>
+        </article>
+        <article class="dashboard-article">
+          <div class="dashboard-article-header content-body item-3">
+            <div class="dashboard-article-header-item">
+              <img src="assets/img/dashboard_icon_noise.png" alt="" />
+              <span class="dashboard-article-header-item-title">소음센서2</span>
+            </div>
+            <div class="dashboard-article-header-item">
+              <span class="dashboard-article-header-item-sub-title">leq</span>
+              <div class="dashboard-article-header-item-sub-box">
+                <span
+                  class="dashboard-article-header-item-sub-box-num font-green"
+                  id="noise2-leq"
+                  >-</span
+                >
+                <span
+                  class="dashboard-article-header-item-sub-box-unit font-gray "
+                  >dB</span
+                >
+              </div>
+            </div>
+            <div class="dashboard-article-header-item">
+              <span class="dashboard-article-header-item-sub-title">L max</span>
+              <div class="dashboard-article-header-item-sub-box">
+                <span
+                  class="dashboard-article-header-item-sub-box-num font-blue"
+                  id="noise2-lmax"
+                  >-</span
+                >
+                <span
+                  class="dashboard-article-header-item-sub-box-unit font-gray "
+                  >dB</span
+                >
+              </div>
+            </div>
+          </div>
+          <div class="dashboard-article-body content-body">
+            <div class="dashboard-article-body-chart-index-box-02-item">
+              <div class="dashboard-article-body-chart-index-01">
+                <img src="assets/img/char_index_green.png" alt="" />
+                <span class="dashboard-article-body-chart-index-title"
+                  >L eq평균</span
+                > 
+                <span
+                  class="dashboard-article-body-chart-index-value"
+                  id="noiseChart1LeqAverage"
+                  >0</span
+                >
+                <span class="dashboard-article-body-chart-index-unit">dB</span>
+              </div>
+              <div class="dashboard-article-body-chart-index-02">
+                <img src="assets/img/char_index_blue.png" alt="" />
+                <span class="dashboard-article-body-chart-index-title"
+                  >L max평균</span
+                >
+                <span
+                  class="dashboard-article-body-chart-index-value"
+                  id="noiseChart2LmaxAverage"
+                  >0</span
+                >
+                <span class="dashboard-article-body-chart-index-unit">dB</span>
+              </div>
+            </div>
+            <div class="chart">
+              <canvas id="noiseChart2"></canvas>
             </div>
           </div>
         </article>
@@ -350,7 +417,8 @@
             </div>
           </div>
         </article>
-        <article class="dashboard-article">
+
+        <!-- <article class="dashboard-article">
           <div class="dashboard-article-header content-body box-item-4">
             <div class="dashboard-article-header-item">
               <img src="assets/img/dashboard_icon_noise.png" alt="" />
@@ -429,10 +497,11 @@
               </div>
             </div>
             <div class="chart">
-              <canvas id="vibeChart2"></canvas>
+              <canvas id="vibeChart1"></canvas>
             </div>
           </div>
-        </article>
+        </article> -->
+
         <!-- 화재 센서 -->
         <article class="dashboard-article-fire-box">
           <div class="dashboard-article-fire content-body">
