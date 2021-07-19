@@ -213,8 +213,7 @@ window.addEventListener("DOMContentLoaded", async function() {
 
   var endDate = new Date(endTs);
   var startDate = new Date(startTs);
-  console.log(endDate);
-  console.log(startDate);
+
   // Chart drawing
 
   {
@@ -241,9 +240,7 @@ window.addEventListener("DOMContentLoaded", async function() {
         })
       ]
     );
-    console.log(noise);
-    console.log(dust);
-    console.log(vibe);
+    
     const noiseChart = document.getElementById("noiseChart").getContext("2d");
     const dustChart = document.getElementById("dustChart").getContext("2d");
     const vibeChart1 = document.getElementById("vibeChart1").getContext("2d");
@@ -291,7 +288,7 @@ window.addEventListener("DOMContentLoaded", async function() {
     // const averageLeq = calculateAverageValue(noise.leq);
 
     //70 dB 가이드라인 표시를 위한 배열
-    const guideLineArr = new Array(288);
+    const guideLineArr = new Array(noise.lmax.length);
     for (let i = 0; i < guideLineArr.length; i++) {
       guideLineArr[i] = 70;
     }
@@ -427,17 +424,30 @@ window.addEventListener("DOMContentLoaded", async function() {
     const y2 = y_2 ? y_2.map(({ value }) => Number(value)) : [];
     const z2 = z_2 ? z_2.map(({ value }) => Number(value)) : [];
 
-    const vibeLabels = x_1.map(({ ts }) => {
+    const vibe1Labels = x_1.map(({ ts }) => {
       let time = new Date(ts);
       const hours = "" + time.getHours();
       const mins = "" + time.getMinutes();
       return hours.padStart(2, "0") + ":" + mins.padStart(2, "0");
     });
 
-    var vibeLabelsReverse = [];
+    const vibe2Labels = x_2.map(({ ts }) => {
+      let time = new Date(ts);
+      const hours = "" + time.getHours();
+      const mins = "" + time.getMinutes();
+      return hours.padStart(2, "0") + ":" + mins.padStart(2, "0");
+    });
+
+    var vibe1LabelsReverse = [];
     for (let i = x1.length - 1; i >= 0; i--) {
-      vibeLabelsReverse.push(vibeLabels[i]);
+      vibe1LabelsReverse.push(vibe1Labels[i]);
     }
+
+    var vibe2LabelsReverse = [];
+    for (let i = x2.length - 1; i >= 0; i--) {
+      vibe2LabelsReverse.push(vibe2Labels[i]);
+    }
+  
 
     var x1Reverse = [];
     for (let i = x1.length - 1; i >= 0; i--) {
@@ -472,7 +482,7 @@ window.addEventListener("DOMContentLoaded", async function() {
     new Chart(vibeChart1, {
       type: "line",
       data: {
-        labels: vibeLabelsReverse,
+        labels: vibe1LabelsReverse,
         datasets: [
           {
             label: "X",
@@ -511,7 +521,7 @@ window.addEventListener("DOMContentLoaded", async function() {
     new Chart(vibeChart2, {
       type: "line",
       data: {
-        labels: vibeLabelsReverse,
+        labels: vibe2LabelsReverse,
         datasets: [
           {
             label: "X",
