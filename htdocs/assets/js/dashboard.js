@@ -1,11 +1,5 @@
 // ()초에 한 번씩 데이터를 리프레시 시함
-async function f() {
-    return 1;
-}
-
-console.log(f().catch);
-
-// refreshData(60);
+refreshData(60);
 
 window.addEventListener('DOMContentLoaded', async function () {
     const {
@@ -271,10 +265,10 @@ window.addEventListener('DOMContentLoaded', async function () {
             .getContext('2d');
 
         //배열 안에 있는 데이터의 평균값을 계산합니다.
-        function calculateAverageValue(array) {
-            const dataArray = array;
+        function calculateAverageValue(dataArray) {
             let sum = 0;
             let average = 0;
+            console.log(dataArray[0]);
             for (let i = 0; i < dataArray.length; i++) {
                 sum = sum + Number(dataArray[i].value);
             }
@@ -304,12 +298,12 @@ window.addEventListener('DOMContentLoaded', async function () {
         document.querySelector('#dustChartFDustAverage').innerText =
             averageFinedust;
 
-        const averageX_1 = calculateAverageValue(vibe.x_1);
-        document.querySelector('#vibeCart1XAverage').innerText = averageX_1;
-        const averageY_1 = calculateAverageValue(vibe.y_1);
-        document.querySelector('#vibeCart1YAverage').innerText = averageY_1;
-        const averageZ_1 = calculateAverageValue(vibe.z_1);
-        document.querySelector('#vibeCart1ZAverage').innerText = averageZ_1;
+        // const averageX_1 = calculateAverageValue(vibe.x_1);
+        // document.querySelector('#vibeCart1XAverage').innerText = averageX_1;
+        // const averageY_1 = calculateAverageValue(vibe.y_1);
+        // document.querySelector('#vibeCart1YAverage').innerText = averageY_1;
+        // const averageZ_1 = calculateAverageValue(vibe.z_1);
+        // document.querySelector('#vibeCart1ZAverage').innerText = averageZ_1;
 
         // const averageLeq = calculateAverageValue(noise.leq);
         // const averageLeq = calculateAverageValue(noise.leq);

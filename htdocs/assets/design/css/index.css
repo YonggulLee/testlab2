@@ -1,0 +1,70 @@
+div.index-container {
+  display: -ms-grid;
+  display: grid;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  margin-top: 100px;
+}
+
+div.index-container section.login-box-01 {
+  width: 596px;
+  height: 800px;
+  color: #ffffff;
+  background-color: #1d2226;
+  border-radius: 12px;
+}
+
+div.index-container section.login-box-01 header {
+  background-image: url(../../img/index_img.png);
+  border-radius: 12px 12px 0 0;
+  width: 596px;
+  height: 208px;
+}
+
+div.index-container section.login-box-01 section.login-box-02 {
+  width: 480px;
+  margin: auto;
+  padding-top: 50px;
+}
+
+div.index-container section.login-box-01 section.login-box-02 article {
+  width: 480px;
+  height: 70px;
+  margin-top: 50px;
+}
+
+div.index-container section.login-box-01 section.login-box-02 article div {
+  color: #ff3847;
+  font-weight: 700;
+}
+
+div.index-container section.login-box-01 section.login-box-02 article div input {
+  width: 480px;
+  height: 37px;
+  background-color: #1d2226;
+  border: none;
+  border-bottom: 1px solid #515557;
+  font-size: 20px;
+  color: #ffffff;
+}
+
+div.index-container section.login-box-01 section.login-box-02 article div input:focus {
+  outline: none;
+}
+
+div.index-container section.login-box-01 section.login-box-02 button {
+  width: 480px;
+  margin: 0;
+  height: 76px;
+  margin-top: 80px;
+  background-color: #ff3847;
+  font-size: 24px;
+  color: #ffffff;
+}
+
+div.index-container section.login-box-01 footer {
+  text-align: center;
+  padding-top: 30px;
+  color: #bebebe;
+}
