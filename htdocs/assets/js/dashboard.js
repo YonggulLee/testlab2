@@ -2,16 +2,20 @@
 refreshData(60);
 
 window.addEventListener('DOMContentLoaded', async function () {
-    const {
-        data: { token },
-    } = await axios.post('https://dongsung.farota.com/api/auth/login', {
-        username: 'manager@smarf.kr',
-        password: 'uiop90-=',
-    });
+    const userToken = localStorage.getItem('access_token');
+    if (userToken === undefined) {
+        alert('로그인이 필요합니다');
+    }
+    // const {
+    //     data: { token },
+    // } = await axios.post('https://dongsung.farota.com/api/auth/login', {
+    //     username: 'manager@smarf.kr',
+    //     password: 'uiop90-=',
+    // });
 
     const farota = axios.create({
         baseURL: 'https://dongsung.farota.com/api/',
-        headers: { 'X-Authorization': 'Bearer ' + token },
+        headers: { 'X-Authorization': 'Bearer ' + userToken },
     });
 
     const SENSOR_ID_NOISE_1 = 'e8a11380-bc2e-11eb-8551-4f4bb0e28011';
@@ -507,76 +511,76 @@ window.addEventListener('DOMContentLoaded', async function () {
             },
         });
 
-        const { x_1, y_1, z_1 } = vibe;
-        const x1 = x_1 ? x_1.map(({ value }) => Number(value)) : [];
-        const y1 = y_1 ? y_1.map(({ value }) => Number(value)) : [];
-        const z1 = z_1 ? z_1.map(({ value }) => Number(value)) : [];
+        // const { x_1, y_1, z_1 } = vibe;
+        // const x1 = x_1 ? x_1.map(({ value }) => Number(value)) : [];
+        // const y1 = y_1 ? y_1.map(({ value }) => Number(value)) : [];
+        // const z1 = z_1 ? z_1.map(({ value }) => Number(value)) : [];
 
-        const vibe1Labels = x_1.map(({ ts }) => {
-            let time = new Date(ts);
-            const hours = '' + time.getHours();
-            const mins = '' + time.getMinutes();
-            return hours.padStart(2, '0') + ':' + mins.padStart(2, '0');
-        });
+        // const vibe1Labels = x_1.map(({ ts }) => {
+        //     let time = new Date(ts);
+        //     const hours = '' + time.getHours();
+        //     const mins = '' + time.getMinutes();
+        //     return hours.padStart(2, '0') + ':' + mins.padStart(2, '0');
+        // });
 
-        var vibe1LabelsReverse = [];
-        for (let i = x1.length - 1; i >= 0; i--) {
-            vibe1LabelsReverse.push(vibe1Labels[i]);
-        }
+        // var vibe1LabelsReverse = [];
+        // for (let i = x1.length - 1; i >= 0; i--) {
+        //     vibe1LabelsReverse.push(vibe1Labels[i]);
+        // }
 
-        var x1Reverse = [];
-        for (let i = x1.length - 1; i >= 0; i--) {
-            x1Reverse.push(x1[i]);
-        }
+        // var x1Reverse = [];
+        // for (let i = x1.length - 1; i >= 0; i--) {
+        //     x1Reverse.push(x1[i]);
+        // }
 
-        var y1Reverse = [];
-        for (let i = y1.length - 1; i >= 0; i--) {
-            y1Reverse.push(y1[i]);
-        }
+        // var y1Reverse = [];
+        // for (let i = y1.length - 1; i >= 0; i--) {
+        //     y1Reverse.push(y1[i]);
+        // }
 
-        var z1Reverse = [];
-        for (let i = z1.length - 1; i >= 0; i--) {
-            z1Reverse.push(z1[i]);
-        }
+        // var z1Reverse = [];
+        // for (let i = z1.length - 1; i >= 0; i--) {
+        //     z1Reverse.push(z1[i]);
+        // }
 
-        new Chart(vibeChart1, {
-            type: 'line',
-            data: {
-                labels: vibe1LabelsReverse,
-                datasets: [
-                    {
-                        label: 'X',
-                        data: x1,
-                        backgroundColor: ['#4ED139'],
-                        borderColor: ['#4ED139'],
-                    },
-                    {
-                        label: 'Y',
-                        data: y1,
-                        backgroundColor: ['#289CF4'],
-                        borderColor: ['#289CF4'],
-                    },
-                    {
-                        label: 'Z',
-                        data: z1,
-                        backgroundColor: ['#fdca57'],
-                        borderColor: ['#fdca57'],
-                    },
-                ],
-            },
-            options: {
-                responsive: true,
-                maintainAspectRatio: false,
-                layout: {
-                    padding: {
-                        top: 20,
-                    },
-                },
-                plugins: {
-                    legend: { display: false },
-                },
-            },
-        });
+        // new Chart(vibeChart1, {
+        //     type: 'line',
+        //     data: {
+        //         labels: vibe1LabelsReverse,
+        //         datasets: [
+        //             {
+        //                 label: 'X',
+        //                 data: x1,
+        //                 backgroundColor: ['#4ED139'],
+        //                 borderColor: ['#4ED139'],
+        //             },
+        //             {
+        //                 label: 'Y',
+        //                 data: y1,
+        //                 backgroundColor: ['#289CF4'],
+        //                 borderColor: ['#289CF4'],
+        //             },
+        //             {
+        //                 label: 'Z',
+        //                 data: z1,
+        //                 backgroundColor: ['#fdca57'],
+        //                 borderColor: ['#fdca57'],
+        //             },
+        //         ],
+        //     },
+        //     options: {
+        //         responsive: true,
+        //         maintainAspectRatio: false,
+        //         layout: {
+        //             padding: {
+        //                 top: 20,
+        //             },
+        //         },
+        //         plugins: {
+        //             legend: { display: false },
+        //         },
+        //     },
+        // });
     }
 
     // RPC Call
