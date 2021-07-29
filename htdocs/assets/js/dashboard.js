@@ -1,60 +1,85 @@
 // ()초에 한 번씩 데이터를 리프레시 시함
-refreshData(60);
+// refreshData(60);
 
-window.addEventListener('DOMContentLoaded', async function () {
+//화면에 필요한 전역변수
+
+//로그인 토큰
+const userToken = localStorage.getItem('access_token');
+//Farota Axios
+const farota = getFarotaAxios();
+//기기별 ID 값
+const SENSOR_ID_NOISE_1 = 'e8a11380-bc2e-11eb-8551-4f4bb0e28011';
+const SENSOR_ID_NOISE_2 = 'e8a11a40-e601-11eb-8e78-f7a9f6ae5a19';
+const SENSOR_ID_DUST = 'c4cc4150-bc2e-11eb-8551-4f4bb0e28011';
+const SENSOR_ID_VIBE = '26b984e0-b793-11eb-a7c7-c5ac42947b75';
+const SENSOR_ID_WEATER = 'd737f5b0-b9da-11eb-a7c7-c5ac42947b75';
+const SENSOR_ID_SPRIN = '446e8620-b923-11eb-a7c7-c5ac42947b75';
+const SENSOR_ID_FIRE_1 = '6bf43210-e2f6-11eb-8692-193d8d39219e';
+const SENSOR_ID_FIRE_2 = 'c8707450-e2f5-11eb-8692-193d8d39219e';
+const SENSOR_ID_FIRE_3 = '72c11220-e2f6-11eb-8692-193d8d39219e';
+const DEVICE_ID_BUZZ = 'f314d090-e2f3-11eb-8692-193d8d39219e';
+const DEVICE_ID_TRENCH = '27351810-bd26-11eb-8551-4f4bb0e28011';
+const DEVICE_ID_SPRIN_BIG = 'fd4dd1d0-c97e-11eb-8551-4f4bb0e28011';
+
+//기기별 조회를 위한 API 호출을 위한 URL 생성
+const URI_NOISE_1 = `/plugins/telemetry/DEVICE/${SENSOR_ID_NOISE_1}/values/timeseries`;
+const URI_NOISE_2 = `/plugins/telemetry/DEVICE/${SENSOR_ID_NOISE_2}/values/timeseries`;
+const URI_DUST = `/plugins/telemetry/DEVICE/${SENSOR_ID_DUST}/values/timeseries`;
+const URI_VIBE = `/plugins/telemetry/DEVICE/${SENSOR_ID_VIBE}/values/timeseries`;
+const URI_WEATHER = `/plugins/telemetry/DEVICE/${SENSOR_ID_WEATER}/values/timeseries`;
+const URI_SPRINKLER = `/plugins/telemetry/DEVICE/${SENSOR_ID_SPRIN}/values/timeseries`;
+const URI_SPRINKLER_BIG = `/plugins/telemetry/DEVICE/${DEVICE_ID_SPRIN_BIG}/values/timeseries`;
+const URI_SPRINKLER_TRENCH = `/plugins/telemetry/DEVICE/${DEVICE_ID_TRENCH}/values/timeseries`;
+const URI_FIRE_1 = `/plugins/telemetry/DEVICE/${SENSOR_ID_FIRE_1}/values/timeseries`;
+const URI_FIRE_2 = `/plugins/telemetry/DEVICE/${SENSOR_ID_FIRE_2}/values/timeseries`;
+const URI_FIRE_3 = `/plugins/telemetry/DEVICE/${SENSOR_ID_FIRE_3}/values/timeseries`;
+
+//기기별 데이터 SET
+let noise1 = null;
+let noise2 = null;
+let dust = null;
+let vibe = null;
+let weather = null;
+let sprinkler = null;
+let sprinklerBig = null;
+let sprinklerTrench = null;
+let fire1 = null;
+let fire2 = null;
+let fire3 = null;
+
+// 토큰 가져요기
+function checkToken() {
     const userToken = localStorage.getItem('access_token');
+
     if (userToken === undefined) {
         alert('로그인이 필요합니다');
+        location.href = 'index.html';
     }
-    // const {
-    //     data: { token },
-    // } = await axios.post('https://dongsung.farota.com/api/auth/login', {
-    //     username: 'manager@smarf.kr',
-    //     password: 'uiop90-=',
-    // });
-
+}
+// 파로타 axios 인스턴스 생성
+function getFarotaAxios() {
     const farota = axios.create({
         baseURL: 'https://dongsung.farota.com/api/',
         headers: { 'X-Authorization': 'Bearer ' + userToken },
     });
+    return farota;
+}
 
-    const SENSOR_ID_NOISE_1 = 'e8a11380-bc2e-11eb-8551-4f4bb0e28011';
-    const SENSOR_ID_NOISE_2 = 'e8a11a40-e601-11eb-8e78-f7a9f6ae5a19';
-    const SENSOR_ID_DUST = 'c4cc4150-bc2e-11eb-8551-4f4bb0e28011';
-    const SENSOR_ID_VIBE = '26b984e0-b793-11eb-a7c7-c5ac42947b75';
-    const SENSOR_ID_WEATER = 'd737f5b0-b9da-11eb-a7c7-c5ac42947b75';
-    const SENSOR_ID_SPRIN = '446e8620-b923-11eb-a7c7-c5ac42947b75';
-    const SENSOR_ID_FIRE_1 = '6bf43210-e2f6-11eb-8692-193d8d39219e';
-    const SENSOR_ID_FIRE_2 = 'c8707450-e2f5-11eb-8692-193d8d39219e';
-    const SENSOR_ID_FIRE_3 = '72c11220-e2f6-11eb-8692-193d8d39219e';
-    const DEVICE_ID_BUZZ = 'f314d090-e2f3-11eb-8692-193d8d39219e';
-    const DEVICE_ID_TRENCH = '27351810-bd26-11eb-8551-4f4bb0e28011';
-    const DEVICE_ID_SPRIN_BIG = 'fd4dd1d0-c97e-11eb-8551-4f4bb0e28011';
-
-    const URI_NOISE_1 = `/plugins/telemetry/DEVICE/${SENSOR_ID_NOISE_1}/values/timeseries`;
-    const URI_NOISE_2 = `/plugins/telemetry/DEVICE/${SENSOR_ID_NOISE_2}/values/timeseries`;
-    const URI_DUST = `/plugins/telemetry/DEVICE/${SENSOR_ID_DUST}/values/timeseries`;
-    const URI_VIBE = `/plugins/telemetry/DEVICE/${SENSOR_ID_VIBE}/values/timeseries`;
-    const URI_WEATHER = `/plugins/telemetry/DEVICE/${SENSOR_ID_WEATER}/values/timeseries`;
-    const URI_SPRINKLER = `/plugins/telemetry/DEVICE/${SENSOR_ID_SPRIN}/values/timeseries`;
-    const URI_SPRINKLER_BIG = `/plugins/telemetry/DEVICE/${DEVICE_ID_SPRIN_BIG}/values/timeseries`;
-    const URI_SPRINKLER_TRENCH = `/plugins/telemetry/DEVICE/${DEVICE_ID_TRENCH}/values/timeseries`;
-    const URI_FIRE_1 = `/plugins/telemetry/DEVICE/${SENSOR_ID_FIRE_1}/values/timeseries`;
-    const URI_FIRE_2 = `/plugins/telemetry/DEVICE/${SENSOR_ID_FIRE_2}/values/timeseries`;
-    const URI_FIRE_3 = `/plugins/telemetry/DEVICE/${SENSOR_ID_FIRE_3}/values/timeseries`;
-
+// 차트를 제외한 데이터 로딩
+async function getData() {
+    checkToken();
     const [
-        { data: noise1 },
-        { data: noise2 },
-        { data: dust },
-        { data: vibe },
-        { data: weather },
-        { data: sprinkler },
-        { data: sprinklerBig },
-        { data: sprinklerTrench },
-        { data: fire1 },
-        { data: fire2 },
-        { data: fire3 },
+        { data: noise1Data },
+        { data: noise2Data },
+        { data: dustData },
+        { data: vibeData },
+        { data: weatherData },
+        { data: sprinklerData },
+        { data: sprinklerBigData },
+        { data: sprinklerTrenchData },
+        { data: fire1Data },
+        { data: fire2Data },
+        { data: fire3Data },
     ] = await Promise.all([
         farota.get(URI_NOISE_1, { params: { keys: 'leq,lmax' } }),
         farota.get(URI_NOISE_2, { params: { keys: 'leq,lmax' } }),
@@ -79,6 +104,20 @@ window.addEventListener('DOMContentLoaded', async function () {
         farota.get(URI_FIRE_3, { params: { keys: 'state' } }),
     ]);
 
+    noise1 = noise1Data;
+    noise2 = noise2Data;
+    dust = dustData;
+    vibe = vibeData;
+    weather = weatherData;
+    sprinkler = sprinklerData;
+    sprinklerBig = sprinklerBigData;
+    sprinklerTrench = sprinklerTrenchData;
+    fire1 = fire1Data;
+    fire2 = fire2Data;
+    fire3 = fire3Data;
+}
+// 차트를 제외한 데이터 세팅
+function setCurrentData() {
     // 소음센서1
     document.querySelector('#noise1-leq').innerText = noise1.leq[0].value;
     document.querySelector('#noise1-lmax').innerText = noise1.lmax[0].value;
@@ -125,10 +164,9 @@ window.addEventListener('DOMContentLoaded', async function () {
         fireElem3.classList.add('bad');
     }
 
-    // 기상대
+    // 기상대 풍향
     let windDirValue = weather.windDir[0].value;
     windDirValue = Number(windDirValue);
-    // 기상대 이미지 변경
     if (
         (337.5 < windDirValue && windDirValue <= 360) ||
         (0 < windDirValue && windDirValue <= 22.5)
@@ -150,6 +188,7 @@ window.addEventListener('DOMContentLoaded', async function () {
         document.querySelector('#windDir').src = 'assets/img/windDirNW.png';
     }
 
+    //기상대 나머지 데이터
     document.querySelector('#weather-temp').innerText = Number(
         weather.outTemp[0].value
     ).toFixed(2);
@@ -213,26 +252,38 @@ window.addEventListener('DOMContentLoaded', async function () {
         sprinklerTrench.switch1_1[0].value == '1' ? '켜짐' : '꺼짐';
     document.querySelector('#trench-in').innerText =
         sprinklerTrench.switch1_2[0].value == '1' ? '켜짐' : '꺼짐';
+}
 
+// 차트 관련 변수 & 메소드
+// 데이터 로딩
+let noise1ChartData = null;
+let noise2ChartData = null;
+let dustChartData = null;
+let vibeChartData = null;
+
+// 각가의 차트를 수행할 변수
+let charTempNoise1 = null;
+let charTempNoise2 = null;
+let charTempDust = null;
+let charTempVibe = null;
+
+// 차트 데이터 로딩
+async function getChartData() {
+    // 토큰을 체크합니다
+    checkToken();
+    // 오늘의 날짜를 가져옵니다
     let now = new Date();
-
+    // 현재 시간을 가져와 타임스탬프를 생성합니다
     const endTs = now.getTime();
-
+    // 24시간 이전의 타임스템프를 생성합니다
     now.setHours(now.getHours() - 24);
     const startTs = now.getTime();
 
-    var endDate = new Date(endTs);
-    var startDate = new Date(startTs);
+    // var endDate = new Date(endTs);
+    // var startDate = new Date(startTs);
 
-    // Chart drawing
-
-    {
-        const [
-            { data: noise1 },
-            { data: noise2 },
-            { data: dust },
-            { data: vibe },
-        ] = await Promise.all([
+    const [{ data: noise1 }, { data: noise2 }, { data: dust }, { data: vibe }] =
+        await Promise.all([
             farota.get(URI_NOISE_1, {
                 params: { startTs, endTs, limit: 1000, keys: 'leq,lmax' },
             }),
@@ -257,259 +308,284 @@ window.addEventListener('DOMContentLoaded', async function () {
             }),
         ]);
 
-        const noiseChart1 = document
-            .getElementById('noiseChart1')
-            .getContext('2d');
-        const noiseChart2 = document
-            .getElementById('noiseChart2')
-            .getContext('2d');
-        const dustChart = document.getElementById('dustChart').getContext('2d');
-        const vibeChart1 = document
-            .getElementById('vibeChart1')
-            .getContext('2d');
+    noise1ChartData = noise1;
+    noise2ChartData = noise2;
+    dustChartData = dust;
+    vibeChartData = vibe;
+}
+// 배열 안에 있는 데이터의 평균값을 계산
+function calculateAverageValue(dataArray) {
+    let sum = 0;
+    let average = 0;
+    for (let i = 0; i < dataArray.length; i++) {
+        sum = sum + Number(dataArray[i].value);
+    }
+    average = sum / dataArray.length;
+    average = average.toFixed(2);
+    return average;
+}
+// 차트 엘레먼트 가져오기
+function getChartElement(strElementId, strChartType) {
+    const chartElemant = document
+        .getElementById(strElementId)
+        .getContext(strChartType);
+    return chartElemant;
+}
+// 차트 범례에 평균값을 세팅
+function setChartAverageData() {
+    const averageLeq1 = calculateAverageValue(noise1.leq);
+    document.querySelector('#noiseChart1LeqAverage').innerText = averageLeq1;
+    const averagelmax1 = calculateAverageValue(noise1.lmax);
+    document.querySelector('#noiseChart1LmaxAverage').innerText = averagelmax1;
+    const averageLeq2 = calculateAverageValue(noise2.leq);
+    document.querySelector('#noiseChart2LeqAverage').innerText = averageLeq2;
+    const averagelmax2 = calculateAverageValue(noise2.lmax);
+    document.querySelector('#noiseChart2LmaxAverage').innerText = averagelmax2;
+    // 미세먼지 차트
+    const averageuUltraFinedust = calculateAverageValue(dust.ultraFinedust);
+    document.querySelector('#dustChartUFDustAverage').innerText =
+        averageuUltraFinedust;
+    const averageFinedust = calculateAverageValue(dust.finedust);
+    document.querySelector('#dustChartFDustAverage').innerText =
+        averageFinedust;
 
-        //배열 안에 있는 데이터의 평균값을 계산합니다.
-        function calculateAverageValue(dataArray) {
-            let sum = 0;
-            let average = 0;
-            console.log(dataArray[0]);
-            for (let i = 0; i < dataArray.length; i++) {
-                sum = sum + Number(dataArray[i].value);
-            }
-            average = sum / dataArray.length;
-            average = average.toFixed(2);
-            return average;
-        }
-        //범례 평균값 세팅
-        // 노이즈 차트
-        const averageLeq1 = calculateAverageValue(noise1.leq);
-        document.querySelector('#noiseChart1LeqAverage').innerText =
-            averageLeq1;
-        const averagelmax1 = calculateAverageValue(noise1.lmax);
-        document.querySelector('#noiseChart1LmaxAverage').innerText =
-            averagelmax1;
-        const averageLeq2 = calculateAverageValue(noise2.leq);
-        document.querySelector('#noiseChart2LeqAverage').innerText =
-            averageLeq2;
-        const averagelmax2 = calculateAverageValue(noise2.lmax);
-        document.querySelector('#noiseChart2LmaxAverage').innerText =
-            averagelmax2;
-        // 미세먼지 차트
-        const averageuUltraFinedust = calculateAverageValue(dust.ultraFinedust);
-        document.querySelector('#dustChartUFDustAverage').innerText =
-            averageuUltraFinedust;
-        const averageFinedust = calculateAverageValue(dust.finedust);
-        document.querySelector('#dustChartFDustAverage').innerText =
-            averageFinedust;
+    // const averageX_1 = calculateAverageValue(vibe.x_1);
+    // document.querySelector('#vibeCart1XAverage').innerText = averageX_1;
+    // const averageY_1 = calculateAverageValue(vibe.y_1);
+    // document.querySelector('#vibeCart1YAverage').innerText = averageY_1;
+    // const averageZ_1 = calculateAverageValue(vibe.z_1);
+    // document.querySelector('#vibeCart1ZAverage').innerText = averageZ_1;
 
-        // const averageX_1 = calculateAverageValue(vibe.x_1);
-        // document.querySelector('#vibeCart1XAverage').innerText = averageX_1;
-        // const averageY_1 = calculateAverageValue(vibe.y_1);
-        // document.querySelector('#vibeCart1YAverage').innerText = averageY_1;
-        // const averageZ_1 = calculateAverageValue(vibe.z_1);
-        // document.querySelector('#vibeCart1ZAverage').innerText = averageZ_1;
+    // const averageLeq = calculateAverageValue(noise.leq);
+    // const averageLeq = calculateAverageValue(noise.leq);
+    // const averageLeq = calculateAverageValue(noise.leq);
+}
+// 차트 가이드라인 생성
+function getGuideLineArray(numGuidePoint, objOriginData) {
+    const guideLineArr = new Array(objOriginData.lmax.length);
+    for (let i = 0; i < guideLineArr.length; i++) {
+        guideLineArr[i] = numGuidePoint;
+    }
+    return guideLineArr;
+}
+// 배열 순서를 거꾸로 변경
+function reverseArrayOrder(targetArray) {
+    let reverseArray = [];
+    for (let i = targetArray.length - 1; i >= 0; i--) {
+        reverseArray.push(targetArray[i]);
+    }
+    return reverseArray;
+}
+// 2라인 차트를 생성합니다.
+function creatTwoLineChart(
+    dom_elemntOfChart,
+    str_ChartType,
+    obj_chartData1,
+    obj_chartData2,
+    obj_guideLineArray,
+    str_legend1,
+    str_legend2
+) {
+    // charTempNoise1 = new Chart(noiseChart1, {
+    if (obj_guideLineArray == null) {
+        chart = new Chart(dom_elemntOfChart, {
+            type: str_ChartType,
+            data: {
+                labels: obj_chartData1.map(({ ts }) => {
+                    let time = new Date(ts);
+                    const hours = '' + time.getHours();
+                    const mins = '' + time.getMinutes();
+                    return hours.padStart(2, '0') + ':' + mins.padStart(2, '0');
+                }),
+                datasets: [
+                    {
+                        label: str_legend1,
+                        data: obj_chartData1.map(({ value }) => value),
+                        backgroundColor: ['#4ED139'],
+                        borderColor: ['#4ED139'],
+                    },
+                    {
+                        label: str_legend2,
+                        data: obj_chartData2.map(({ value }) => value),
+                        backgroundColor: ['#289CF4'],
+                        borderColor: ['#289CF4'],
+                    },
+                ],
+            },
+            options: {
+                borderWidth: 2,
+                elements: {
+                    point: {
+                        pointStyle: 'line',
+                        hoverBorderWidth: 0,
+                        borderWidth: 0,
+                    },
+                },
+                responsive: true,
+                maintainAspectRatio: false,
+                layout: {
+                    padding: {
+                        top: 20,
+                    },
+                },
+                plugins: {
+                    legend: {
+                        display: false,
+                    },
+                },
+            },
+        });
+    } else {
+        chart = new Chart(dom_elemntOfChart, {
+            type: str_ChartType,
+            data: {
+                labels: obj_chartData1.map(({ ts }) => {
+                    let time = new Date(ts);
+                    const hours = '' + time.getHours();
+                    const mins = '' + time.getMinutes();
+                    return hours.padStart(2, '0') + ':' + mins.padStart(2, '0');
+                }),
+                datasets: [
+                    {
+                        label: str_legend1,
+                        data: obj_chartData1.map(({ value }) => value),
+                        backgroundColor: ['#4ED139'],
+                        borderColor: ['#4ED139'],
+                    },
+                    {
+                        label: str_legend2,
+                        data: obj_chartData2.map(({ value }) => value),
+                        backgroundColor: ['#289CF4'],
+                        borderColor: ['#289CF4'],
+                    },
+                    {
+                        label: 'guideLine',
+                        data: obj_guideLineArray,
+                        backgroundColor: ['red'],
+                        borderColor: ['red'],
+                    },
+                ],
+            },
+            options: {
+                borderWidth: 2,
+                elements: {
+                    point: {
+                        pointStyle: 'line',
+                        hoverBorderWidth: 0,
+                        borderWidth: 0,
+                    },
+                },
+                responsive: true,
+                maintainAspectRatio: false,
+                layout: {
+                    padding: {
+                        top: 20,
+                    },
+                },
+                plugins: {
+                    legend: {
+                        display: false,
+                    },
+                },
+            },
+        });
+    }
 
-        // const averageLeq = calculateAverageValue(noise.leq);
-        // const averageLeq = calculateAverageValue(noise.leq);
-        // const averageLeq = calculateAverageValue(noise.leq);
+    return chart;
+}
+
+function updateTwoLineChart(obj_chartData1, obj_chartData2) {
+    charTempNoise1.data.datasets.data = obj_chartData1.map(
+        ({ value }) => value
+    );
+    charTempNoise1.data.datasets.data = obj_chartData2.map(
+        ({ value }) => value
+    );
+    // console.log('chart update!');
+    return chart;
+}
+
+// 화면 초기화
+window.addEventListener('DOMContentLoaded', async function () {
+    if (userToken === undefined) {
+        alert('로그인이 필요합니다');
+        location.href = 'index.html';
+    }
+
+    const farota = getFarotaAxios();
+    // 서버에서 돔요소가 로딩되는 시점에 최초의 데이터를 로딩합니다
+    await getData();
+    // 차트를 제외한 데이터들을 삽압합니다
+    setCurrentData();
+
+    // Chart 그리기
+    {
+        // 차트 데이들을 서버에서 불럽옵니다
+        await getChartData();
+        // 차트 엘리먼트 가져오기
+        const noiseChart1 = getChartElement('noiseChart1', '2d');
+        const noiseChart2 = getChartElement('noiseChart2', '2d');
+        const dustChart = getChartElement('dustChart', '2d');
+        const vibeChart = getChartElement('vibeChart', '2d');
+
+        // 전체 Chart 범례 평균값 세팅
+        setChartAverageData();
 
         //70 dB 가이드라인 표시를 위한 배열
-        const noise1GuideLineArr = new Array(noise1.lmax.length);
-        for (let i = 0; i < noise1GuideLineArr.length; i++) {
-            noise1GuideLineArr[i] = 70;
-        }
+        const noise1GuideLineArr = getGuideLineArray(70, noise1ChartData);
+        const noise2GuideLineArr = getGuideLineArray(70, noise2ChartData);
 
-        const noise2GuideLineArr = new Array(noise2.lmax.length);
-        for (let i = 0; i < noise2GuideLineArr.length; i++) {
-            noise2GuideLineArr[i] = 70;
-        }
+        // API에서 꺼꾸로 넘어오고 있는 데이터의 순서 반전
+        let noise1Leq = noise1ChartData.leq;
+        let noise1LeqReverse = reverseArrayOrder(noise1Leq);
 
-        // 순서 반전
-        var noise1LeqReverse = [];
-        for (let i = noise1.leq.length - 1; i >= 0; i--) {
-            noise1LeqReverse.push(noise1.leq[i]);
-        }
+        let noise1Lmax = noise1ChartData.lmax;
+        let noise1LmaxReverse = reverseArrayOrder(noise1Lmax);
 
-        var noise1LmaxReverse = [];
-        for (let i = noise1.lmax.length - 1; i >= 0; i--) {
-            noise1LmaxReverse.push(noise1.lmax[i]);
-        }
+        let noise2Leq = noise2ChartData.leq;
+        let noise2LeqReverse = reverseArrayOrder(noise2Leq);
 
-        var noise2LeqReverse = [];
-        for (let i = noise2.leq.length - 1; i >= 0; i--) {
-            noise2LeqReverse.push(noise2.leq[i]);
-        }
+        let noise2Lmax = noise2ChartData.lmax;
+        let noise2LmaxReverse = reverseArrayOrder(noise2Lmax);
 
-        var noise2LmaxReverse = [];
-        for (let i = noise2.lmax.length - 1; i >= 0; i--) {
-            noise2LmaxReverse.push(noise2.lmax[i]);
-        }
+        // 노이즈 1 차트 생성
+        charTempNoise1 = creatTwoLineChart(
+            noiseChart1,
+            'line',
+            noise1LeqReverse,
+            noise1LmaxReverse,
+            noise1GuideLineArr,
+            'leq',
+            'lmax'
+        );
 
-        new Chart(noiseChart1, {
-            type: 'line',
-            data: {
-                labels: noise1LeqReverse.map(({ ts }) => {
-                    let time = new Date(ts);
-                    const hours = '' + time.getHours();
-                    const mins = '' + time.getMinutes();
-                    return hours.padStart(2, '0') + ':' + mins.padStart(2, '0');
-                }),
-                datasets: [
-                    {
-                        label: 'leq',
-                        data: noise1LeqReverse.map(({ value }) => value),
-                        backgroundColor: ['#4ED139'],
-                        borderColor: ['#4ED139'],
-                    },
-                    {
-                        label: 'lmax',
-                        data: noise1LmaxReverse.map(({ value }) => value),
-                        backgroundColor: ['#289CF4'],
-                        borderColor: ['#289CF4'],
-                    },
-                    {
-                        label: 'guideLine',
-                        data: noise1GuideLineArr,
-                        backgroundColor: ['red'],
-                        borderColor: ['red'],
-                    },
-                ],
-            },
-            options: {
-                borderWidth: 2,
-                elements: {
-                    point: {
-                        pointStyle: 'line',
-                        hoverBorderWidth: 0,
-                        borderWidth: 0,
-                    },
-                },
-                responsive: true,
-                maintainAspectRatio: false,
-                layout: {
-                    padding: {
-                        top: 20,
-                    },
-                },
-                plugins: {
-                    legend: {
-                        display: false,
-                    },
-                },
-            },
-        });
+        // 노이즈 2 차트 생성
+        charTempNoise2 = creatTwoLineChart(
+            noiseChart2,
+            'line',
+            noise2LeqReverse,
+            noise2LmaxReverse,
+            noise2GuideLineArr,
+            'leq',
+            'lmax'
+        );
 
-        new Chart(noiseChart2, {
-            type: 'line',
-            data: {
-                labels: noise2LeqReverse.map(({ ts }) => {
-                    let time = new Date(ts);
-                    const hours = '' + time.getHours();
-                    const mins = '' + time.getMinutes();
-                    return hours.padStart(2, '0') + ':' + mins.padStart(2, '0');
-                }),
-                datasets: [
-                    {
-                        label: 'leq',
-                        data: noise2LeqReverse.map(({ value }) => value),
-                        backgroundColor: ['#4ED139'],
-                        borderColor: ['#4ED139'],
-                    },
-                    {
-                        label: 'lmax',
-                        data: noise2LmaxReverse.map(({ value }) => value),
-                        backgroundColor: ['#289CF4'],
-                        borderColor: ['#289CF4'],
-                    },
-                    {
-                        label: 'guideLine',
-                        data: noise2GuideLineArr,
-                        backgroundColor: ['red'],
-                        borderColor: ['red'],
-                    },
-                ],
-            },
-            options: {
-                borderWidth: 2,
-                elements: {
-                    point: {
-                        pointStyle: 'line',
-                        hoverBorderWidth: 0,
-                        borderWidth: 0,
-                    },
-                },
-                responsive: true,
-                maintainAspectRatio: false,
-                layout: {
-                    padding: {
-                        top: 20,
-                    },
-                },
-                plugins: {
-                    legend: {
-                        display: false,
-                    },
-                },
-            },
-        });
+        // API에서 꺼꾸로 넘어오고 있는 데이터의 순서 반전
+        let finedust = dustChartData.finedust;
+        let finedustReverse = reverseArrayOrder(finedust);
 
-        var finedustReverse = [];
-        for (let i = dust.finedust.length - 1; i >= 0; i--) {
-            finedustReverse.push(dust.finedust[i]);
-        }
+        let ultrafinedust = dustChartData.ultraFinedust;
+        let ultraFinedustReverse = reverseArrayOrder(ultrafinedust);
 
-        var ultraFinedustReverse = [];
-        for (let i = dust.ultraFinedust.length - 1; i >= 0; i--) {
-            ultraFinedustReverse.push(dust.ultraFinedust[i]);
-        }
-
-        new Chart(dustChart, {
-            type: 'line',
-            data: {
-                labels: finedustReverse.map(({ ts }) => {
-                    let time = new Date(ts);
-                    const hours = '' + time.getHours();
-                    const mins = '' + time.getMinutes();
-                    return hours.padStart(2, '0') + ':' + mins.padStart(2, '0');
-                }),
-                datasets: [
-                    {
-                        label: '2.5pm',
-                        data: ultraFinedustReverse.map(({ value }) => value),
-                        backgroundColor: ['#4ED139'],
-                        borderColor: ['#4ED139'],
-                    },
-                    {
-                        label: '10pm',
-                        data: finedustReverse.map(({ value }) => value),
-                        backgroundColor: ['#289CF4'],
-                        borderColor: ['#289CF4'],
-                    },
-                ],
-            },
-            options: {
-                borderWidth: 1,
-                elements: {
-                    point: {
-                        pointStyle: 'line',
-                        hoverBorderWidth: 0,
-                        borderWidth: 0,
-                    },
-                },
-                responsive: true,
-                maintainAspectRatio: false,
-                layout: {
-                    padding: {
-                        top: 20,
-                    },
-                },
-                plugins: {
-                    legend: {
-                        display: false,
-                    },
-                },
-            },
-        });
+        // 노이즈 2 차트 생성
+        charTempDust = creatTwoLineChart(
+            dustChart,
+            'line',
+            finedustReverse,
+            ultraFinedustReverse,
+            '2.5pm',
+            '10pm'
+        );
 
         // const { x_1, y_1, z_1 } = vibe;
         // const x1 = x_1 ? x_1.map(({ value }) => Number(value)) : [];
@@ -595,6 +671,7 @@ window.addEventListener('DOMContentLoaded', async function () {
 
             document.querySelector('#sprinkler-' + valveNo).innerText =
                 onOff == '1' ? '켜짐' : '꺼짐';
+            console.log(body);
         };
 
         document
@@ -844,3 +921,408 @@ window.addEventListener('DOMContentLoaded', async function () {
             });
     }
 });
+
+// 화면 비동기 리프레시
+setInterval(async function () {
+    if (userToken === undefined) {
+        alert('로그인이 필요합니다');
+        location.href = 'index.html';
+    }
+
+    const farota = getFarotaAxios();
+    // 서버에서 돔요소가 로딩되는 시점에 최초의 데이터를 로딩합니다
+    await getData();
+    // 차트를 제외한 데이터들을 삽압합니다
+    setCurrentData();
+
+    // Chart 그리기
+    {
+        // 차트 데이들을 서버에서 불럽옵니다
+        await getChartData();
+        // 차트 엘리먼트 가져오기
+        const noiseChart1 = getChartElement('noiseChart1', '2d');
+        const noiseChart2 = getChartElement('noiseChart2', '2d');
+        const dustChart = getChartElement('dustChart', '2d');
+        const vibeChart = getChartElement('vibeChart', '2d');
+
+        // 전체 Chart 범례 평균값 세팅
+        setChartAverageData();
+
+        //70 dB 가이드라인 표시를 위한 배열
+        const noise1GuideLineArr = getGuideLineArray(70, noise1ChartData);
+        const noise2GuideLineArr = getGuideLineArray(70, noise2ChartData);
+
+        // API에서 꺼꾸로 넘어오고 있는 데이터의 순서 반전
+        let noise1Leq = noise1ChartData.leq;
+        let noise1LeqReverse = reverseArrayOrder(noise1Leq);
+
+        let noise1Lmax = noise1ChartData.lmax;
+        let noise1LmaxReverse = reverseArrayOrder(noise1Lmax);
+
+        let noise2Leq = noise2ChartData.leq;
+        let noise2LeqReverse = reverseArrayOrder(noise2Leq);
+
+        let noise2Lmax = noise2ChartData.lmax;
+        let noise2LmaxReverse = reverseArrayOrder(noise2Lmax);
+
+        // 노이즈 1 차트 업데이트
+
+        charTempNoise1 = updateTwoLineChart(
+            noise1LeqReverse,
+            noise1LmaxReverse
+        );
+
+        // 노이즈 2 차트 생성
+        charTempNoise2 = updateTwoLineChart(
+            noise2LeqReverse,
+            noise2LmaxReverse
+        );
+
+        // API에서 꺼꾸로 넘어오고 있는 데이터의 순서 반전
+        let finedust = dustChartData.finedust;
+        let finedustReverse = reverseArrayOrder(finedust);
+
+        let ultrafinedust = dustChartData.ultraFinedust;
+        let ultraFinedustReverse = reverseArrayOrder(ultrafinedust);
+
+        // 더스트 차트 업데이트
+        charTempDust = updateTwoLineChart(
+            finedustReverse,
+            ultraFinedustReverse
+        );
+
+        // const { x_1, y_1, z_1 } = vibe;
+        // const x1 = x_1 ? x_1.map(({ value }) => Number(value)) : [];
+        // const y1 = y_1 ? y_1.map(({ value }) => Number(value)) : [];
+        // const z1 = z_1 ? z_1.map(({ value }) => Number(value)) : [];
+
+        // const vibe1Labels = x_1.map(({ ts }) => {
+        //     let time = new Date(ts);
+        //     const hours = '' + time.getHours();
+        //     const mins = '' + time.getMinutes();
+        //     return hours.padStart(2, '0') + ':' + mins.padStart(2, '0');
+        // });
+
+        // var vibe1LabelsReverse = [];
+        // for (let i = x1.length - 1; i >= 0; i--) {
+        //     vibe1LabelsReverse.push(vibe1Labels[i]);
+        // }
+
+        // var x1Reverse = [];
+        // for (let i = x1.length - 1; i >= 0; i--) {
+        //     x1Reverse.push(x1[i]);
+        // }
+
+        // var y1Reverse = [];
+        // for (let i = y1.length - 1; i >= 0; i--) {
+        //     y1Reverse.push(y1[i]);
+        // }
+
+        // var z1Reverse = [];
+        // for (let i = z1.length - 1; i >= 0; i--) {
+        //     z1Reverse.push(z1[i]);
+        // }
+
+        // new Chart(vibeChart1, {
+        //     type: 'line',
+        //     data: {
+        //         labels: vibe1LabelsReverse,
+        //         datasets: [
+        //             {
+        //                 label: 'X',
+        //                 data: x1,
+        //                 backgroundColor: ['#4ED139'],
+        //                 borderColor: ['#4ED139'],
+        //             },
+        //             {
+        //                 label: 'Y',
+        //                 data: y1,
+        //                 backgroundColor: ['#289CF4'],
+        //                 borderColor: ['#289CF4'],
+        //             },
+        //             {
+        //                 label: 'Z',
+        //                 data: z1,
+        //                 backgroundColor: ['#fdca57'],
+        //                 borderColor: ['#fdca57'],
+        //             },
+        //         ],
+        //     },
+        //     options: {
+        //         responsive: true,
+        //         maintainAspectRatio: false,
+        //         layout: {
+        //             padding: {
+        //                 top: 20,
+        //             },
+        //         },
+        //         plugins: {
+        //             legend: { display: false },
+        //         },
+        //     },
+        // });
+    }
+
+    // RPC Call
+    {
+        const sprinklerCtrl = async (valveNo, onOff) => {
+            const body = {
+                method: 'setOnOff',
+                params: { valveNo, onOff: onOff ? 1 : 0 },
+            };
+
+            await farota.post(`/plugins/rpc/oneway/${SENSOR_ID_SPRIN}`, body);
+
+            document.querySelector('#sprinkler-' + valveNo).innerText =
+                onOff == '1' ? '켜짐' : '꺼짐';
+            // console.log('good!');
+        };
+
+        document
+            .querySelector('#ctrl-1 .sprinkler-btn-on')
+            .addEventListener('click', () => {
+                sprinklerCtrl(1, true);
+            });
+        document
+            .querySelector('#ctrl-1 .sprinkler-btn-off')
+            .addEventListener('click', () => {
+                sprinklerCtrl(1, false);
+            });
+        document
+            .querySelector('#ctrl-2 .sprinkler-btn-on')
+            .addEventListener('click', () => {
+                sprinklerCtrl(2, true);
+            });
+        document
+            .querySelector('#ctrl-2 .sprinkler-btn-off')
+            .addEventListener('click', () => {
+                sprinklerCtrl(2, false);
+            });
+        document
+            .querySelector('#ctrl-3 .sprinkler-btn-on')
+            .addEventListener('click', () => {
+                sprinklerCtrl(3, true);
+            });
+        document
+            .querySelector('#ctrl-3 .sprinkler-btn-off')
+            .addEventListener('click', () => {
+                sprinklerCtrl(3, false);
+            });
+        document
+            .querySelector('#ctrl-4 .sprinkler-btn-on')
+            .addEventListener('click', () => {
+                sprinklerCtrl(4, true);
+            });
+        document
+            .querySelector('#ctrl-4 .sprinkler-btn-off')
+            .addEventListener('click', () => {
+                sprinklerCtrl(4, false);
+            });
+        document
+            .querySelector('#ctrl-5 .sprinkler-btn-on')
+            .addEventListener('click', () => {
+                sprinklerCtrl(5, true);
+            });
+        document
+            .querySelector('#ctrl-5 .sprinkler-btn-off')
+            .addEventListener('click', () => {
+                sprinklerCtrl(5, false);
+            });
+        document
+            .querySelector('#ctrl-6 .sprinkler-btn-on')
+            .addEventListener('click', () => {
+                sprinklerCtrl(6, true);
+            });
+        document
+            .querySelector('#ctrl-6 .sprinkler-btn-off')
+            .addEventListener('click', () => {
+                sprinklerCtrl(6, false);
+            });
+        document.querySelector('#alarm-1').addEventListener('click', () => {
+            farota.post(`/plugins/rpc/oneway/${DEVICE_ID_BUZZ}`, {
+                method: 'setOnOff',
+                params: { valveNo: 1, onOff: 1 },
+            });
+        });
+
+        document.querySelector('#alarm-2').addEventListener('click', () => {
+            farota.post(`/plugins/rpc/oneway/${DEVICE_ID_BUZZ}`, {
+                method: 'setOnOff',
+                params: { valveNo: 2, onOff: 1 },
+            });
+        });
+
+        // 대형 살수기 펌프 on/off
+        const BigSpringklerPumpBtn = document.querySelector(
+            '.big-sprinkler #pump-toggle'
+        );
+        BigSpringklerPumpBtn.addEventListener('click', () => {
+            let className = BigSpringklerPumpBtn.className;
+            switch (className) {
+                case 'sprinkler-btn-on':
+                    BigSpringklerPumpBtn.className = 'sprinkler-btn-off';
+                    BigSpringklerPumpBtn.innerHTML = 'OFF';
+                    farota.post(`/plugins/rpc/oneway/${DEVICE_ID_SPRIN_BIG}`, {
+                        method: 'setOnOff',
+                        params: { onOff: 0, valveNo: 1, switchNo: 2 },
+                    });
+                    break;
+                case 'sprinkler-btn-off':
+                    BigSpringklerPumpBtn.className = 'sprinkler-btn-on';
+                    BigSpringklerPumpBtn.innerHTML = 'ON';
+                    farota.post(`/plugins/rpc/oneway/${DEVICE_ID_SPRIN_BIG}`, {
+                        method: 'setOnOff',
+                        params: { onOff: 1, valveNo: 1, switchNo: 2 },
+                    });
+                    break;
+                default:
+            }
+        });
+
+        // document
+        //   .querySelector(".big-sprinkler #pump-off")
+        //   .addEventListener("click", () => {
+        //     farota.post(`/plugins/rpc/oneway/${DEVICE_ID_SPRIN_BIG}`, {
+        //       method: "setOnOff",
+        //       params: { onOff: 0, valveNo: 1, switchNo: 2 }
+        //     });
+        //     document.querySelector(".big-sprinkler-status").innerText = "꺼짐";
+        //   });
+        // document
+        //   .querySelector(".big-sprinkler #pump-on")
+        //   .addEventListener("click", () => {
+        //     farota.post(`/plugins/rpc/oneway/${DEVICE_ID_SPRIN_BIG}`, {
+        //       method: "setOnOff",
+        //       params: { onOff: 1, valveNo: 1, switchNo: 2 }
+        //     });
+        //     document.querySelector(".big-sprinkler-status").innerText = "켜짐";
+        //   });
+
+        // 대형 살수기 스윙 on/off
+        const BigSpringklerSwingBtn = document.querySelector(
+            '.big-sprinkler #swing-toggle'
+        );
+        BigSpringklerSwingBtn.addEventListener('click', () => {
+            let className = BigSpringklerSwingBtn.className;
+            switch (className) {
+                case 'sprinkler-btn-on':
+                    BigSpringklerSwingBtn.className = 'sprinkler-btn-off';
+                    BigSpringklerSwingBtn.innerHTML = 'OFF';
+                    farota.post(`/plugins/rpc/oneway/${DEVICE_ID_SPRIN_BIG}`, {
+                        method: 'setOnOff',
+                        params: { onOff: 0, valveNo: 1, switchNo: 4 },
+                    });
+                    break;
+                case 'sprinkler-btn-off':
+                    BigSpringklerSwingBtn.className = 'sprinkler-btn-on';
+                    BigSpringklerSwingBtn.innerHTML = 'ON';
+                    farota.post(`/plugins/rpc/oneway/${DEVICE_ID_SPRIN_BIG}`, {
+                        method: 'setOnOff',
+                        params: { onOff: 1, valveNo: 1, switchNo: 4 },
+                    });
+                    break;
+                default:
+            }
+        });
+        // document
+        //   .querySelector(".big-sprinkler #swing-off")
+        //   .addEventListener("click", () => {
+        //     farota.post(`/plugins/rpc/oneway/${DEVICE_ID_SPRIN_BIG}`, {
+        //       method: "setOnOff",
+        //       params: { onOff: 0, valveNo: 1, switchNo: 4 }
+        //     });
+        //   });
+        // document
+        //   .querySelector(".big-sprinkler #swing-on")
+        //   .addEventListener("click", () => {
+        //     farota.post(`/plugins/rpc/oneway/${DEVICE_ID_SPRIN_BIG}`, {
+        //       method: "setOnOff",
+        //       params: { onOff: 1, valveNo: 1, switchNo: 4 }
+        //     });
+        //   });
+
+        // 대형 살수기 리프트 on/off
+        const BigSpringklerLiftBtn = document.querySelector(
+            '.big-sprinkler #lift-toggle'
+        );
+        BigSpringklerLiftBtn.addEventListener('click', () => {
+            let className = BigSpringklerLiftBtn.className;
+            switch (className) {
+                case 'sprinkler-btn-on':
+                    BigSpringklerLiftBtn.className = 'sprinkler-btn-off';
+                    BigSpringklerLiftBtn.innerHTML = 'OFF';
+                    farota.post(`/plugins/rpc/oneway/${DEVICE_ID_SPRIN_BIG}`, {
+                        method: 'setOnOff',
+                        params: { onOff: 0, valveNo: 1, switchNo: 3 },
+                    });
+                    break;
+                case 'sprinkler-btn-off':
+                    BigSpringklerLiftBtn.className = 'sprinkler-btn-on';
+                    BigSpringklerLiftBtn.innerHTML = 'ON';
+                    farota.post(`/plugins/rpc/oneway/${DEVICE_ID_SPRIN_BIG}`, {
+                        method: 'setOnOff',
+                        params: { onOff: 1, valveNo: 1, switchNo: 3 },
+                    });
+                    break;
+                default:
+            }
+        });
+        // document
+        //   .querySelector(".big-sprinkler #lift-off")
+        //   .addEventListener("click", () => {
+        //     farota.post(`/plugins/rpc/oneway/${DEVICE_ID_SPRIN_BIG}`, {
+        //       method: "setOnOff",
+        //       params: { onOff: 0, valveNo: 1, switchNo: 3 }
+        //     });
+        //   });
+        // document
+        //   .querySelector(".big-sprinkler #lift-on")
+        //   .addEventListener("click", () => {
+        //     farota.post(`/plugins/rpc/oneway/${DEVICE_ID_SPRIN_BIG}`, {
+        //       method: "setOnOff",
+        //       params: { onOff: 1, valveNo: 1, switchNo: 3 }
+        //     });
+        //   });
+
+        // 게이트 외부 살수 on/off
+        document
+            .querySelector('#trench-out-off')
+            .addEventListener('click', () => {
+                farota.post(`/plugins/rpc/oneway/${DEVICE_ID_TRENCH}`, {
+                    method: 'setOnOff',
+                    params: { onOff: 0, valveNo: 1, switchNo: 1 },
+                });
+                document.querySelector('#trench-out').innerText = '꺼짐';
+            });
+        document
+            .querySelector('#trench-out-on')
+            .addEventListener('click', () => {
+                farota.post(`/plugins/rpc/oneway/${DEVICE_ID_TRENCH}`, {
+                    method: 'setOnOff',
+                    params: { onOff: 1, valveNo: 1, switchNo: 1 },
+                });
+                document.querySelector('#trench-out').innerText = '켜짐';
+            });
+
+        // 게이트 내부 살수 on/off
+        document
+            .querySelector('#trench-in-off')
+            .addEventListener('click', () => {
+                farota.post(`/plugins/rpc/oneway/${DEVICE_ID_TRENCH}`, {
+                    method: 'setOnOff',
+                    params: { onOff: 0, valveNo: 1, switchNo: 2 },
+                });
+                document.querySelector('#trench-in').innerText = '꺼짐';
+            });
+        document
+            .querySelector('#trench-in-on')
+            .addEventListener('click', () => {
+                farota.post(`/plugins/rpc/oneway/${DEVICE_ID_TRENCH}`, {
+                    method: 'setOnOff',
+                    params: { onOff: 1, valveNo: 1, switchNo: 2 },
+                });
+                document.querySelector('#trench-in').innerText = '켜짐';
+            });
+    }
+    console.log('data update!');
+}, 10 * 1000);
