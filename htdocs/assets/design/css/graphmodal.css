@@ -1,0 +1,87 @@
+.graph-modal-container {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+}
+
+.graph-modal-container section {
+  width: 80%;
+  height: 80%;
+  margin-top: 5%;
+  margin-left: 10%;
+  background-color: #1d2226;
+  border-radius: 12px;
+}
+
+.graph-modal-container section header {
+  border: 1px solid red;
+  display: -ms-grid;
+  display: grid;
+  -ms-grid-columns: 1fr 120px;
+      grid-template-columns: 1fr 120px;
+  padding: 10px;
+}
+
+.graph-modal-container section header h3 {
+  margin: 10px;
+}
+
+.graph-modal-container section article {
+  border: 1px solid red;
+  display: -ms-grid;
+  display: grid;
+  -ms-grid-columns: 420px 1fr;
+      grid-template-columns: 420px 1fr;
+  padding: 10px;
+  height: 85%;
+}
+
+.graph-modal-container section article div.table-haeder {
+  border: 1px solid red;
+  margin: 10px;
+  width: 96%;
+  height: 96%;
+}
+
+.graph-modal-container section article div.table-haeder div.table-header-box {
+  border: 1px solid red;
+  display: -ms-grid;
+  display: grid;
+  -ms-grid-columns: 1fr 1fr 1fr 1fr;
+      grid-template-columns: 1fr 1fr 1fr 1fr;
+  border-bottom: 1px solid gray;
+  color: gray;
+}
+
+.graph-modal-container section article div.table-haeder div.table-header-box div {
+  padding: 5px;
+}
+
+.graph-modal-container section article div.table-haeder div.table-item-box {
+  border: 1px solid red;
+  display: -ms-grid;
+  display: grid;
+  -ms-grid-columns: 1fr 1fr 1fr 1fr;
+      grid-template-columns: 1fr 1fr 1fr 1fr;
+  border-bottom: 1px solid gray;
+  color: #dddddd;
+}
+
+.graph-modal-container section article div.table-haeder div.table-item-box div {
+  padding: 5px;
+}
+
+.graph-modal-container section article div.chart-area {
+  border: 1px solid red;
+  margin: 10px;
+  width: 96%;
+  height: 96%;
+}
+
+.graph-modal-container section footer {
+  border: 1px solid red;
+  margin: 10px 10px 10px 20px;
+}

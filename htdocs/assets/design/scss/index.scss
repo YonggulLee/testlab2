@@ -1,15 +1,15 @@
 // colors
 // Default color
-$ske-red: #ff3847;
+$ske-red: #ff3847 !global;
 
 // background
-$bg-lv-00: #000000;
-$bg-lv-01: #1d2226;
+$bg-lv-00: #000000 !global;
+$bg-lv-01: #1d2226 !global;
 
 // text
-$text-place-holder: #797979;
-$text-lv-00: #ffffff;
-$text-lv-01: #bebebe;
+$text-place-holder: #797979 !global;
+$text-lv-00: #ffffff !global;
+$text-lv-01: #bebebe !global;
 
 //font-size
 
@@ -22,69 +22,69 @@ $height-login-box-01_article: 70px;
 
 // Main
 div.index-container {
-    display: grid;
-    justify-content: center;
-    margin-top: 100px;
+  display: grid;
+  justify-content: center;
+  margin-top: 100px;
 
-    section.login-box-01 {
-        // border: 1px solid red;
-        width: $width-login-box-01;
-        height: $height-login-box-01;
-        color: $text-lv-00;
-        background-color: $bg-lv-01;
-        border-radius: 12px;
-        // display: grid;
+  section.login-box-01 {
+    // border: 1px solid red;
+    width: $width-login-box-01;
+    height: $height-login-box-01;
+    color: $text-lv-00;
+    background-color: $bg-lv-01;
+    border-radius: 12px;
+    // display: grid;
 
-        header {
-            // border: 1px solid red;
-            background-image: url(../../img/index_img.png);
-            border-radius: 12px 12px 0 0;
-            width: $width-login-box-01;
-            height: $height-login-box-01_header;
-        }
-        section.login-box-02 {
-            // border: 1px solid red;
-            width: $width-login-box-02;
-            margin: auto;
-            padding-top: 50px;
-            article {
-                // border: 1px solid red;
-                width: $width-login-box-02;
-                height: $height-login-box-01_article;
-                margin-top: 50px;
-                div {
-                    color: $ske-red;
-                    font-weight: 700;
-                }
-                div {
-                    input {
-                        width: $width-login-box-02;
-                        height: 37px;
-                        background-color: $bg-lv-01;
-                        border: none;
-                        border-bottom: 1px solid #515557;
-                        font-size: 20px;
-                        color: $text-lv-00;
-                    }
-                    input:focus {
-                        outline: none;
-                    }
-                }
-            }
-            button {
-                width: $width-login-box-02;
-                margin: 0;
-                height: 76px;
-                margin-top: 80px;
-                background-color: $ske-red;
-                font-size: 24px;
-                color: $text-lv-00;
-            }
-        }
-        footer {
-            text-align: center;
-            padding-top: 30px;
-            color: $text-lv-01;
-        }
+    header {
+      // border: 1px solid red;
+      background-image: url(../../img/index_img.png);
+      border-radius: 12px 12px 0 0;
+      width: $width-login-box-01;
+      height: $height-login-box-01_header;
     }
+    section.login-box-02 {
+      // border: 1px solid red;
+      width: $width-login-box-02;
+      margin: auto;
+      padding-top: 50px;
+      article {
+        // border: 1px solid red;
+        width: $width-login-box-02;
+        height: $height-login-box-01_article;
+        margin-top: 50px;
+        div {
+          color: $ske-red;
+          font-weight: 700;
+        }
+        div {
+          input {
+            width: $width-login-box-02;
+            height: 37px;
+            background-color: $bg-lv-01;
+            border: none;
+            border-bottom: 1px solid #515557;
+            font-size: 20px;
+            color: $text-lv-00;
+          }
+          input:focus {
+            outline: none;
+          }
+        }
+      }
+      button {
+        width: $width-login-box-02;
+        margin: 0;
+        height: 76px;
+        margin-top: 80px;
+        background-color: $ske-red;
+        font-size: 24px;
+        color: $text-lv-00;
+      }
+    }
+    footer {
+      text-align: center;
+      padding-top: 30px;
+      color: $text-lv-01;
+    }
+  }
 }
