@@ -1473,6 +1473,7 @@ function closeGraphModal() {
   charModalNoise2 = null;
   charModalDust = null;
   charModalVibe = null;
+  location.reload();
 }
 
 // let noise1Leq = null;
