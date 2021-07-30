@@ -1402,7 +1402,7 @@ function openGraphModal(clicked_id) {
     // 테이블 해드 체우기
     setTableHeaderBox('Time', 'leq', 'lmax', '-');
     // 테이블 라인 체우기
-    setTableLineItem(noise1LeqReverse, noise1LmaxReverse);
+    setTableLineItem(noise1Leq, noise1Lmax);
     // 그래프 체우기
     const GuideLineArr = getGuideLineArray(70, noise1ChartData);
 
@@ -1411,8 +1411,8 @@ function openGraphModal(clicked_id) {
     charModalNoise1 = creatTwoLineChart(
       ctx,
       'line',
-      noise1LeqReverse,
-      noise1LmaxReverse,
+      noise1Leq,
+      noise1Lmax,
       GuideLineArr,
       'leq',
       'lmax'
@@ -1425,7 +1425,7 @@ function openGraphModal(clicked_id) {
     // 테이블 해드 체우기
     setTableHeaderBox('Time', 'leq', 'lmax', '-');
     // 테이블 라인 체우기
-    setTableLineItem(noise2LeqReverse, noise2LmaxReverse);
+    setTableLineItem(noise2Leq, noise2Lmax);
     // 그래프 체우기
     const GuideLineArr = getGuideLineArray(70, noise2ChartData);
 
@@ -1434,8 +1434,8 @@ function openGraphModal(clicked_id) {
     charModalNoise1 = creatTwoLineChart(
       ctx,
       'line',
-      noise2LeqReverse,
-      noise2LmaxReverse,
+      noise2Leq,
+      noise2Lmax,
       GuideLineArr,
       'leq',
       'lmax'
@@ -1448,16 +1448,16 @@ function openGraphModal(clicked_id) {
     // 테이블 해드 체우기
     setTableHeaderBox('Time', 'pm 2.5', 'pm 10', '-');
     // 테이블 라인 체우기
-    setTableLineItem(finedustReverse, ultraFinedustReverse);
+    setTableLineItem(finedust, ultrafinedust);
 
     const ctx = getChartElement('modalchart', '2d');
     charModalNoise1 = creatTwoLineChart(
       ctx,
       'line',
-      finedustReverse,
-      ultraFinedustReverse,
-      'leq',
-      'lmax'
+      finedust,
+      ultrafinedust,
+      'finedust',
+      'ultrafinedust'
     );
     const todayDate = getTodayTime();
     document.querySelector('#modal-footer').innerHTML = todayDate;
@@ -1474,3 +1474,10 @@ function closeGraphModal() {
   charModalDust = null;
   charModalVibe = null;
 }
+
+// let noise1Leq = null;
+// let noise1Lmax = null;
+// let noise2Leq = null;
+// let noise2Lmax = null;
+// let finedust = null;
+// let ultrafinedust = null;
