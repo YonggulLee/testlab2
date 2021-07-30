@@ -11,7 +11,7 @@ $text-place-holder: #797979 !global;
 $text-lv-00: #ffffff !global;
 $text-lv-01: #bebebe !global;
 
-.graph-modal-container {
+.graph-modal-container-on {
   position: absolute;
   top: 0;
   left: 0;
@@ -26,17 +26,20 @@ $text-lv-01: #bebebe !global;
     margin-left: 10%;
     background-color: $bg-lv-01;
     border-radius: 12px;
+    border: 1px solid $text-place-holder;
     header {
-      border: 1px solid red;
       display: grid;
       grid-template-columns: 1fr 120px;
       padding: 10px;
       h3 {
         margin: 10px;
       }
+      button {
+        background-color: $bg-lv-01;
+        color: $text-lv-00;
+      }
     }
     article {
-      border: 1px solid red;
       display: grid;
       grid-template-columns: 420px 1fr;
       padding: 10px;
@@ -69,15 +72,26 @@ $text-lv-01: #bebebe !global;
         }
       }
       div.chart-area {
-        border: 1px solid red;
         margin: 10px;
-        width: 96%;
+        margin-left: 30px;
+        width: 93%;
         height: 96%;
       }
     }
     footer {
-      border: 1px solid red;
+      // border: 1px solid red;
       margin: 10px 10px 10px 20px;
+      color: $text-place-holder;
     }
   }
+}
+
+.graph-expend-btn {
+  background-color: $bg-lv-01;
+  height: 20px;
+  margin-top: -3px;
+}
+
+.graph-modal-container-off {
+  display: none;
 }

@@ -1,4 +1,4 @@
-.graph-modal-container {
+.graph-modal-container-on {
   position: absolute;
   top: 0;
   left: 0;
@@ -7,81 +7,109 @@
   background-color: rgba(0, 0, 0, 0.5);
 }
 
-.graph-modal-container section {
+.graph-modal-container-on section {
   width: 80%;
   height: 80%;
   margin-top: 5%;
   margin-left: 10%;
   background-color: #1d2226;
   border-radius: 12px;
+  border: 1px solid #797979;
 }
 
-.graph-modal-container section header {
-  border: 1px solid red;
+.graph-modal-container-on section header {
   display: -ms-grid;
   display: grid;
   -ms-grid-columns: 1fr 120px;
-      grid-template-columns: 1fr 120px;
+  grid-template-columns: 1fr 120px;
   padding: 10px;
 }
 
-.graph-modal-container section header h3 {
+.graph-modal-container-on section header h3 {
   margin: 10px;
 }
 
-.graph-modal-container section article {
-  border: 1px solid red;
+.graph-modal-container-on section header button {
+  background-color: #1d2226;
+  color: #ffffff;
+}
+
+.graph-modal-container-on section article {
   display: -ms-grid;
   display: grid;
   -ms-grid-columns: 420px 1fr;
-      grid-template-columns: 420px 1fr;
+  grid-template-columns: 420px 1fr;
   padding: 10px;
   height: 85%;
 }
 
-.graph-modal-container section article div.table-haeder {
-  border: 1px solid red;
+.graph-modal-container-on section article div.table-haeder {
+  /* border: 1px solid red; */
   margin: 10px;
   width: 96%;
   height: 96%;
 }
 
-.graph-modal-container section article div.table-haeder div.table-header-box {
-  border: 1px solid red;
+.graph-modal-container-on
+  section
+  article
+  div.table-haeder
+  div.table-header-box {
+  /* border: 1px solid red; */
   display: -ms-grid;
   display: grid;
   -ms-grid-columns: 1fr 1fr 1fr 1fr;
-      grid-template-columns: 1fr 1fr 1fr 1fr;
+  grid-template-columns: 1fr 1fr 1fr 1fr;
   border-bottom: 1px solid gray;
   color: gray;
 }
 
-.graph-modal-container section article div.table-haeder div.table-header-box div {
+.graph-modal-container-on
+  section
+  article
+  div.table-haeder
+  div.table-header-box
+  div {
   padding: 5px;
 }
 
-.graph-modal-container section article div.table-haeder div.table-item-box {
-  border: 1px solid red;
+.graph-modal-container-on section article div.table-haeder div.table-item-box {
+  /* border: 1px solid red; */
   display: -ms-grid;
   display: grid;
   -ms-grid-columns: 1fr 1fr 1fr 1fr;
-      grid-template-columns: 1fr 1fr 1fr 1fr;
+  grid-template-columns: 1fr 1fr 1fr 1fr;
   border-bottom: 1px solid gray;
   color: #dddddd;
 }
 
-.graph-modal-container section article div.table-haeder div.table-item-box div {
+.graph-modal-container-on
+  section
+  article
+  div.table-haeder
+  div.table-item-box
+  div {
   padding: 5px;
 }
 
-.graph-modal-container section article div.chart-area {
-  border: 1px solid red;
+.graph-modal-container-on section article div.chart-area {
   margin: 10px;
-  width: 96%;
+  margin-left: 30px;
+  width: 93%;
   height: 96%;
 }
 
-.graph-modal-container section footer {
-  border: 1px solid red;
+.graph-modal-container-on section footer {
   margin: 10px 10px 10px 20px;
+  color: #797979;
+}
+
+.graph-expend-btn {
+  background-color: #1d2226;
+  height: 20px;
+  margin-top: -3px;
+}
+
+.graph-modal-container-off {
+  display: none;
 }

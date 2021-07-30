@@ -177,6 +177,13 @@
                 >
                 <span class="dashboard-article-body-chart-index-unit">dB</span>
               </div>
+              <button
+                onclick="openGraphModal(this.id)"
+                class="graph-expend-btn"
+                id="graph-expend-btn-noise-01"
+              >
+                <img src="assets/img/dashboard_icon_graph_modal.png" alt="" />
+              </button>
             </div>
             <div class="chart">
               <canvas id="noiseChart1"></canvas>
@@ -244,6 +251,13 @@
                 >
                 <span class="dashboard-article-body-chart-index-unit">dB</span>
               </div>
+              <button
+                onclick="openGraphModal(this.id)"
+                class="graph-expend-btn"
+                id="graph-expend-btn-noise-02"
+              >
+                <img src="assets/img/dashboard_icon_graph_modal.png" alt="" />
+              </button>
             </div>
             <div class="chart">
               <canvas id="noiseChart2"></canvas>
@@ -319,6 +333,13 @@
                   >㎍/㎥</span
                 >
               </div>
+              <button
+                onclick="openGraphModal(this.id)"
+                class="graph-expend-btn"
+                id="graph-expend-btn-dust"
+              >
+                <img src="assets/img/dashboard_icon_graph_modal.png" alt="" />
+              </button>
             </div>
             <div class="chart">
               <canvas id="dustChart"></canvas>
@@ -415,6 +436,9 @@
                 >
                 <span class="dashboard-article-body-chart-index-unit">g</span>
               </div>
+              <button class="graph-expend-btn" id="graph-expend-btn-vibe">
+                <img src="assets/img/dashboard_icon_graph_modal.png" alt="" />
+              </button>
             </div>
             <div class="chart">
               <canvas id="vibeChart"></canvas>
@@ -718,9 +742,9 @@
         </div>
         <div class="dashboard-row-2-item">
           <a
-            href="assets/img/dashboard_fieldmap_temp.png"
-            data-lightbox="dashboard_fieldmap_temp"
-            data-title="dashboard_fieldmap_temp"
+            href="assets/img/dashboard_fieldmap_temp.jpeg"
+            data-lightbox="dashboard_site schematic map"
+            data-title="dashboard_site schematic map"
             ><img class="feild-map" src="assets/img/6.png" alt=""
           /></a>
         </div>
@@ -949,33 +973,38 @@
       </div>
     </section>
     <!-- 그래프 클릭하면 나타나는 UI -->
-    <!-- <div class="graph-modal-container">
+    <div class="graph-modal-container-off" id="graph-modal-container">
       <section>
         <header>
-          <h3>그래프의 제목이 들어갑니다</h3>
-          <button>크게보기 종료</button>
+          <h3 id="modal-title">그래프의 제목이 들어갑니다</h3>
+          <button
+            onclick="closeGraphModal()"
+            id="graph-modal-container-exit-btn"
+          >
+            크게보기 종료
+          </button>
         </header>
         <article class="graph-table-box">
           <div class="table-haeder">
-            <div class="table-header-box">
-              <div id="graph-table-col-01-title">title1</div>
-              <div id="graph-table-col-02-title">title2</div>
-              <div id="graph-table-col-03-title">title3</div>
-              <div id="graph-table-col-04-title">title4</div>
+            <div class="table-header-box" id="table-header-box">
+              <!-- <div id="graph-table-col-01-title"></div>
+              <div id="graph-table-col-02-title"></div>
+              <div id="graph-table-col-03-title"></div>
+              <div id="graph-table-col-04-title"></div> -->
             </div>
-            <div class="table-item-box">
-              <div id="graph-table-col-01-item">item1</div>
+            <div class="table-item-box" id="table-item-box">
+              <!-- <div id="graph-table-col-01-item">item1</div>
               <div id="graph-table-col-02-item">item2</div>
               <div id="graph-table-col-03-item">item3</div>
-              <div id="graph-table-col-04-item">item4</div>
+              <div id="graph-table-col-04-item">item4</div> -->
             </div>
           </div>
           <div class="chart-area">
-            <canvas id="noiseChart1"></canvas>
+            <canvas id="modalchart"></canvas>
           </div>
         </article>
-        <footer>지금 시간대가 표시됩니다</footer>
+        <footer id="modal-footer">지금 시간대가 표시됩니다</footer>
       </section>
-    </div> -->
+    </div>
   </body>
 </html>
