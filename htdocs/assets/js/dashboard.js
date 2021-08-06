@@ -405,6 +405,28 @@ function creatTwoLineChart(
   str_legend1,
   str_legend2
 ) {
+  //check order
+  // let lastTime = obj_chartData1.map(({ ts }) => {
+  //   let timeA = new Date(ts);
+  //   const yearA = '' + timeA.getFullYear();
+  //   const monthA = '' + timeA.getMonth();
+  //   const dateA = '' + timeA.getDate();
+  //   const hoursA = '' + timeA.getHours();
+  //   const minsA = '' + timeA.getMinutes();
+  //   return (
+  //     yearA +
+  //     '.' +
+  //     monthA.padStart(2, '0') +
+  //     '.' +
+  //     dateA.padStart(2, '0') +
+  //     '_' +
+  //     hoursA.padStart(2, '0') +
+  //     ':' +
+  //     minsA.padStart(2, '0')
+  //   );
+  // });
+  // console.log(lastTime);
+
   // charTempNoise1 = new Chart(noiseChart1, {
   if (obj_guideLineArray == null) {
     chart = new Chart(dom_elemntOfChart, {
@@ -412,9 +434,22 @@ function creatTwoLineChart(
       data: {
         labels: obj_chartData1.map(({ ts }) => {
           let time = new Date(ts);
+          // const year = '' + time.getFullYear();
+          // const month = '' + time.getMonth();
+          const day = '' + time.getDate();
           const hours = '' + time.getHours();
           const mins = '' + time.getMinutes();
-          return hours.padStart(2, '0') + ':' + mins.padStart(2, '0');
+          return (
+            // year +
+            // '.' +
+            // month.padStart(2, '0') +
+            // '.' +
+            day.padStart(2, '0') +
+            '_' +
+            hours.padStart(2, '0') +
+            ':' +
+            mins.padStart(2, '0')
+          );
         }),
         datasets: [
           {
@@ -460,9 +495,22 @@ function creatTwoLineChart(
       data: {
         labels: obj_chartData1.map(({ ts }) => {
           let time = new Date(ts);
+          // const year = '' + time.getFullYear();
+          // const month = '' + time.getMonth();
+          const day = '' + time.getDate();
           const hours = '' + time.getHours();
           const mins = '' + time.getMinutes();
-          return hours.padStart(2, '0') + ':' + mins.padStart(2, '0');
+          return (
+            // year +
+            // '.' +
+            // month.padStart(2, '0') +
+            // '.' +
+            day.padStart(2, '0') +
+            '_' +
+            hours.padStart(2, '0') +
+            ':' +
+            mins.padStart(2, '0')
+          );
         }),
         datasets: [
           {
@@ -512,17 +560,6 @@ function creatTwoLineChart(
 
   return chart;
 }
-
-// charTempVibe = creatTwoLineChart(
-//   vibeChart,
-//   'line',
-//   xReverse,
-//   yReverse,
-//   zReverse,
-//   'x',
-//   'y',
-//   'z'
-// );
 // 3라인 차트를 생성합니다
 function creatThreeLineChart(
   dom_elemntOfChart,
@@ -536,16 +573,43 @@ function creatThreeLineChart(
   str_legend3
 ) {
   // charTempNoise1 = new Chart(noiseChart1, {
-
+  //check order
+  // let lastTime = obj_chartData1.map(({ ts }) => {
+  //   let timeA = new Date(ts);
+  //   const yearA = '' + timeA.getFullYear();
+  //   const monthA = '' + timeA.getMonth();
+  //   const dateA = '' + timeA.getDate();
+  //   const hoursA = '' + timeA.getHours();
+  //   const minsA = '' + timeA.getMinutes();
+  //   return (
+  //     yearA +
+  //     '.' +
+  //     monthA.padStart(2, '0') +
+  //     '.' +
+  //     dateA.padStart(2, '0') +
+  //     '_' +
+  //     hoursA.padStart(2, '0') +
+  //     ':' +
+  //     minsA.padStart(2, '0')
+  //   );
+  // });
+  // console.log(lastTime);
   if (obj_guideLineArray == null) {
     chart = new Chart(dom_elemntOfChart, {
       type: str_ChartType,
       data: {
         labels: obj_chartData1.map(({ ts }) => {
           let time = new Date(ts);
+          const day = '' + time.getDate();
           const hours = '' + time.getHours();
           const mins = '' + time.getMinutes();
-          return hours.padStart(2, '0') + ':' + mins.padStart(2, '0');
+          return (
+            day.padStart(2, '0') +
+            '_' +
+            hours.padStart(2, '0') +
+            ':' +
+            mins.padStart(2, '0')
+          );
         }),
         datasets: [
           {
@@ -597,9 +661,16 @@ function creatThreeLineChart(
       data: {
         labels: obj_chartData1.map(({ ts }) => {
           let time = new Date(ts);
+          const day = '' + time.getDate();
           const hours = '' + time.getHours();
           const mins = '' + time.getMinutes();
-          return hours.padStart(2, '0') + ':' + mins.padStart(2, '0');
+          return (
+            day.padStart(2, '0') +
+            '_' +
+            hours.padStart(2, '0') +
+            ':' +
+            mins.padStart(2, '0')
+          );
         }),
         datasets: [
           {
@@ -1487,6 +1558,31 @@ function setTableLineItem(targetData1, targetData2) {
   }
   document.querySelector('#table-item-box').innerHTML = modalTableData;
 }
+// 모달 테이블을 세팅합니다.
+function setTableLineItemThree(targetData1, targetData2, targetData3) {
+  let modalTableData = '';
+
+  for (let i = 0; i < 24; i++) {
+    let a = targetData1[i].ts;
+    let time = new Date(a);
+    const hours = '' + time.getHours();
+    const mins = '' + time.getMinutes();
+    const seconds = '' + time.getSeconds();
+    let finalTime =
+      hours.padStart(2, '0') +
+      ':' +
+      mins.padStart(2, '0') +
+      ':' +
+      seconds.padStart(2, '0');
+
+    const element = `<div id="graph-table-col-01-item">${finalTime}</div>
+    <div id="graph-table-col-02-item">${targetData1[i].value}</div>
+    <div id="graph-table-col-03-item">${targetData2[i].value}</div>
+    <div id="graph-table-col-04-item">${targetData3[i].value}</div>`;
+    modalTableData = modalTableData + element;
+  }
+  document.querySelector('#table-item-box').innerHTML = modalTableData;
+}
 
 //시간 체우기
 function getTodayTime() {
@@ -1519,8 +1615,8 @@ function openGraphModal(clicked_id) {
     charModalNoise1 = creatTwoLineChart(
       ctx,
       'line',
-      noise1Leq,
-      noise1Lmax,
+      noise1LeqReverse,
+      noise1LmaxReverse,
       GuideLineArr,
       'leq',
       'lmax'
@@ -1542,8 +1638,8 @@ function openGraphModal(clicked_id) {
     charModalNoise1 = creatTwoLineChart(
       ctx,
       'line',
-      noise2Leq,
-      noise2Lmax,
+      noise2LeqReverse,
+      noise2LmaxReverse,
       GuideLineArr,
       'leq',
       'lmax'
@@ -1562,14 +1658,34 @@ function openGraphModal(clicked_id) {
     charModalNoise1 = creatTwoLineChart(
       ctx,
       'line',
-      finedust,
-      ultrafinedust,
+      finedustReverse,
+      ultraFinedustReverse,
       'finedust',
       'ultrafinedust'
     );
     const todayDate = getTodayTime();
     document.querySelector('#modal-footer').innerHTML = todayDate;
   } else if (clicked_id == 'graph-expend-btn-vibe') {
+    // 모달 제목 체우기
+    document.querySelector('#modal-title').innerHTML = '진동센서';
+    // 테이블 해드 체우기
+    setTableHeaderBox('Time', ' x', 'y', 'z');
+    // 테이블 라인 체우기
+    setTableLineItemThree(x, y, z);
+
+    const ctx = getChartElement('modalchart', '2d');
+    charModalNoise1 = creatThreeLineChart(
+      ctx,
+      'line',
+      xReverse,
+      yReverse,
+      zReverse,
+      'x',
+      'y',
+      'z'
+    );
+    const todayDate = getTodayTime();
+    document.querySelector('#modal-footer').innerHTML = todayDate;
   }
 }
 
