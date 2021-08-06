@@ -34,7 +34,7 @@ const URI_SPRINKLER_TRENCH = `/plugins/telemetry/DEVICE/${DEVICE_ID_TRENCH}/valu
 const URI_FIRE_1 = `/plugins/telemetry/DEVICE/${SENSOR_ID_FIRE_1}/values/timeseries`;
 const URI_FIRE_2 = `/plugins/telemetry/DEVICE/${SENSOR_ID_FIRE_2}/values/timeseries`;
 const URI_FIRE_3 = `/plugins/telemetry/DEVICE/${SENSOR_ID_FIRE_3}/values/timeseries`;
-const URI_SCHEDULER = '/scheduler'
+const URI_SCHEDULER = '/scheduler';
 
 //기기별 데이터 SET
 let noise1 = null;
@@ -105,7 +105,7 @@ async function getData() {
     farota.get(URI_FIRE_1, { params: { keys: 'state' } }),
     farota.get(URI_FIRE_2, { params: { keys: 'state' } }),
     farota.get(URI_FIRE_3, { params: { keys: 'state' } }),
-    farota.get(URI_SCHEDULER)
+    farota.get(URI_SCHEDULER),
   ]);
 
   noise1 = noise1Data;
@@ -119,7 +119,7 @@ async function getData() {
   fire1 = fire1Data;
   fire2 = fire2Data;
   fire3 = fire3Data;
-  schedule = scheduleData.result
+  schedule = scheduleData.result;
 }
 // 차트를 제외한 데이터 세팅
 function setCurrentData() {
@@ -266,6 +266,9 @@ let noise2Leq = null;
 let noise2Lmax = null;
 let finedust = null;
 let ultrafinedust = null;
+let x = null;
+let y = null;
+let z = null;
 
 // 차트 리버스 데이터
 let noise1LeqReverse = null;
@@ -274,6 +277,9 @@ let noise2LeqReverse = null;
 let noise2LmaxReverse = null;
 let finedustReverse = null;
 let ultraFinedustReverse = null;
+let xReverse = null;
+let yReverse = null;
+let zReverse = null;
 
 // 각가의 차트를 담을 변수 선언
 let charTempNoise1 = null;
@@ -347,6 +353,7 @@ function getChartElement(strElementId, strChartType) {
 }
 // 차트 범례에 평균값을 세팅
 function setChartAverageData() {
+  // 소음 차트
   const averageLeq1 = calculateAverageValue(noise1.leq);
   document.querySelector('#noiseChart1LeqAverage').innerText = averageLeq1;
   const averagelmax1 = calculateAverageValue(noise1.lmax);
@@ -355,6 +362,7 @@ function setChartAverageData() {
   document.querySelector('#noiseChart2LeqAverage').innerText = averageLeq2;
   const averagelmax2 = calculateAverageValue(noise2.lmax);
   document.querySelector('#noiseChart2LmaxAverage').innerText = averagelmax2;
+
   // 미세먼지 차트
   const averageuUltraFinedust = calculateAverageValue(dust.ultraFinedust);
   document.querySelector('#dustChartUFDustAverage').innerText =
@@ -362,18 +370,15 @@ function setChartAverageData() {
   const averageFinedust = calculateAverageValue(dust.finedust);
   document.querySelector('#dustChartFDustAverage').innerText = averageFinedust;
 
-  // const averageX_1 = calculateAverageValue(vibe.x_1);
-  // document.querySelector('#vibeCart1XAverage').innerText = averageX_1;
-  // const averageY_1 = calculateAverageValue(vibe.y_1);
-  // document.querySelector('#vibeCart1YAverage').innerText = averageY_1;
-  // const averageZ_1 = calculateAverageValue(vibe.z_1);
-  // document.querySelector('#vibeCart1ZAverage').innerText = averageZ_1;
-
-  // const averageLeq = calculateAverageValue(noise.leq);
-  // const averageLeq = calculateAverageValue(noise.leq);
-  // const averageLeq = calculateAverageValue(noise.leq);
+  //진동센서 차트
+  const averageX_1 = calculateAverageValue(vibe.x_1);
+  document.querySelector('#vibeCart1XAverage').innerText = averageX_1;
+  const averageY_1 = calculateAverageValue(vibe.y_1);
+  document.querySelector('#vibeCart1YAverage').innerText = averageY_1;
+  const averageZ_1 = calculateAverageValue(vibe.z_1);
+  document.querySelector('#vibeCart1ZAverage').innerText = averageZ_1;
 }
-// 차트 가이드라인 생성
+// 차트 가이드라인 배열 생성
 function getGuideLineArray(numGuidePoint, objOriginData) {
   const guideLineArr = new Array(objOriginData.lmax.length);
   for (let i = 0; i < guideLineArr.length; i++) {
@@ -389,6 +394,7 @@ function reverseArrayOrder(targetArray) {
   }
   return reverseArray;
 }
+
 // 2라인 차트를 생성합니다.
 function creatTwoLineChart(
   dom_elemntOfChart,
@@ -506,13 +512,171 @@ function creatTwoLineChart(
 
   return chart;
 }
-// 차트를 업데이트 합니다
-function updateTwoLineChart(obj_chartData1, obj_chartData2) {
-  charTempNoise1.data.datasets.data = obj_chartData1.map(({ value }) => value);
-  charTempNoise1.data.datasets.data = obj_chartData2.map(({ value }) => value);
+
+// charTempVibe = creatTwoLineChart(
+//   vibeChart,
+//   'line',
+//   xReverse,
+//   yReverse,
+//   zReverse,
+//   'x',
+//   'y',
+//   'z'
+// );
+// 3라인 차트를 생성합니다
+function creatThreeLineChart(
+  dom_elemntOfChart,
+  str_ChartType,
+  obj_chartData1,
+  obj_chartData2,
+  obj_chartData3,
+  obj_guideLineArray,
+  str_legend1,
+  str_legend2,
+  str_legend3
+) {
+  // charTempNoise1 = new Chart(noiseChart1, {
+
+  if (obj_guideLineArray == null) {
+    chart = new Chart(dom_elemntOfChart, {
+      type: str_ChartType,
+      data: {
+        labels: obj_chartData1.map(({ ts }) => {
+          let time = new Date(ts);
+          const hours = '' + time.getHours();
+          const mins = '' + time.getMinutes();
+          return hours.padStart(2, '0') + ':' + mins.padStart(2, '0');
+        }),
+        datasets: [
+          {
+            label: str_legend1,
+            data: obj_chartData1.map(({ value }) => value),
+            backgroundColor: ['#4ED139'],
+            borderColor: ['#4ED139'],
+          },
+          {
+            label: str_legend2,
+            data: obj_chartData2.map(({ value }) => value),
+            backgroundColor: ['#289CF4'],
+            borderColor: ['#289CF4'],
+          },
+          {
+            label: str_legend3,
+            data: obj_chartData3.map(({ value }) => value),
+            backgroundColor: ['#FDCA58'],
+            borderColor: ['#FDCA58'],
+          },
+        ],
+      },
+      options: {
+        borderWidth: 2,
+        elements: {
+          point: {
+            pointStyle: 'line',
+            hoverBorderWidth: 0,
+            borderWidth: 0,
+          },
+        },
+        responsive: true,
+        maintainAspectRatio: false,
+        layout: {
+          padding: {
+            top: 20,
+          },
+        },
+        plugins: {
+          legend: {
+            display: false,
+          },
+        },
+      },
+    });
+  } else {
+    chart = new Chart(dom_elemntOfChart, {
+      type: str_ChartType,
+      data: {
+        labels: obj_chartData1.map(({ ts }) => {
+          let time = new Date(ts);
+          const hours = '' + time.getHours();
+          const mins = '' + time.getMinutes();
+          return hours.padStart(2, '0') + ':' + mins.padStart(2, '0');
+        }),
+        datasets: [
+          {
+            label: str_legend1,
+            data: obj_chartData1.map(({ value }) => value),
+            backgroundColor: ['#4ED139'],
+            borderColor: ['#4ED139'],
+          },
+          {
+            label: str_legend2,
+            data: obj_chartData2.map(({ value }) => value),
+            backgroundColor: ['#289CF4'],
+            borderColor: ['#289CF4'],
+          },
+          {
+            label: str_legend3,
+            data: obj_chartData3.map(({ value }) => value),
+            backgroundColor: ['#FDCA58'],
+            borderColor: ['#FDCA58'],
+          },
+          {
+            label: 'guideLine',
+            data: obj_guideLineArray,
+            backgroundColor: ['red'],
+            borderColor: ['red'],
+          },
+        ],
+      },
+      options: {
+        borderWidth: 2,
+        elements: {
+          point: {
+            pointStyle: 'line',
+            hoverBorderWidth: 0,
+            borderWidth: 0,
+          },
+        },
+        responsive: true,
+        maintainAspectRatio: false,
+        layout: {
+          padding: {
+            top: 20,
+          },
+        },
+        plugins: {
+          legend: {
+            display: false,
+          },
+        },
+      },
+    });
+  }
+
+  return chart;
+}
+
+// 2라인 차트를 업데이트 합니다
+function updateTwoLineChart(charTemp, obj_chartData1, obj_chartData2) {
+  charTemp.data.datasets.data = obj_chartData1.map(({ value }) => value);
+  charTemp.data.datasets.data = obj_chartData2.map(({ value }) => value);
   // console.log('chart update!');
   return chart;
 }
+// 3라인 차트를 업데이트 합니다
+function updateThreeLineChart(
+  charTemp,
+  obj_chartData1,
+  obj_chartData2,
+  obj_chartData3
+) {
+  charTemp.data.datasets.data = obj_chartData1.map(({ value }) => value);
+  charTemp.data.datasets.data = obj_chartData2.map(({ value }) => value);
+  charTemp.data.datasets.data = obj_chartData3.map(({ value }) => value);
+  // console.log('chart update!');
+  return chart;
+}
+
 // 타임스템프에서 시간을 가져옵니다
 function getTimeFromTs(timestemp) {
   let targetTimeStamp = timestemp;
@@ -602,76 +766,24 @@ window.addEventListener('DOMContentLoaded', async function () {
       '10pm'
     );
 
-    // const { x_1, y_1, z_1 } = vibe;
-    // const x1 = x_1 ? x_1.map(({ value }) => Number(value)) : [];
-    // const y1 = y_1 ? y_1.map(({ value }) => Number(value)) : [];
-    // const z1 = z_1 ? z_1.map(({ value }) => Number(value)) : [];
+    // // API에서 꺼꾸로 넘어오고 있는 데이터의 순서 반전
+    x = vibeChartData.x_1;
+    xReverse = reverseArrayOrder(x);
+    y = vibeChartData.y_1;
+    yReverse = reverseArrayOrder(y);
+    z = vibeChartData.z_1;
+    zReverse = reverseArrayOrder(z);
 
-    // const vibe1Labels = x_1.map(({ ts }) => {
-    //     let time = new Date(ts);
-    //     const hours = '' + time.getHours();
-    //     const mins = '' + time.getMinutes();
-    //     return hours.padStart(2, '0') + ':' + mins.padStart(2, '0');
-    // });
-
-    // var vibe1LabelsReverse = [];
-    // for (let i = x1.length - 1; i >= 0; i--) {
-    //     vibe1LabelsReverse.push(vibe1Labels[i]);
-    // }
-
-    // var x1Reverse = [];
-    // for (let i = x1.length - 1; i >= 0; i--) {
-    //     x1Reverse.push(x1[i]);
-    // }
-
-    // var y1Reverse = [];
-    // for (let i = y1.length - 1; i >= 0; i--) {
-    //     y1Reverse.push(y1[i]);
-    // }
-
-    // var z1Reverse = [];
-    // for (let i = z1.length - 1; i >= 0; i--) {
-    //     z1Reverse.push(z1[i]);
-    // }
-
-    // new Chart(vibeChart1, {
-    //     type: 'line',
-    //     data: {
-    //         labels: vibe1LabelsReverse,
-    //         datasets: [
-    //             {
-    //                 label: 'X',
-    //                 data: x1,
-    //                 backgroundColor: ['#4ED139'],
-    //                 borderColor: ['#4ED139'],
-    //             },
-    //             {
-    //                 label: 'Y',
-    //                 data: y1,
-    //                 backgroundColor: ['#289CF4'],
-    //                 borderColor: ['#289CF4'],
-    //             },
-    //             {
-    //                 label: 'Z',
-    //                 data: z1,
-    //                 backgroundColor: ['#fdca57'],
-    //                 borderColor: ['#fdca57'],
-    //             },
-    //         ],
-    //     },
-    //     options: {
-    //         responsive: true,
-    //         maintainAspectRatio: false,
-    //         layout: {
-    //             padding: {
-    //                 top: 20,
-    //             },
-    //         },
-    //         plugins: {
-    //             legend: { display: false },
-    //         },
-    //     },
-    // });
+    charTempVibe = creatThreeLineChart(
+      vibeChart,
+      'line',
+      xReverse,
+      yReverse,
+      zReverse,
+      'x',
+      'y',
+      'z'
+    );
   }
 
   // RPC Call
@@ -941,16 +1053,20 @@ window.addEventListener('DOMContentLoaded', async function () {
 
   // 스케줄러 설정
   {
-    const slct = document.querySelector('#preset-list')
-    const btn_start = document.querySelector('.preset-start')
-    const btn_stop = document.querySelector('.preset-stop')
+    const slct = document.querySelector('#preset-list');
+    const btn_start = document.querySelector('.preset-start');
+    const btn_stop = document.querySelector('.preset-stop');
 
-    for (const { scheduler_idx: _idx, scheduler_name: _name, status } of schedule) {
-      const _elem = document.createElement('option')
-      _elem.value = _idx
-      _elem.innerText = _name
-      _elem.selected = status === '10'
-      slct.appendChild(_elem)
+    for (const {
+      scheduler_idx: _idx,
+      scheduler_name: _name,
+      status,
+    } of schedule) {
+      const _elem = document.createElement('option');
+      _elem.value = _idx;
+      _elem.innerText = _name;
+      _elem.selected = status === '10';
+      slct.appendChild(_elem);
     }
 
     /**
@@ -958,24 +1074,24 @@ window.addEventListener('DOMContentLoaded', async function () {
      * @param {Bolean} on 진행중인 스케줄 유무
      */
     const toggleElements = (on) => {
-      btn_start.style.display = on ? 'none' : ''
-      btn_stop.style.display = on ? '' : 'none'
-      slct.disabled = on
-    }
-    
-    toggleElements(slct.value)
+      btn_start.style.display = on ? 'none' : '';
+      btn_stop.style.display = on ? '' : 'none';
+      slct.disabled = on;
+    };
+
+    toggleElements(slct.value);
 
     btn_start.addEventListener('click', async () => {
-      const _idx = slct.value
-      if (_idx.length == 0) return
-      await farota.post(`/scheduler/${_idx}/status`, { status: '10' })
-      toggleElements(true)
-    })
+      const _idx = slct.value;
+      if (_idx.length == 0) return;
+      await farota.post(`/scheduler/${_idx}/status`, { status: '10' });
+      toggleElements(true);
+    });
     btn_stop.addEventListener('click', async () => {
-      const _idx = slct.value
-      await farota.post(`/scheduler/${_idx}/status`, { status: '00' })
-      toggleElements(false)
-    })
+      const _idx = slct.value;
+      await farota.post(`/scheduler/${_idx}/status`, { status: '00' });
+      toggleElements(false);
+    });
   }
 });
 
@@ -996,19 +1112,11 @@ setInterval(async function () {
   {
     // 차트 데이들을 서버에서 불럽옵니다
     await getChartData();
-    // 차트 엘리먼트 가져오기
-    const noiseChart1 = getChartElement('noiseChart1', '2d');
-    const noiseChart2 = getChartElement('noiseChart2', '2d');
-    const dustChart = getChartElement('dustChart', '2d');
-    const vibeChart = getChartElement('vibeChart', '2d');
 
     // 전체 Chart 범례 평균값 세팅
     setChartAverageData();
 
-    //70 dB 가이드라인 표시를 위한 배열
-    const noise1GuideLineArr = getGuideLineArray(70, noise1ChartData);
-    const noise2GuideLineArr = getGuideLineArray(70, noise2ChartData);
-
+    // Noise Chart
     // API에서 꺼꾸로 넘어오고 있는 데이터의 순서 반전
     noise1Leq = noise1ChartData.leq;
     noise1LeqReverse = reverseArrayOrder(noise1Leq);
@@ -1023,12 +1131,20 @@ setInterval(async function () {
     noise2LmaxReverse = reverseArrayOrder(noise2Lmax);
 
     // 노이즈 1 차트 업데이트
-
-    charTempNoise1 = updateTwoLineChart(noise1LeqReverse, noise1LmaxReverse);
+    charTempNoise1 = updateTwoLineChart(
+      charTempNoise1,
+      noise1LeqReverse,
+      noise1LmaxReverse
+    );
 
     // 노이즈 2 차트 생성
-    charTempNoise2 = updateTwoLineChart(noise2LeqReverse, noise2LmaxReverse);
+    charTempNoise2 = updateTwoLineChart(
+      charTempNoise2,
+      noise2LeqReverse,
+      noise2LmaxReverse
+    );
 
+    // Dust Chart
     // API에서 꺼꾸로 넘어오고 있는 데이터의 순서 반전
     finedust = dustChartData.finedust;
     finedustReverse = reverseArrayOrder(finedust);
@@ -1037,78 +1153,28 @@ setInterval(async function () {
     ultraFinedustReverse = reverseArrayOrder(ultrafinedust);
 
     // 더스트 차트 업데이트
-    charTempDust = updateTwoLineChart(finedustReverse, ultraFinedustReverse);
+    charTempDust = updateTwoLineChart(
+      charTempDust,
+      finedustReverse,
+      ultraFinedustReverse
+    );
 
-    // const { x_1, y_1, z_1 } = vibe;
-    // const x1 = x_1 ? x_1.map(({ value }) => Number(value)) : [];
-    // const y1 = y_1 ? y_1.map(({ value }) => Number(value)) : [];
-    // const z1 = z_1 ? z_1.map(({ value }) => Number(value)) : [];
+    // Vibe Chart
+    // API에서 꺼꾸로 넘어오고 있는 데이터의 순서 반전
+    x = vibeChartData.x_1;
+    xReverse = reverseArrayOrder(x);
+    y = vibeChartData.y_1;
+    yReverse = reverseArrayOrder(y);
+    z = vibeChartData.z_1;
+    zReverse = reverseArrayOrder(z);
 
-    // const vibe1Labels = x_1.map(({ ts }) => {
-    //     let time = new Date(ts);
-    //     const hours = '' + time.getHours();
-    //     const mins = '' + time.getMinutes();
-    //     return hours.padStart(2, '0') + ':' + mins.padStart(2, '0');
-    // });
-
-    // var vibe1LabelsReverse = [];
-    // for (let i = x1.length - 1; i >= 0; i--) {
-    //     vibe1LabelsReverse.push(vibe1Labels[i]);
-    // }
-
-    // var x1Reverse = [];
-    // for (let i = x1.length - 1; i >= 0; i--) {
-    //     x1Reverse.push(x1[i]);
-    // }
-
-    // var y1Reverse = [];
-    // for (let i = y1.length - 1; i >= 0; i--) {
-    //     y1Reverse.push(y1[i]);
-    // }
-
-    // var z1Reverse = [];
-    // for (let i = z1.length - 1; i >= 0; i--) {
-    //     z1Reverse.push(z1[i]);
-    // }
-
-    // new Chart(vibeChart1, {
-    //     type: 'line',
-    //     data: {
-    //         labels: vibe1LabelsReverse,
-    //         datasets: [
-    //             {
-    //                 label: 'X',
-    //                 data: x1,
-    //                 backgroundColor: ['#4ED139'],
-    //                 borderColor: ['#4ED139'],
-    //             },
-    //             {
-    //                 label: 'Y',
-    //                 data: y1,
-    //                 backgroundColor: ['#289CF4'],
-    //                 borderColor: ['#289CF4'],
-    //             },
-    //             {
-    //                 label: 'Z',
-    //                 data: z1,
-    //                 backgroundColor: ['#fdca57'],
-    //                 borderColor: ['#fdca57'],
-    //             },
-    //         ],
-    //     },
-    //     options: {
-    //         responsive: true,
-    //         maintainAspectRatio: false,
-    //         layout: {
-    //             padding: {
-    //                 top: 20,
-    //             },
-    //         },
-    //         plugins: {
-    //             legend: { display: false },
-    //         },
-    //     },
-    // });
+    // 진동 차트 업데이트
+    charTempVibe = updateTwoLineChart(
+      charTempVibe,
+      xReverse,
+      yReverse,
+      zReverse
+    );
   }
 
   // RPC Call
