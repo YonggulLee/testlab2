@@ -34,6 +34,7 @@ const URI_SPRINKLER_TRENCH = `/plugins/telemetry/DEVICE/${DEVICE_ID_TRENCH}/valu
 const URI_FIRE_1 = `/plugins/telemetry/DEVICE/${SENSOR_ID_FIRE_1}/values/timeseries`;
 const URI_FIRE_2 = `/plugins/telemetry/DEVICE/${SENSOR_ID_FIRE_2}/values/timeseries`;
 const URI_FIRE_3 = `/plugins/telemetry/DEVICE/${SENSOR_ID_FIRE_3}/values/timeseries`;
+const URI_SCHEDULER = '/scheduler'
 
 //기기별 데이터 SET
 let noise1 = null;
@@ -81,6 +82,7 @@ async function getData() {
     { data: fire1Data },
     { data: fire2Data },
     { data: fire3Data },
+    { data: scheduleData },
   ] = await Promise.all([
     farota.get(URI_NOISE_1, { params: { keys: 'leq,lmax' } }),
     farota.get(URI_NOISE_2, { params: { keys: 'leq,lmax' } }),
@@ -103,6 +105,7 @@ async function getData() {
     farota.get(URI_FIRE_1, { params: { keys: 'state' } }),
     farota.get(URI_FIRE_2, { params: { keys: 'state' } }),
     farota.get(URI_FIRE_3, { params: { keys: 'state' } }),
+    farota.get(URI_SCHEDULER)
   ]);
 
   noise1 = noise1Data;
@@ -116,6 +119,7 @@ async function getData() {
   fire1 = fire1Data;
   fire2 = fire2Data;
   fire3 = fire3Data;
+  schedule = scheduleData.result
 }
 // 차트를 제외한 데이터 세팅
 function setCurrentData() {
@@ -933,6 +937,45 @@ window.addEventListener('DOMContentLoaded', async function () {
       });
       document.querySelector('#trench-in').innerText = '켜짐';
     });
+  }
+
+  // 스케줄러 설정
+  {
+    const slct = document.querySelector('#preset-list')
+    const btn_start = document.querySelector('.preset-start')
+    const btn_stop = document.querySelector('.preset-stop')
+
+    for (const { scheduler_idx: _idx, scheduler_name: _name, status } of schedule) {
+      const _elem = document.createElement('option')
+      _elem.value = _idx
+      _elem.innerText = _name
+      _elem.selected = status === '10'
+      slct.appendChild(_elem)
+    }
+
+    /**
+     * 진행 상태에 따라서 <select>를 disable 시키고 시작/종료 <button>을 감춘다.
+     * @param {Bolean} on 진행중인 스케줄 유무
+     */
+    const toggleElements = (on) => {
+      btn_start.style.display = on ? 'none' : ''
+      btn_stop.style.display = on ? '' : 'none'
+      slct.disabled = on
+    }
+    
+    toggleElements(slct.value)
+
+    btn_start.addEventListener('click', async () => {
+      const _idx = slct.value
+      if (_idx.length == 0) return
+      await farota.post(`/scheduler/${_idx}/status`, { status: '10' })
+      toggleElements(true)
+    })
+    btn_stop.addEventListener('click', async () => {
+      const _idx = slct.value
+      await farota.post(`/scheduler/${_idx}/status`, { status: '00' })
+      toggleElements(false)
+    })
   }
 });
 
