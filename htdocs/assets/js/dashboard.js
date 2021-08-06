@@ -1474,10 +1474,3 @@ function closeGraphModal() {
   charModalVibe = null;
   location.reload();
 }
-
-// let noise1Leq = null;
-// let noise1Lmax = null;
-// let noise2Leq = null;
-// let noise2Lmax = null;
-// let finedust = null;
-// let ultrafinedust = null;
