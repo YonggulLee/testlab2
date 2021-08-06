@@ -4,49 +4,112 @@ Date : 2021.06.30
 */
 
 header.top-bar-container {
-    /* border: 1px solid red; */
-    width: 100%;
-    height: 60px;
-    font-family: 'NotoSansCJKkr';
-    font-weight: 700;
+  /* border: 1px solid red; */
+  width: 100%;
+  height: 60px;
+  font-family: 'NotoSansCJKkr';
+  font-weight: 700;
 }
 
 nav.top-bar {
-    /* border: 1px solid green; */
-    width: 100%;
-    height: 60px;
-    background-color: #262a2d;
+  /* border: 1px solid green; */
+  width: 100%;
+  height: 60px;
+  background-color: #262a2d;
 }
 
 ol.top-bar-item-box {
-    /* border: 1px solid blue; */
-    display: grid;
-    grid-template-columns: 135px 1fr 60px 80px 85px;
-    list-style: none;
+  /* border: 1px solid blue; */
+  display: grid;
+  grid-template-columns: 135px 1fr 400px 60px 80px 85px;
+  list-style: none;
 }
 
 li.top-bar-item {
-    /* border: 1px solid pink; */
-    height: 60px;
+  /* border: 1px solid pink; */
+  height: 60px;
 }
 
 li.top-bar-item:last-child {
-    /* border: 1px solid pink; */
-    height: 60px;
-    padding-top: 21px;
+  /* border: 1px solid pink; */
+  height: 60px;
+  padding-top: 21px;
 }
 
 .top-bar-title {
-    /* border: 1px solid pink; */
-    display: block;
-    margin: 20px 0 0 0;
-    font-size: 16px;
-    line-height: 1.5;
+  /* border: 1px solid pink; */
+  display: block;
+  margin: 20px 0 0 0;
+  font-size: 16px;
+  line-height: 1.5;
 }
 
 .top-bar-name {
-    display: block;
-    margin: 20px 0 0 0;
-    font-size: 16px;
-    line-height: 1.5;
+  display: block;
+  margin: 20px 0 0 0;
+  font-size: 16px;
+  line-height: 1.5;
+}
+
+/* Style The Dropdown Button */
+.dropbtn {
+  background-color: #3f3f3f;
+  color: white;
+  margin-top: 11px;
+  padding: 10px;
+  border-radius: 30px;
+  font-size: 13px;
+  width: 300px;
+  border: none;
+  cursor: pointer;
+}
+
+/* The container <div> - needed to position the dropdown content */
+.dropdown {
+  position: relative;
+  display: inline-block;
+}
+
+/* Dropdown Content (Hidden by Default) */
+.dropdown-content {
+  display: none;
+  position: absolute;
+  background-color: #3f3f3f;
+  padding: 0;
+  border-radius: 30px;
+  font-size: 13px;
+  width: 300px;
+  min-width: 160px;
+  box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+  z-index: 1;
+  color: aliceblue;
+}
+
+/* Links inside the dropdown */
+.dropdown-content span {
+  color: black;
+  padding: 12px 16px;
+  text-decoration: none;
+  display: block;
+}
+
+/* Change color of dropdown links on hover */
+.dropdown-content span:hover {
+  background-color: #1b1b1b;
+}
+
+.dropdown-content span:hover {
+  background-color: #1b1b1b;
+}
+
+/* Show the dropdown menu on hover */
+.dropdown:hover .dropdown-content {
+  display: block;
+  border-radius: 30px;
+}
+
+/* Change the background color of the dropdown button when the dropdown content is shown */
+.dropdown:hover .dropbtn {
+  background-color: #1b1b1b;
+  border-radius: 30px;
 }

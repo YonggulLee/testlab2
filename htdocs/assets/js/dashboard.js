@@ -7,6 +7,7 @@
 const userToken = localStorage.getItem('access_token');
 //Farota Axios
 const farota = getFarotaAxios();
+
 //기기별 ID 값
 const SENSOR_ID_NOISE_1 = 'e8a11380-bc2e-11eb-8551-4f4bb0e28011';
 const SENSOR_ID_NOISE_2 = 'e8a11a40-e601-11eb-8e78-f7a9f6ae5a19';
@@ -1336,8 +1337,6 @@ setInterval(async function () {
   }
   console.log('data update!');
 }, 10 * 1000);
-
-// Modal
 
 // 각가의 차트를 수행할 변수
 let charModalNoise1 = null;
