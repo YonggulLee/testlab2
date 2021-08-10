@@ -246,18 +246,12 @@
                     const id = band.config.url.split('/')[4];
                     const { highBloodPressure, lowBloodPressure } = band.data;
                     const ts = new Date(band.data.highBloodPressure[0].ts);
-                    const year = ts.getFullYear() + '.';
-                    const month =
-                        (ts.getMonth() + 1 + '').padStart(2, '0') + '.';
-                    const date = (ts.getDate() + '').padStart(2, '0') + ' ';
-                    const hours = (ts.getHours() + '').padStart(2, '0') + ':';
-                    const mins = (ts.getMinutes() + '').padStart(2, '0');
-
+                    const dateTime = makeDateYYYYMMDDHHMM(ts);
                     const article = createArticle(
                         id,
                         highBloodPressure[0].value,
                         lowBloodPressure[0].value,
-                        year + month + date + hours + mins
+                        dateTime
                     );
                     container.appendChild(article);
                 }
@@ -269,22 +263,22 @@
                 let smartBandName = new String();
                 switch (id) {
                     case 'dab4b010-e08c-11eb-8f29-a98e7e184789':
-                        smartBandName = 'Smart Band 01';
+                        smartBandName = 'SB01-장한건설-함상인';
                         break;
                     case '0a253300-e08e-11eb-8f29-a98e7e184789':
-                        smartBandName = 'Smart Band 02';
+                        smartBandName = 'SB02-장한건설-박종기';
                         break;
                     case 'de6e0e90-e08c-11eb-8f29-a98e7e184789':
-                        smartBandName = 'Smart Band 03';
+                        smartBandName = 'SB03-혜성기공-정병해';
                         break;
                     case 'e6e9fe30-e08c-11eb-8f29-a98e7e184789':
-                        smartBandName = 'Smart Band 04';
+                        smartBandName = 'SB04-SKEP-이기세';
                         break;
                     case 'e9dfe5a0-e08c-11eb-8f29-a98e7e184789':
-                        smartBandName = 'Smart Band 05';
+                        smartBandName = 'SB05-혜성기공-신삼조';
                         break;
                     case 'ecab1390-e08c-11eb-8f29-a98e7e184789':
-                        smartBandName = 'Smart Band 06';
+                        smartBandName = 'SB06-SKEP-배순희';
                         break;
                     case 'ef7249e0-e08c-11eb-8f29-a98e7e184789':
                         smartBandName = 'Smart Band 07';
