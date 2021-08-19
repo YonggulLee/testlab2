@@ -21,7 +21,7 @@
   display: -ms-grid;
   display: grid;
   -ms-grid-columns: 1fr 120px;
-  grid-template-columns: 1fr 120px;
+      grid-template-columns: 1fr 120px;
   padding: 10px;
 }
 
@@ -31,65 +31,55 @@
 
 .graph-modal-container-on section header button {
   background-color: #1d2226;
-  color: #ffffff;
+  color: #bebebe;
 }
 
 .graph-modal-container-on section article {
   display: -ms-grid;
   display: grid;
   -ms-grid-columns: 420px 1fr;
-  grid-template-columns: 420px 1fr;
+      grid-template-columns: 420px 1fr;
   padding: 10px;
   height: 85%;
 }
 
 .graph-modal-container-on section article div.table-haeder {
-  /* border: 1px solid red; */
   margin: 10px;
   width: 96%;
   height: 96%;
 }
 
-.graph-modal-container-on
-  section
-  article
-  div.table-haeder
-  div.table-header-box {
-  /* border: 1px solid red; */
+.graph-modal-container-on section article div.table-haeder div.table-header-box {
   display: -ms-grid;
   display: grid;
   -ms-grid-columns: 1fr 1fr 1fr 1fr;
-  grid-template-columns: 1fr 1fr 1fr 1fr;
+      grid-template-columns: 1fr 1fr 1fr 1fr;
   border-bottom: 1px solid gray;
   color: gray;
 }
 
-.graph-modal-container-on
-  section
-  article
-  div.table-haeder
-  div.table-header-box
-  div {
+.graph-modal-container-on section article div.table-haeder div.table-header-box div {
   padding: 5px;
 }
 
 .graph-modal-container-on section article div.table-haeder div.table-item-box {
-  /* border: 1px solid red; */
   display: -ms-grid;
   display: grid;
   -ms-grid-columns: 1fr 1fr 1fr 1fr;
-  grid-template-columns: 1fr 1fr 1fr 1fr;
+      grid-template-columns: 1fr 1fr 1fr 1fr;
   border-bottom: 1px solid gray;
   color: #dddddd;
 }
 
-.graph-modal-container-on
-  section
-  article
-  div.table-haeder
-  div.table-item-box
-  div {
+.graph-modal-container-on section article div.table-haeder div.table-item-box div {
   padding: 5px;
+}
+
+.graph-modal-container-on section article div.table-haeder div#excel-download-btn-box button {
+  margin-top: 10px;
+  margin-left: -12px;
+  background-color: #1d2226;
+  color: #bebebe;
 }
 
 .graph-modal-container-on section article div.chart-area {

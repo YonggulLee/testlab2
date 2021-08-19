@@ -4,30 +4,29 @@
     <!-- -->
     <meta charset="utf-8" />
     <title>SK에코플랜트 현장 IoT System</title>
+    <!-- Design : 마스터 CSS -->
     <link rel="stylesheet" href="assets/design/css/master.css" />
-    <!-- <link rel="stylesheet" href="assets/design/css/font.css" /> -->
+    <!-- Design : 상단 탑 네비게이션 -->
     <link rel="stylesheet" href="assets/design/css/top-bar.css" />
+    <!-- Design : 사이드 네비게이션 -->
     <link rel="stylesheet" href="assets/design/css/side-bar.css" />
-    <link rel="stylesheet" href="assets/design/css/index.css" />
+    <!-- Design : 데시보드 -->
     <link rel="stylesheet" href="assets/design/css/dashboard.css" />
-    <link rel="stylesheet" href="assets/design/css/smart-band.css" />
-    <link rel="stylesheet" href="assets/design/css/device-alarm.css" />
+    <!-- Design : 그래픽 모달 -->
     <link rel="stylesheet" href="assets/design/css/graphmodal.css" />
+    <!-- Design - Plugin : 라이트 박스  -->
     <link rel="stylesheet" href="assets/plugins/lightbox/css/lightbox.css" />
+    <!-- CDN - Design : 폰트 어섬  -->
     <link
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.8.2/css/all.min.css"
     />
+    <!-- CDN - library  : 제이쿼리  -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <!-- CDN - library  : 엑시오스 -->
     <script
       src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.21.1/axios.min.js"
       integrity="sha512-bZS47S7sPOxkjU/4Bt0zrhEtWx0y0CRkhEp8IckzK+ltifIIE9EMIMTuT/mEzoIMewUINruDBIR/jJnbguonqQ=="
-      crossorigin="anonymous"
-      referrerpolicy="no-referrer"
-    ></script>
-    <script
-      src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.4.1/chart.min.js"
-      integrity="sha512-5vwN8yor2fFT9pgPS9p9R7AszYaNn0LkQElTXIsZFCL7ucT8zDCAqlQXDdaqgA1mZP47hdvztBMsIoFxq/FyyQ=="
       crossorigin="anonymous"
       referrerpolicy="no-referrer"
     ></script>
@@ -37,6 +36,8 @@
     <script src="assets/plugins/sheetjs/xlsx.full.min.js" defer></script>
     <!-- Plugin : File Saver - 엑셀 파일 다운로드  -->
     <script src="assets/plugins/filesaver/FileSaver.min.js" defer></script>
+    <!-- Plugin : File Saver - 엑셀 파일 다운로드  -->
+    <script src="assets/plugins/chartjs/chart.min.js" defer></script>
     <!-- ETC : Tool Box - 기타 유용한 기능들을 뫃아놓은 툴박스  -->
     <script src="assets/js/utility.js" defer></script>
     <script src="assets/js/dashboard.js" defer></script>
@@ -1001,7 +1002,7 @@
         </div>
       </div>
     </section>
-    <!-- 그래프 클릭하면 나타나는 UI -->
+    <!-- 그래프 모달 -->
     <div class="graph-modal-container-off" id="graph-modal-container">
       <section>
         <header>
@@ -1042,8 +1043,3 @@
     </div>
   </body>
 </html>
-
-<!-- 
-id : skec7@sk.com
-password : skec7@pw
--->

@@ -338,6 +338,7 @@ function calculateAverageValue(dataArray) {
   return average;
 }
 // 차트 엘레먼트 가져오기
+
 function getChartElement(strElementId, strChartType) {
   const chartElemant = document
     .getElementById(strElementId)
@@ -1224,7 +1225,7 @@ setInterval(async function () {
     );
 
     // Vibe Chart
-    // // API에서 꺼꾸로 넘어오고 있는 데이터의 순서 반전
+    // API에서 꺼꾸로 넘어오고 있는 데이터의 순서 반전
     // x = vibeChartData.x_1;
     // xReverse = reverseArrayOrder(x);
     // y = vibeChartData.y_1;
@@ -1636,7 +1637,7 @@ function openGraphModal(clicked_id) {
 
     // const modalCart = document.querySelector('#modal-chart');
     const ctx = getChartElement('modalchart', '2d');
-    charModalNoise1 = creatTwoLineChart(
+    charModalNoise2 = creatTwoLineChart(
       ctx,
       'line',
       noise2LeqReverse,
@@ -1659,7 +1660,7 @@ function openGraphModal(clicked_id) {
     setTableLineItem(finedust, ultrafinedust);
 
     const ctx = getChartElement('modalchart', '2d');
-    charModalNoise1 = creatTwoLineChart(
+    charModalDust = creatTwoLineChart(
       ctx,
       'line',
       finedustReverse,
@@ -1681,7 +1682,7 @@ function openGraphModal(clicked_id) {
     setTableLineItemThree(x, y, z);
 
     const ctx = getChartElement('modalchart', '2d');
-    charModalNoise1 = creatThreeLineChart(
+    charModalVibe = creatThreeLineChart(
       ctx,
       'line',
       xReverse,
@@ -1717,78 +1718,22 @@ function closeGraphModal() {
 function exprotDataToExcel(clicked_id) {
   switch (clicked_id) {
     case 'xlsx-download-btn-noise-01':
-      // 1. workbook 생성
-      let wb = XLSX.utils.book_new();
-      // 2. 노이즈 제목 생성
-      const dataTitle = 'Noise 01';
-      // 3. 문서 속성세팅 ( 윈도우에서 엑셀 오른쪽 클릭 속성 -> 자세히에 있는 값들 )
-      // 필요 없으면 안써도 괜찮다.
-      wb.Props = {
-        Title: 'title',
-        Subject: 'subject',
-        Author: 'programmer93',
-        Manager: 'Manager',
-        Company: 'Company',
-        Category: 'Category',
-        Keywords: 'Keywords',
-        Comments: 'Comments',
-        LastAuthor: 'programmer93',
-        CreatedDate: new Date(2021, 01, 13),
-      };
-      // 4. sheet명 생성
-      wb.SheetNames.push(`${dataTitle} Data`);
-      // 5. 데이터 어레이 생성
-      let wsData = [];
-      // 5.1 타이틀 어레이 생성
-      const titleArray = ['dateTime', 'leq', 'lmax'];
-      // 5.2 타이틀 어레이 푸시
-      wsData[0] = titleArray;
-      // 5.3 데이터 1열 생성
-      console.log(noise1ChartData);
-
-      for (let i = 0; i < noise1ChartData.leq.length; i++) {
-        // 데이터 어레이를 생성한다
-        let dataArray = [];
-        // 타임 스템프 값을 가지고 온다
-        let timestemp = noise1ChartData.leq[i].ts;
-        let date = new Date(timestemp);
-        let dateTime =
-          'Date: ' +
-          date.getFullYear() +
-          '/' +
-          date.getMonth() +
-          '/' +
-          date.getDate() +
-          '_' +
-          date.getHours() +
-          ':' +
-          date.getMinutes() +
-          ':' +
-          date.getSeconds();
-        dataArray[0] = dateTime;
-        dataArray[1] = noise1ChartData.leq[i].value;
-        dataArray[2] = noise1ChartData.lmax[i].value;
-        let e = i + 1;
-        wsData[e] = dataArray;
-        console.log(i);
-      }
-
-      console.log(wsData);
-
-      // 배열 데이터로 시트 데이터 생성
-      var ws = XLSX.utils.aoa_to_sheet(wsData);
-
-      // 시트 데이터를 시트에 넣기 ( 시트 명이 없는 시트인경우 첫번째 시트에 데이터가 들어감 )
-      wb.Sheets[`${dataTitle} Data`] = ws;
-
-      // 엑셀 파일 쓰기
-      var wbout = XLSX.write(wb, { bookType: 'xlsx', type: 'binary' });
-
-      //파일 다운로드
-      saveAs(
-        new Blob([s2ab(wbout)], { type: 'application/octet-stream' }),
-        `${dataTitle} Data.xlsx`
+      downlaodExcelTwoColumn('Noise01', 'leq', 'lmax', noise1Leq, noise1Lmax);
+      break;
+    case 'xlsx-download-btn-noise-02':
+      downlaodExcelTwoColumn('Noise02', 'leq', 'lmax', noise2Leq, noise2Lmax);
+      break;
+    case 'xlsx-download-btn-dust':
+      downlaodExcelTwoColumn(
+        'Dust',
+        'pm 2.5',
+        'pm 10',
+        finedust,
+        ultrafinedust
       );
+      break;
+    case 'xlsx-download-btn-vibe':
+      downlaodExcelThreeColumn('Vibe', 'x', 'y', 'z', x, y, z);
       break;
 
     default:

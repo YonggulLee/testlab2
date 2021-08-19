@@ -36,7 +36,7 @@ $text-lv-01: #bebebe !global;
       }
       button {
         background-color: $bg-lv-01;
-        color: $text-lv-00;
+        color: $text-lv-01;
       }
     }
     article {
@@ -45,12 +45,12 @@ $text-lv-01: #bebebe !global;
       padding: 10px;
       height: 85%;
       div.table-haeder {
-        border: 1px solid red;
+        // border: 1px solid red;
         margin: 10px;
         width: 96%;
         height: 96%;
         div.table-header-box {
-          border: 1px solid red;
+          // border: 1px solid red;
           display: grid;
           grid-template-columns: 1fr 1fr 1fr 1fr;
           border-bottom: 1px solid gray;
@@ -61,13 +61,22 @@ $text-lv-01: #bebebe !global;
           }
         }
         div.table-item-box {
-          border: 1px solid red;
+          // border: 1px solid red;
           display: grid;
           grid-template-columns: 1fr 1fr 1fr 1fr;
           border-bottom: 1px solid gray;
           color: rgb(221, 221, 221);
           div {
             padding: 5px;
+          }
+        }
+        div#excel-download-btn-box {
+          // border: 1px solid red;
+          button {
+            margin-top: 10px;
+            margin-left: -12px;
+            background-color: $bg-lv-01;
+            color: $text-lv-01;
           }
         }
       }

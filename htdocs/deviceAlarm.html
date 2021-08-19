@@ -1,94 +1,94 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <!-- -->
-        <meta charset="utf-8" />
-        <title>SK에코플랜트 현장 IoT System</title>
-        <link rel="stylesheet" href="assets/design/css/master.css" />
-        <link rel="stylesheet" href="assets/design/css/font.css" />
-        <link rel="stylesheet" href="assets/design/css/top-bar.css" />
-        <link rel="stylesheet" href="assets/design/css/side-bar.css" />
-        <link rel="stylesheet" href="assets/design/css/dashboard.css" />
-        <link rel="stylesheet" href="assets/design/css/smart-band.css" />
-        <link rel="stylesheet" href="assets/design/css/device-alarm.css" />
-        <!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css"> -->
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-        <script
-            src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.21.1/axios.min.js"
-            integrity="sha512-bZS47S7sPOxkjU/4Bt0zrhEtWx0y0CRkhEp8IckzK+ltifIIE9EMIMTuT/mEzoIMewUINruDBIR/jJnbguonqQ=="
-            crossorigin="anonymous"
-            referrerpolicy="no-referrer"
-        ></script>
-        <script
-            src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.4.1/chart.min.js"
-            integrity="sha512-5vwN8yor2fFT9pgPS9p9R7AszYaNn0LkQElTXIsZFCL7ucT8zDCAqlQXDdaqgA1mZP47hdvztBMsIoFxq/FyyQ=="
-            crossorigin="anonymous"
-            referrerpolicy="no-referrer"
-        ></script>
-    </head>
+  <head>
+    <!-- -->
+    <meta charset="utf-8" />
+    <title>SK에코플랜트 현장 IoT System</title>
+    <link rel="stylesheet" href="assets/design/css/master.css" />
+    <link rel="stylesheet" href="assets/design/css/font.css" />
+    <link rel="stylesheet" href="assets/design/css/top-bar.css" />
+    <link rel="stylesheet" href="assets/design/css/side-bar.css" />
+    <link rel="stylesheet" href="assets/design/css/dashboard.css" />
+    <link rel="stylesheet" href="assets/design/css/smart-band.css" />
+    <link rel="stylesheet" href="assets/design/css/device-alarm.css" />
+    <!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css"> -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.21.1/axios.min.js"
+      integrity="sha512-bZS47S7sPOxkjU/4Bt0zrhEtWx0y0CRkhEp8IckzK+ltifIIE9EMIMTuT/mEzoIMewUINruDBIR/jJnbguonqQ=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    ></script>
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.4.1/chart.min.js"
+      integrity="sha512-5vwN8yor2fFT9pgPS9p9R7AszYaNn0LkQElTXIsZFCL7ucT8zDCAqlQXDdaqgA1mZP47hdvztBMsIoFxq/FyyQ=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    ></script>
+  </head>
 
-    <body>
-        <!-- 탑 메뉴 -->
-        <header class="top-bar-container">
-            <nav class="top-bar">
-                <ol class="top-bar-item-box">
-                    <li class="top-bar-item">
-                        <a href="#">
-                            <img src="assets/img/top-bar_logo.png" alt="" />
-                        </a>
-                    </li>
+  <body>
+    <!-- 탑 메뉴 -->
+    <header class="top-bar-container">
+      <nav class="top-bar">
+        <ol class="top-bar-item-box">
+          <li class="top-bar-item">
+            <a href="#">
+              <img src="assets/img/top-bar_logo.png" alt="" />
+            </a>
+          </li>
 
-                    <li class="top-bar-item">
-                        <span class="top-bar-title">현장IoT플랫폼</span>
-                    </li>
+          <li class="top-bar-item">
+            <span class="top-bar-title">현장IoT플랫폼</span>
+          </li>
 
-                    <li class="top-bar-item">
-                        <a href="#">
-                            <img src="assets/img/top-bar_profile.png" alt="" />
-                        </a>
-                    </li>
+          <li class="top-bar-item">
+            <a href="#">
+              <img src="assets/img/top-bar_profile.png" alt="" />
+            </a>
+          </li>
 
-                    <li class="top-bar-item">
-                        <span class="top-bar-name">이용걸</span>
-                    </li>
+          <li class="top-bar-item">
+            <span class="top-bar-name">이용걸</span>
+          </li>
 
-                    <li class="top-bar-item">
-                        <img src="assets/img/top-bar_temparrow.png" alt="" />
-                        <!-- <form class="" action="dashboard.html" method="post">
+          <li class="top-bar-item">
+            <img src="assets/img/top-bar_temparrow.png" alt="" />
+            <!-- <form class="" action="dashboard.html" method="post">
             <select class="" name="color">
               <option value="">Mypage</option>
               <option value="">LogOut</option>
             </select>
           </form> -->
-                    </li>
-                </ol>
-            </nav>
-        </header>
+          </li>
+        </ol>
+      </nav>
+    </header>
 
-        <!-- 사이드 메뉴 -->
-        <section class="side-bar-container">
-            <nav class="side-bar">
-                <ol class="side-bar-item-box">
-                    <!-- 사이드 메뉴 : 종합현황 -->
-                    <li class="side-bar-item">
-                        <a href="dashboard.html"
-                            >종합현황<br /><span class="side-bar-item-title-eng"
-                                >Dashboard</span
-                            ></a
-                        >
-                    </li>
+    <!-- 사이드 메뉴 -->
+    <section class="side-bar-container">
+      <nav class="side-bar">
+        <ol class="side-bar-item-box">
+          <!-- 사이드 메뉴 : 종합현황 -->
+          <li class="side-bar-item">
+            <a href="dashboard.html"
+              >종합현황<br /><span class="side-bar-item-title-eng"
+                >Dashboard</span
+              ></a
+            >
+          </li>
 
-                    <!-- 사이드 메뉴 : 장치알람 -->
-                    <li class="side-bar-item">
-                        <a href="deviceAlarm.html"
-                            >장치알람<br /><span class="side-bar-item-title-eng"
-                                >Device Alarm</span
-                            ></a
-                        >
-                    </li>
+          <!-- 사이드 메뉴 : 장치알람 -->
+          <li class="side-bar-item">
+            <a href="deviceAlarm.html"
+              >장치알람<br /><span class="side-bar-item-title-eng"
+                >Device Alarm</span
+              ></a
+            >
+          </li>
 
-                    <!-- 사이드 메뉴 : 지상부(제어,센서,통신장비) -->
-                    <!-- <li class="side-bar-item">
+          <!-- 사이드 메뉴 : 지상부(제어,센서,통신장비) -->
+          <!-- <li class="side-bar-item">
             <a href="groundfloor.html"
               >지상부<br /><span class="side-bar-item-title-eng"
                 >Ground Floor</span
@@ -96,32 +96,28 @@
             >
           </li> -->
 
-                    <!-- 사이드 메뉴 : 스마트밴드(건강관리,위치관리) -->
-                    <!-- <li class="side-bar-item">
+          <!-- 사이드 메뉴 : 스마트밴드(건강관리,위치관리) -->
+          <!-- <li class="side-bar-item">
             <a href="smartband.html"
               >스마트 밴드<br /><span class="side-bar-item-title-eng"
                 >Health & Location</span
               ></a
             >
           </li> -->
-                </ol>
-            </nav>
-        </section>
-        <section class="content-container-device-alarm">
-            <div class="device-alarm-b01 content-body">
-                <div class="device-alarm-b01-02">
-                    <div class="device-alarm-title title-kor">장치알람</div>
-                    <div class=""></div>
-                </div>
-                <div class="device-alarm-btn-box">
-                    <button class="device-alarm-btn" type="submit">
-                        장치 1
-                    </button>
-                    <button class="device-alarm-btn" type="submit">
-                        장치 2
-                    </button>
-                </div>
-            </div>
-        </section>
-    </body>
+        </ol>
+      </nav>
+    </section>
+    <section class="content-container-device-alarm">
+      <div class="device-alarm-b01 content-body">
+        <div class="device-alarm-b01-02">
+          <div class="device-alarm-title title-kor">장치알람</div>
+          <div class=""></div>
+        </div>
+        <div class="device-alarm-btn-box">
+          <button class="device-alarm-btn" type="submit">장치 1</button>
+          <button class="device-alarm-btn" type="submit">장치 2</button>
+        </div>
+      </div>
+    </section>
+  </body>
 </html>
