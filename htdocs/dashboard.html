@@ -31,7 +31,13 @@
       crossorigin="anonymous"
       referrerpolicy="no-referrer"
     ></script>
+    <!-- Plugin : LightBox - 사진 팝업 및 확대 -->
     <script src="assets/plugins/lightbox/js/lightbox.js" defer></script>
+    <!-- Plugin : SheetJS - 엑셀 파일 생성 -->
+    <script src="assets/plugins/sheetjs/xlsx.full.min.js" defer></script>
+    <!-- Plugin : File Saver - 엑셀 파일 다운로드  -->
+    <script src="assets/plugins/filesaver/FileSaver.min.js" defer></script>
+    <!-- ETC : Tool Box - 기타 유용한 기능들을 뫃아놓은 툴박스  -->
     <script src="assets/js/utility.js" defer></script>
     <script src="assets/js/dashboard.js" defer></script>
   </head>
@@ -1021,6 +1027,11 @@
               <div id="graph-table-col-03-item">item3</div>
               <div id="graph-table-col-04-item">item4</div> -->
             </div>
+            <div id="excel-download-btn-box">
+              <!-- 
+                <button onclick="" id="xlsx-download-btn">엑셀 다운로드</button> 
+              -->
+            </div>
           </div>
           <div class="chart-area">
             <canvas id="modalchart"></canvas>
@@ -1034,5 +1045,5 @@
 
 <!-- 
 id : skec7@sk.com
-password : skec7@pw 
+password : skec7@pw
 -->

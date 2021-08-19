@@ -26,7 +26,9 @@
             crossorigin="anonymous"
             referrerpolicy="no-referrer"
         ></script>
+        <!-- ETC : 기타 유용한 기능들을 모아놓은 툴박스 --> 
         <script src="./assets/js/utility.js" defer></script>
+        
     </head>
 
     <body>
@@ -242,6 +244,8 @@
                     '.content-container-smartband'
                 );
 
+                console.log(BANDs);
+
                 for (const band of BANDs) {
                     const id = band.config.url.split('/')[4];
                     const { highBloodPressure, lowBloodPressure } = band.data;
@@ -309,23 +313,23 @@
               <span class="health-check-article-item-unit">mmHg</span>
             </div>`;
 
-                if (high > 140 || low > 90) {
+                if (high > 160 || low > 100) {
                     article.innerHTML += `
           <div class="health-check-article-item">
-            <span class="health-check-article-item-state-high">고혈압</span>
+            <span class="health-check-article-item-state-highdanger">고위험</span>
           </div>`;
-                } else if (high >= 120 || low >= 80) {
+                } else if (high >= 150 || low >= 90) {
                     article.innerHTML += `
           <div class="health-check-article-item">
-            <span class="health-check-article-item-state-prehigh">전고혈압</span>
+            <span class="health-check-article-item-state-danger">위험</span>
           </div>`;
-                } else if (high >= 90 || low >= 60) {
+                } else if (high >= 140 || low >= 80) {
                     article.innerHTML += `<div class="health-check-article-item">
-          <span class="health-check-article-item-state-normal">정상</span>
+          <span class="health-check-article-item-state-attention">관심</span>
         </div>`;
-                } else if (high < 90 || low < 60) {
+                } else if (high < 140 || low < 80) {
                     article.innerHTML += `<div class="health-check-article-item">
-          <span class="health-check-article-item-state-low">저혈압</span>
+          <span class="health-check-article-item-state-noraml">정상</span>
         </div>`;
                 } else {
                     article.innerHTML += `<div class="health-check-article-item"></div>`;

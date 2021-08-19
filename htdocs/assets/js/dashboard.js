@@ -1,8 +1,4 @@
-// ()초에 한 번씩 데이터를 리프레시 시함
-// refreshData(60);
-
 //화면에 필요한 전역변수
-
 //로그인 토큰
 const userToken = localStorage.getItem('access_token');
 //Farota Axios
@@ -36,7 +32,7 @@ const URI_FIRE_2 = `/plugins/telemetry/DEVICE/${SENSOR_ID_FIRE_2}/values/timeser
 const URI_FIRE_3 = `/plugins/telemetry/DEVICE/${SENSOR_ID_FIRE_3}/values/timeseries`;
 const URI_SCHEDULER = '/scheduler';
 
-//기기별 데이터 SET
+//센서별 데이터 SET
 let noise1 = null;
 let noise2 = null;
 let dust = null;
@@ -49,7 +45,7 @@ let fire1 = null;
 let fire2 = null;
 let fire3 = null;
 
-// 토큰 가져요기
+// 로컬 스토리지 토큰 유무 체크
 function checkToken() {
   const userToken = localStorage.getItem('access_token');
 
@@ -69,7 +65,9 @@ function getFarotaAxios() {
 
 // 차트를 제외한 데이터 로딩
 async function getData() {
+  // 1. 로컬스토리지에 토큰이 있는제 체크합니다
   checkToken();
+  // 2. 생성된 파로타 Axios 인스턴스를 활용해 비동기 통신으로 데이터를 가져옵니다
   const [
     { data: noise1Data },
     { data: noise2Data },
@@ -107,7 +105,7 @@ async function getData() {
     farota.get(URI_FIRE_3, { params: { keys: 'state' } }),
     farota.get(URI_SCHEDULER),
   ]);
-
+  //3. 센서별 데이터 Set을 저장할 변수들에 데이터를 저장합니다
   noise1 = noise1Data;
   noise2 = noise2Data;
   dust = dustData;
@@ -289,19 +287,14 @@ let charTempVibe = null;
 
 // 차트 데이터 로딩
 async function getChartData() {
-  // 토큰을 체크합니다
+  // 1. 토큰을 체크합니다
   checkToken();
-  // 오늘의 날짜를 가져옵니다
+  // 2. 데이터 조회를 위해 24시간 전에 타임스템프를 생성합니다
   let now = new Date();
-  // 현재 시간을 가져와 타임스탬프를 생성합니다
   const endTs = now.getTime();
-  // 24시간 이전의 타임스템프를 생성합니다
   now.setHours(now.getHours() - 24);
   const startTs = now.getTime();
-
-  // var endDate = new Date(endTs);
-  // var startDate = new Date(startTs);
-
+  // 3. 차트에 활용할 데이터들을 Farota Axios 인스턴스를 통한 통신으로 받아옵니다.
   const [{ data: noise1 }, { data: noise2 }, { data: dust }, { data: vibe }] =
     await Promise.all([
       farota.get(URI_NOISE_1, {
@@ -327,7 +320,7 @@ async function getChartData() {
         },
       }),
     ]);
-
+  // 4. 받아온 데이터를 Chart DataSet을 저장할 변수에 저장합니다.
   noise1ChartData = noise1;
   noise2ChartData = noise2;
   dustChartData = dust;
@@ -838,23 +831,23 @@ window.addEventListener('DOMContentLoaded', async function () {
     );
 
     // // API에서 꺼꾸로 넘어오고 있는 데이터의 순서 반전
-    x = vibeChartData.x_1;
-    xReverse = reverseArrayOrder(x);
-    y = vibeChartData.y_1;
-    yReverse = reverseArrayOrder(y);
-    z = vibeChartData.z_1;
-    zReverse = reverseArrayOrder(z);
+    // x = vibeChartData.x_1;
+    // xReverse = reverseArrayOrder(x);
+    // y = vibeChartData.y_1;
+    // yReverse = reverseArrayOrder(y);
+    // z = vibeChartData.z_1;
+    // zReverse = reverseArrayOrder(z);
 
-    charTempVibe = creatThreeLineChart(
-      vibeChart,
-      'line',
-      xReverse,
-      yReverse,
-      zReverse,
-      'x',
-      'y',
-      'z'
-    );
+    // charTempVibe = creatThreeLineChart(
+    //   vibeChart,
+    //   'line',
+    //   xReverse,
+    //   yReverse,
+    //   zReverse,
+    //   'x',
+    //   'y',
+    //   'z'
+    // );
   }
 
   // RPC Call
@@ -1231,21 +1224,21 @@ setInterval(async function () {
     );
 
     // Vibe Chart
-    // API에서 꺼꾸로 넘어오고 있는 데이터의 순서 반전
-    x = vibeChartData.x_1;
-    xReverse = reverseArrayOrder(x);
-    y = vibeChartData.y_1;
-    yReverse = reverseArrayOrder(y);
-    z = vibeChartData.z_1;
-    zReverse = reverseArrayOrder(z);
+    // // API에서 꺼꾸로 넘어오고 있는 데이터의 순서 반전
+    // x = vibeChartData.x_1;
+    // xReverse = reverseArrayOrder(x);
+    // y = vibeChartData.y_1;
+    // yReverse = reverseArrayOrder(y);
+    // z = vibeChartData.z_1;
+    // zReverse = reverseArrayOrder(z);
 
-    // 진동 차트 업데이트
-    charTempVibe = updateTwoLineChart(
-      charTempVibe,
-      xReverse,
-      yReverse,
-      zReverse
-    );
+    // // 진동 차트 업데이트
+    // charTempVibe = updateTwoLineChart(
+    //   charTempVibe,
+    //   xReverse,
+    //   yReverse,
+    //   zReverse
+    // );
   }
 
   // RPC Call
@@ -1524,15 +1517,19 @@ let charModalNoise2 = null;
 let charModalDust = null;
 let charModalVibe = null;
 
+/* 
+그리프 모달 구현 
+*/
+
 // 모달 테이블 해더를 세팅합니다
 function setTableHeaderBox(index1, index2, index3, index4) {
   let tableHeaderBox = ` <div id="graph-table-col-01-title">${index1}</div>
       <div id="graph-table-col-02-title">${index2}</div>
       <div id="graph-table-col-03-title">${index3}</div>
       <div id="graph-table-col-04-title">${index4}</div>`;
-  console.log(tableHeaderBox);
   document.querySelector('#table-header-box').innerHTML = tableHeaderBox;
 }
+
 // 모달 테이블을 세팅합니다.
 function setTableLineItem(targetData1, targetData2) {
   let modalTableData = '';
@@ -1558,6 +1555,7 @@ function setTableLineItem(targetData1, targetData2) {
   }
   document.querySelector('#table-item-box').innerHTML = modalTableData;
 }
+
 // 모달 테이블을 세팅합니다.
 function setTableLineItemThree(targetData1, targetData2, targetData3) {
   let modalTableData = '';
@@ -1584,7 +1582,7 @@ function setTableLineItemThree(targetData1, targetData2, targetData3) {
   document.querySelector('#table-item-box').innerHTML = modalTableData;
 }
 
-//시간 체우기
+//모달 푸터에 금일의 시간을 세팅합니다
 function getTodayTime() {
   // 모달 푸터 시간 체우기
   let today = new Date();
@@ -1623,6 +1621,9 @@ function openGraphModal(clicked_id) {
     );
     const todayDate = getTodayTime();
     document.querySelector('#modal-footer').innerHTML = todayDate;
+    const downLoadBtnBox = document.getElementById('excel-download-btn-box');
+    downLoadBtnBox.innerHTML =
+      '<button onclick="exprotDataToExcel(this.id)" id="xlsx-download-btn-noise-01">엑셀 다운로드</button>';
   } else if (clicked_id == 'graph-expend-btn-noise-02') {
     // 모달 제목 체우기
     document.querySelector('#modal-title').innerHTML = '소음센서02';
@@ -1646,6 +1647,9 @@ function openGraphModal(clicked_id) {
     );
     const todayDate = getTodayTime();
     document.querySelector('#modal-footer').innerHTML = todayDate;
+    const downLoadBtnBox = document.getElementById('excel-download-btn-box');
+    downLoadBtnBox.innerHTML =
+      '<button onclick="exprotDataToExcel(this.id)" id="xlsx-download-btn-noise-02">엑셀 다운로드</button>';
   } else if (clicked_id == 'graph-expend-btn-dust') {
     // 모달 제목 체우기
     document.querySelector('#modal-title').innerHTML = '미세먼지';
@@ -1665,6 +1669,9 @@ function openGraphModal(clicked_id) {
     );
     const todayDate = getTodayTime();
     document.querySelector('#modal-footer').innerHTML = todayDate;
+    const downLoadBtnBox = document.getElementById('excel-download-btn-box');
+    downLoadBtnBox.innerHTML =
+      '<button onclick="exprotDataToExcel(this.id)" id="xlsx-download-btn-dust">엑셀 다운로드</button>';
   } else if (clicked_id == 'graph-expend-btn-vibe') {
     // 모달 제목 체우기
     document.querySelector('#modal-title').innerHTML = '진동센서';
@@ -1686,6 +1693,9 @@ function openGraphModal(clicked_id) {
     );
     const todayDate = getTodayTime();
     document.querySelector('#modal-footer').innerHTML = todayDate;
+    const downLoadBtnBox = document.getElementById('excel-download-btn-box');
+    downLoadBtnBox.innerHTML =
+      '<button onclick="exprotDataToExcel(this.id)" id="xlsx-download-btn-vibe">엑셀 다운로드</button>';
   }
 }
 
@@ -1698,4 +1708,90 @@ function closeGraphModal() {
   charModalDust = null;
   charModalVibe = null;
   location.reload();
+}
+
+/* 
+엑셀 데이터 다운로드 구현
+*/
+
+function exprotDataToExcel(clicked_id) {
+  switch (clicked_id) {
+    case 'xlsx-download-btn-noise-01':
+      // 1. workbook 생성
+      let wb = XLSX.utils.book_new();
+      // 2. 노이즈 제목 생성
+      const dataTitle = 'Noise 01';
+      // 3. 문서 속성세팅 ( 윈도우에서 엑셀 오른쪽 클릭 속성 -> 자세히에 있는 값들 )
+      // 필요 없으면 안써도 괜찮다.
+      wb.Props = {
+        Title: 'title',
+        Subject: 'subject',
+        Author: 'programmer93',
+        Manager: 'Manager',
+        Company: 'Company',
+        Category: 'Category',
+        Keywords: 'Keywords',
+        Comments: 'Comments',
+        LastAuthor: 'programmer93',
+        CreatedDate: new Date(2021, 01, 13),
+      };
+      // 4. sheet명 생성
+      wb.SheetNames.push(`${dataTitle} Data`);
+      // 5. 데이터 어레이 생성
+      let wsData = [];
+      // 5.1 타이틀 어레이 생성
+      const titleArray = ['dateTime', 'leq', 'lmax'];
+      // 5.2 타이틀 어레이 푸시
+      wsData[0] = titleArray;
+      // 5.3 데이터 1열 생성
+      console.log(noise1ChartData);
+
+      for (let i = 0; i < noise1ChartData.leq.length; i++) {
+        // 데이터 어레이를 생성한다
+        let dataArray = [];
+        // 타임 스템프 값을 가지고 온다
+        let timestemp = noise1ChartData.leq[i].ts;
+        let date = new Date(timestemp);
+        let dateTime =
+          'Date: ' +
+          date.getFullYear() +
+          '/' +
+          date.getMonth() +
+          '/' +
+          date.getDate() +
+          '_' +
+          date.getHours() +
+          ':' +
+          date.getMinutes() +
+          ':' +
+          date.getSeconds();
+        dataArray[0] = dateTime;
+        dataArray[1] = noise1ChartData.leq[i].value;
+        dataArray[2] = noise1ChartData.lmax[i].value;
+        let e = i + 1;
+        wsData[e] = dataArray;
+        console.log(i);
+      }
+
+      console.log(wsData);
+
+      // 배열 데이터로 시트 데이터 생성
+      var ws = XLSX.utils.aoa_to_sheet(wsData);
+
+      // 시트 데이터를 시트에 넣기 ( 시트 명이 없는 시트인경우 첫번째 시트에 데이터가 들어감 )
+      wb.Sheets[`${dataTitle} Data`] = ws;
+
+      // 엑셀 파일 쓰기
+      var wbout = XLSX.write(wb, { bookType: 'xlsx', type: 'binary' });
+
+      //파일 다운로드
+      saveAs(
+        new Blob([s2ab(wbout)], { type: 'application/octet-stream' }),
+        `${dataTitle} Data.xlsx`
+      );
+      break;
+
+    default:
+      break;
+  }
 }

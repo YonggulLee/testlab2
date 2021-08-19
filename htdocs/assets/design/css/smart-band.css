@@ -18,10 +18,6 @@ div.health-check-header-item:first-child {
   padding: 17px 0 0 20px;
 }
 
-div.health-check-header-item {
-  /* border: 1px solid red; */
-}
-
 img.health-check-header-img {
   /* border: 1px solid green; */
   margin: 8px;
@@ -43,6 +39,7 @@ article.health-check-article {
   width: 100%;
   height: 70px;
 }
+
 article.health-check-article:last-child {
   border-radius: 0 0 6px 6px;
 }
@@ -52,10 +49,6 @@ div.health-check-article-item:first-child {
   padding: 26px 0 0 20px;
   font-size: 18px;
   font-weight: 700;
-}
-
-div.health-check-article-item {
-  /* border: 1px solid blue; */
 }
 
 span.health-check-article-item-num {
@@ -75,7 +68,7 @@ span.health-check-article-item-unit {
   margin: 0 0 0 14px;
 }
 
-span.health-check-article-item-state-high {
+span.health-check-article-item-state-highdanger {
   /* border: 1px solid blue; */
   display: block;
   width: 100px;
@@ -90,7 +83,7 @@ span.health-check-article-item-state-high {
   padding: 10px;
 }
 
-span.health-check-article-item-state-prehigh {
+span.health-check-article-item-state-danger {
   /* border: 1px solid blue; */
   display: block;
   width: 100px;
@@ -105,12 +98,12 @@ span.health-check-article-item-state-prehigh {
   padding: 10px;
 }
 
-span.health-check-article-item-state-normal {
+span.health-check-article-item-state-attention {
   /* border: 1px solid blue; */
   display: block;
   width: 100px;
   height: 20px;
-  background-color: #6dd230;
+  background-color: #f0d434;
   border-radius: 3px;
   font-size: 16px;
   font-weight: 600;
@@ -120,12 +113,12 @@ span.health-check-article-item-state-normal {
   padding: 10px;
 }
 
-span.health-check-article-item-state-low {
+span.health-check-article-item-state-noraml {
   /* border: 1px solid blue; */
   display: block;
   width: 100px;
   height: 20px;
-  background-color: #2775f4;
+  background-color: #6dd230;
   border-radius: 3px;
   font-size: 16px;
   font-weight: 600;
